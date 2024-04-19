@@ -1,0 +1,46 @@
+{
+    "mangas": [
+      {
+        "title": "Alice-san Chi no Iroribata",
+        "author": "Kinami Bunta",
+        "artist": "Kinami Bunta",
+        "description": "After ten years, Alice returns to her hometown from Tokyo to live alone in a traditional Japanese house with a sunken hearth. Harumi, her childhood friend, nervously meets her again after such a long time, but the warmth of the hearth with Alice is just as warm as it was in the past...\n\nNext to the hearth in Miss Alice's house, let's have a leisurely meal together.",
+        "genre": ["Romance", "Drama", "Slice of Life"],
+        "status": "2",
+        "_status values": [
+          "0 = Unknown",
+          "1 = Ongoing",
+          "2 = Completed",
+          "3 = Licensed",
+          "4 = Publishing finished",
+          "5 = Cancelled",
+          "6 = On hiatus"
+        ]
+      }
+    ],
+    "chapters": [
+      {
+        "id": 1,
+        "data": "D:\\PBL5\\BE\\ReadingComicWebSite\\src\\main\\java\\com\\example\\readingcomicwebsite\\chapters-data\\PBL5\\Alice-san Chi no Iroribata\\[Shin Translation] Vol. 1 Ch. 1.pdf"
+      },
+      {
+        "id": 2,
+        "data": "D:\\PBL5\\BE\\ReadingComicWebSite\\src\\main\\java\\com\\example\\readingcomicwebsite\\chapters-data\\PBL5\\Alice-san Chi no Iroribata\\[Shin Translation] Vol. 1 Ch. 2.pdf"
+      },
+      {
+        "id": 3,
+        "data": "D:\\PBL5\\BE\\ReadingComicWebSite\\src\\main\\java\\com\\example\\readingcomicwebsite\\chapters-data\\PBL5\\Alice-san Chi no Iroribata\\[Shin Translation] Vol. 1 Ch. 3.pdf"
+      }
+    ],
+    "users": [
+        {
+          "id": 1,
+          "username": "testUser",
+          "password": "ahihi",
+          "email": "testUser@example.com"
+        }
+      ]
+
+
+
+  }
