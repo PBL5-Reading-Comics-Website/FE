@@ -1,16 +1,23 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Label } from "./label";
 import { Input } from "./input";
 import { cn } from "../../utils/cn";
+import { authService } from '../../src/service/authService';
 import {
     IconBrandGoogle,
 } from "@tabler/icons-react";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 export function Login() {
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const navigate = useNavigate();
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log("Form submitted");
+        try {
+        } catch (error) {
+            console.error(error);
+        }
     };
     return (
         <div className="w-5/12 mx-auto p-4 md:p-8">
@@ -25,11 +32,11 @@ export function Login() {
                 <form className="my-8" onSubmit={handleSubmit}>
                     <LabelInputContainer className="mb-4">
                         <Label htmlFor="email" className="px-2">Email hoặc tên đăng nhập</Label>
-                        <Input id="email" placeholder="Nhập tài khoản hoặc Gmail" type="email" />
+                        <Input id="email" placeholder="Nhập tài khoản hoặc Gmail" value={username} onChange={e => setUsername(e.target.value)} />
                     </LabelInputContainer>
                     <LabelInputContainer className="mb-4">
                         <Label htmlFor="password" className="px-2">Mật khẩu</Label>
-                        <Input id="password" placeholder="Nhập mật khẩu" type="password" />
+                        <Input id="password" placeholder="Nhập mật khẩu" type="password" value={password} onChange={e => setPassword(e.target.value)} />
                     </LabelInputContainer>
                     <button
                         className="font-saira my-8 bg-[#ED741B] w-full h-16 text-lg font-bold"
@@ -64,7 +71,7 @@ export function Login() {
             <div className="mx-auto p-4 md:p-8 shadow-input bg-white dark:bg-[#6A6969]">
                 <span className="block text-center text-[#CBCBCB] font-saira font-bold text-base">
                     Người dùng mới?
-                    <a href="#" className="text-[#ED741B] pl-5">Đăng ký</a>
+                    <Link to="/register" className="text-[#ED741B] pl-5">Đăng ký</Link>
                 </span>
             </div>
         </div>
