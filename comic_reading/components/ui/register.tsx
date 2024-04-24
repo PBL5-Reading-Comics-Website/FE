@@ -13,8 +13,10 @@ export function Register() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+    const [usernameError, setUsernameError] = useState("");
     const [emailError, setEmailError] = useState("");
     const [passwordError, setPasswordError] = useState("");
+    const [confirmPasswordError, setConfirmPasswordError] = useState("");
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         let isValid = true;
@@ -24,19 +26,47 @@ export function Register() {
             setEmailError("Email không hợp lệ");
             isValid = false;
         }
+        else {
+            setEmailError("");
+        }
 
         if (password !== confirmPassword) {
-            setPasswordError("Mật khẩu không trùng khớp");
+            setConfirmPasswordError("Mật khẩu không trùng khớp");
             isValid = false;
+        }
+        else {
+            setConfirmPasswordError("");
+        }
+        if (!username) {
+            setUsernameError("Tên đăng nhập không được để trống");
+            isValid = false;
+        }
+        else {
+            setUsernameError("");
+        }
+    
+        if (!email || !emailRegex.test(email)) {
+            setEmailError("Email không hợp lệ");
+            isValid = false;
+        }
+        else {
+            setEmailError("");
+        }
+        if (!password) {
+            setPasswordError("Mật khẩu là bắt buộc");
+            isValid = false;
+        }
+        else {
+            setPasswordError("");
         }
         if (!isValid) {
             return;
         }
         try {
-            const response = await authService.register(username, password);
+            const response = await authService.register(username, email ,password);
             alert(response);
         } catch (error) {
-            alert(error);
+            alert(error );
         }
     };
     return (
@@ -50,7 +80,7 @@ export function Register() {
                     ĐĂNG KÝ TÀI KHOẢN MỚI
                 </h2>
                 <form onSubmit={handleSubmit}>
-                    <LabelInputContainer className="mb-4">
+                    <LabelInputContainer className="mb-4" error={usernameError}>
                         <Label htmlFor="username" className="px-2">Tên đăng nhập</Label>
                         <Input id="username" placeholder="Tên đăng nhập" value={username} onChange={(e) => setUsername(e.target.value)} />
                     </LabelInputContainer>
@@ -58,11 +88,11 @@ export function Register() {
                         <Label htmlFor="email" className="px-2">Email hoặc tên đăng nhập</Label>
                         <Input id="email" placeholder="Nhập tài khoản hoặc Gmail" value={email} onChange={(e) => setEmail(e.target.value)} />
                     </LabelInputContainer>
-                    <LabelInputContainer className="mb-4">
+                    <LabelInputContainer className="mb-4" error={passwordError}>
                         <Label htmlFor="password" className="px-2">Mật khẩu</Label>
                         <Input id="password" placeholder="Nhập mật khẩu" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
                     </LabelInputContainer>
-                    <LabelInputContainer className="mb-4" error={passwordError}>
+                    <LabelInputContainer className="mb-4" error={confirmPasswordError}>
                         <Label htmlFor="password_confirm" className="px-2">Nhập lại mật khẩu</Label>
                         <Input id="password_confirm" placeholder="Nhập mật khẩu lại mật khẩu" type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
                     </LabelInputContainer>
