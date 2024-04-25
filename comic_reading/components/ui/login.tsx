@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Label } from "./label";
 import { Input } from "./input";
 import { cn } from "../../utils/cn";
+import {Header} from './header';
 import { authService } from '../../src/service/authService';
 import {
     IconBrandGoogle,
@@ -55,6 +56,7 @@ export function Login() {
                     <div className="bg-gradient-to-r from-transparent via-white dark:via-white to-transparent my-8 h-[1px] w-full" />
 
                     <div className="flex flex-col space-y-4">
+                        <Link to="/main-screen">
                         <button
                             className="h-16 relative group/btn flex space-x-2 items-center justify-center px-4 w-full text-black rounded-md h-10 font-medium shadow-input bg-gray-50 dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_var(--neutral-800)]"
                             type="submit"
@@ -65,6 +67,7 @@ export function Login() {
                             </span>
                             <BottomGradient />
                         </button>
+                        </Link>
                     </div>
                 </form>
             </div>
