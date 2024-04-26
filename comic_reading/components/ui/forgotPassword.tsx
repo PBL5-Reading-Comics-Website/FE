@@ -13,58 +13,33 @@ export function ForgotPassword() {
         console.log("Form submitted");
     };
     return (
-        <div className="w-5/12 mx-auto p-4 md:p-8">
+        <div className="w-6/12 mx-auto p-4 md:p-8">
             <h1 className="text-center font-saira font-bold text-4xl text-neutral-800 dark:text-neutral-200 mb-8">
                 VANCHUONG
                 <span className="text-[#ED741B]">VIET</span>
             </h1>
             <div className="mx-auto p-4 md:p-8 shadow-input bg-white dark:bg-[#4B4B4B] border-t-8 border-[#ED741B]">
                 <h2 className="font-saira font-bold text-2xl text-neutral-800 dark:text-neutral-200 text-center">
-                    Quen me mat kaha
+                    Quên mật khẩu?
                 </h2>
-                <form className="my-8" onSubmit={handleSubmit}>
-                    <LabelInputContainer className="mb-4">
-                        <Label htmlFor="email" className="px-2">Email hoặc tên đăng nhập</Label>
-                        <Input id="email" placeholder="Nhập tài khoản hoặc Gmail" type="email" />
+                <form className="" onSubmit={handleSubmit}>
+                    <LabelInputContainer className="my-2">
+                        <Label htmlFor="email" className="px-2">Email</Label>
+                        <Input id="email" placeholder="Nhập Email" type="email" />
                     </LabelInputContainer>
-                    <LabelInputContainer className="mb-4">
-                        <Label htmlFor="password" className="px-2">Mật khẩu</Label>
-                        <Input id="password" placeholder="Nhập mật khẩu" type="password" />
-                    </LabelInputContainer>
+                    <Link to="/forgot-password" className="text-[#ED741B] my-2">Quay lại trang đăng nhập</Link>
                     <button
-                        className="font-saira my-8 bg-[#ED741B] w-full h-16 text-lg font-bold"
+                        className="font-saira my-2 bg-[#ED741B] w-full h-12  text-sm font-bold"
                         type="submit"
                     >
-                        ĐĂNG NHẬP
+                        Gửi gmail đổi mật khẩu
                         <BottomGradient />
                     </button>
-                    <div className="flex justify-between items-center">
-                        <label className="flex items-center">
-                            <input type="checkbox" className="form-checkbox h-5 w-5" />
-                            <span className="ml-2">Nhớ mật khẩu</span>
-                        </label>
-                        <Link to="/forgot-password" className="text-[#ED741B]">Quên mật khẩu?</Link>
-                    </div>
-                    <div className="bg-gradient-to-r from-transparent via-white dark:via-white to-transparent my-8 h-[1px] w-full" />
-
-                    <div className="flex flex-col space-y-4">
-                        <button
-                            className="h-16 relative group/btn flex space-x-2 items-center justify-center px-4 w-full text-black rounded-md h-10 font-medium shadow-input bg-gray-50 dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_var(--neutral-800)]"
-                            type="submit"
-                        >
-                            <IconBrandGoogle className="h-6 w-6 text-neutral-800 dark:text-neutral-300" />
-                            <span className="text-neutral-700 dark:text-neutral-300 text-lg">
-                                Đăng nhập bằng google
-                            </span>
-                            <BottomGradient />
-                        </button>
-                    </div>
                 </form>
             </div>
             <div className="mx-auto p-4 md:p-8 shadow-input bg-white dark:bg-[#6A6969]">
-                <span className="block text-center text-[#CBCBCB] font-saira font-bold text-base">
-                    Người dùng mới?
-                    <a href="#" className="text-[#ED741B] pl-5">Đăng ký</a>
+                <span className="block text-center text-[#CBCBCB] font-saira font-bold text-sm">
+                    Nhập email hoặc tên đăng nhập sẽ gửi cho bạn một gmail hướng dẫn thay đổi mật khẩu
                 </span>
             </div>
         </div>

@@ -11,10 +11,37 @@ import { Link, useNavigate } from 'react-router-dom';
 export function Login() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [usernameError, setUsernameError] = useState('');
+    const [passwordError, setPasswordError] = useState('');
     const navigate = useNavigate();
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        let isValid = true;
         e.preventDefault();
+        if (!username) {
+            setUsernameError('Tên đăng nhập không được để trống');
+            isValid = false;
+        } else {
+            setUsernameError('');
+        }
+
+        if (!password) {
+            setPasswordError('Mật khẩu không được để trống');
+            isValid = false;
+        }
+        else {
+            setPasswordError('');
+        }
+
+        if (!isValid) {
+            return;
+        }
         try {
+            const response = await authService.login(username, password);
+            if (response.status === 200) {
+                alert('Login success');
+            } else {
+                console.error('Login failed');
+            }
         } catch (error) {
             console.error(error);
         }
@@ -30,11 +57,11 @@ export function Login() {
                     ĐĂNG NHẬP VÀO TÀI KHOẢN
                 </h2>
                 <form className="my-8" onSubmit={handleSubmit}>
-                    <LabelInputContainer className="mb-4">
+                    <LabelInputContainer className="mb-4" error={usernameError}>
                         <Label htmlFor="email" className="px-2">Email hoặc tên đăng nhập</Label>
                         <Input id="email" placeholder="Nhập tài khoản hoặc Gmail" value={username} onChange={e => setUsername(e.target.value)} />
                     </LabelInputContainer>
-                    <LabelInputContainer className="mb-4">
+                    <LabelInputContainer className="mb-4" error={passwordError}>
                         <Label htmlFor="password" className="px-2">Mật khẩu</Label>
                         <Input id="password" placeholder="Nhập mật khẩu" type="password" value={password} onChange={e => setPassword(e.target.value)} />
                     </LabelInputContainer>
@@ -87,16 +114,21 @@ const BottomGradient = () => {
     );
 };
 
-const LabelInputContainer = ({
-    children,
-    className,
-}: {
+interface LabelInputContainerProps {
     children: React.ReactNode;
     className?: string;
+    error?: string;
+}
+
+const LabelInputContainer: React.FC<LabelInputContainerProps> = ({
+    children,
+    className,
+    error,
 }) => {
     return (
         <div className={cn("flex flex-col space-y-2 w-full", className)}>
             {children}
+            {error && <p className="text-red-500">{error}</p>}
         </div>
     );
 };
