@@ -64,9 +64,12 @@ export function Register() {
         }
         try {
             const response = await authService.register(username, email ,password);
-            alert(response);
+            if (response) {
+                alert("Đăng ký thành công");
+            }
         } catch (error) {
-            alert(error );
+            console.log(error);
+            alert("Đăng ký thất bại");
         }
     };
     return (
