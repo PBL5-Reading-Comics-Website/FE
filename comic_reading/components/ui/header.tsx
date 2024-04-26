@@ -12,23 +12,23 @@ export function Header() {
     return (
         <div className="w-full h-16 flex bg-black fixed top-0 justify-between items-center">
             <div className="h-full flex items-center justify-center p-5">
-                <h1 className="text-center font-saira font-bold text-xl text-neutral-800 dark:text-neutral-200">
+                <h1 className="text-center font-saira font-bold text-xl text-white">
                     VANCHUONG
                     <span className="text-[#ED741B]">VIET</span>
                 </h1>
             </div>
             <div className="h-full flex items-center justify-center p-5">
-                <h1 className="text-center font-saira font-bold text-xl text-neutral-800 dark:text-neutral-200">
+                <h1 className="text-center font-saira font-bold text-xl text-white">
                     TRUYỆN MỚI
                 </h1>
             </div>
             <div className="h-full flex items-center justify-center p-5">
-                <h1 className="text-center font-saira font-bold text-xl text-neutral-800 dark:text-neutral-200">
+                <h1 className="text-center font-saira font-bold text-xl text-white">
                     DANH SÁCH TRUYỆN
                 </h1>
             </div>
             <div className="h-full flex items-center justify-center p-5">
-                <h1 className="text-center font-saira font-bold text-xl text-neutral-800 dark:text-neutral-200">
+                <h1 className="text-center font-saira font-bold text-xl text-white">
                     TRUYỆN HOT
                 </h1>
             </div>
