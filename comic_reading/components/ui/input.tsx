@@ -6,9 +6,12 @@ import { useMotionTemplate, useMotionValue, motion } from "framer-motion";
 
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> { }
+export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+   icon?: React.ReactNode; // Add this line
+}
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, type, ...props }, ref) => {
+  ({ className, type, icon,...props }, ref) => {
     const radius = 100; // change this to increase the rdaius of the hover effect
     const [visible, setVisible] = React.useState(false);
 
@@ -27,7 +30,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           background: useMotionTemplate`
         radial-gradient(
           ${visible ? radius + "px" : "0px"} circle at ${mouseX}px ${mouseY}px,
-          var(--blue-500),
+          var(--orange-500),
           transparent 80%
         )
       `,
@@ -37,6 +40,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         onMouseLeave={() => setVisible(false)}
         className="p-[2px] rounded-lg transition duration-300 group/input"
       >
+        
         <input
           type={type}
           className={cn(
@@ -46,12 +50,13 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     disabled:cursor-not-allowed disabled:opacity-50
     dark:shadow-[0px_0px_1px_1px_var(--neutral-700)]
     group-hover/input:shadow-none transition duration-400
-    `,
+    ${icon ? 'pl-6' : ''}`,
             className
           )}
           ref={ref}
           {...props}
         />
+         {icon && <div className="absolute inset-y-0  flex items-center pointer-events-none">{icon}</div>}
       </motion.div>
     );
   }

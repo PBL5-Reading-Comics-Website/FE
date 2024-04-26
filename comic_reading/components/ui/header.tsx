@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { Link, useNavigate } from 'react-router-dom';
+import {Input} from './input';
 import {
     IconSearch,
 } from "@tabler/icons-react";
@@ -33,10 +34,10 @@ export function Header() {
             </div>
             <div className="flex items-center m-5 w-fit">
                 <form action="">
-                    <div className="h-7 w-60 bg-gray-700 m-5 rounded-md flex">
-                        <input type="text" className="bg-gray-700 w-full h-full rounded-md p-2">
-                        </input> 
-                        <IconSearch className="text-white h-full w-7 p-1"/>
+                    <div className="h-7 w-60 m-5 bg-gray-700  rounded-md flex">
+                        <Input type="text" className="bg-gray-700 w-full h-full rounded-md" icon={<IconSearch className="p-1" />}>
+                        </Input> 
+                        
                     </div>
                 </form>
                 <div className="flex p-5">
