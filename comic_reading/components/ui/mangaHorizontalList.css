@@ -1,0 +1,19 @@
+.gd-carousel-wrapper {
+    position:relative;
+}
+
+.gd-carousel {
+    position:unset;
+}
+
+.gd-carousel .react-multiple-carousel__arrow {
+    position:absolute;
+}
+
+.gd-carousel .react-multiple-carousel__arrow--left {
+    left: calc(3% + 1px);
+}
+
+.gd-carousel .react-multiple-carousel__arrow--right {
+    right: calc(3% + 1px);
+}
