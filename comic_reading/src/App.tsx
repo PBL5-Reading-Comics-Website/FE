@@ -9,14 +9,13 @@ export default function App() {
 
     return (
         <BrowserRouter>
-         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', width: '100vw' }}>
+         <div style={{height: '100%', width: '100%' }}>
         <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/register" element={<Register  />} />
             <Route path="/main-screen" element={<MainScreen />} />
         </Routes>
-       
         </div>
         </BrowserRouter>
     )
