@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { Header } from "./header";
+import Footer from "./footer";
 import MangaList from "./mangaList";
 import MangaListItem from "./mangaListItem";
 import MangaHorizontalList from "./mangaHorizontalList";
@@ -59,6 +60,7 @@ export function MainScreen() {
         </MangaHorizontalList>
       </div>
       </div>
+    <Footer/>
     </div>
   );
 }

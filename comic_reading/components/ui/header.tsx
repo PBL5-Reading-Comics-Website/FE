@@ -10,7 +10,7 @@ import {
 } from "@tabler/icons-react";
 export function Header() {
     return (
-        <div className="w-full h-16 flex bg-black fixed top-0 justify-between items-center">
+        <div className="w-full h-16 flex bg-black top-0 justify-between items-center z-50 absolute">
             <div className="h-full flex items-center justify-center p-5">
                 <h1 className="text-center font-saira font-bold text-xl text-white">
                     VANCHUONG
