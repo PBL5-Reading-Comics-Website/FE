@@ -1,9 +1,10 @@
-import './App.css'
-import Login from '../components/ui/login'
-import ForgotPassword from '../components/ui/forgotPassword'
-import Register from '../components/ui/register'
-import MainScreen from '../components/ui/mainScreen'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import ForgotPassword from '../components/ui/forgotPassword'
+import Login from '../components/ui/login'
+import MainScreen from '../components/ui/mainScreen'
+import MangaInfoScreen from '../components/ui/mangaInfoScreen'
+import Register from '../components/ui/register'
+import './App.css'
 
 export default function App() {
 
@@ -15,6 +16,7 @@ export default function App() {
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/register" element={<Register  />} />
             <Route path="/main-screen" element={<MainScreen />} />
+            <Route path="/manga-info" element={<MangaInfoScreen />} />
         </Routes>
         </div>
         </BrowserRouter>

@@ -1,12 +1,10 @@
 "use client";
-import React, { useState } from "react";
 import { Header } from "./header";
 import Footer from "./footer";
 import MangaList from "./mangaList";
 import MangaListItem from "./mangaListItem";
 import MangaHorizontalList from "./mangaHorizontalList";
 import MangaHorizontalListItem from "./mangaHorizontalListItem";
-import { useNavigate } from "react-router-dom";
 
 export function MainScreen() {
   const imageLink = "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRxeHo9j4IlUFhygyd9bXGP2XqppHByB729-W-mxs29HvfKfYpHpYRSAUe4FtMi1HeuIHOUOQ";
@@ -59,6 +57,7 @@ export function MainScreen() {
           <MangaHorizontalListItem imageUrl={imageLink}  mangaName="Manga 8" />
         </MangaHorizontalList>
       </div>
+      <div className="h-64"></div>
       </div>
     <Footer/>
     </div>

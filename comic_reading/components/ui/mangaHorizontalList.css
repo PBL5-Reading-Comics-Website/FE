@@ -11,9 +11,9 @@
 }
 
 .gd-carousel .react-multiple-carousel__arrow--left {
-    left: calc(3% + 1px);
+    left: calc(1%);
 }
 
 .gd-carousel .react-multiple-carousel__arrow--right {
-    right: calc(3% + 1px);
+    right: calc(1%);
 }
