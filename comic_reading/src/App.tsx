@@ -4,6 +4,7 @@ import Login from '../components/ui/login'
 import MainScreen from '../components/ui/mainScreen'
 import MangaInfoScreen from '../components/ui/mangaInfoScreen'
 import Register from '../components/ui/register'
+import UserInfoScreen from '../components/ui/userInfoScreen'
 import './App.css'
 
 export default function App() {
@@ -17,6 +18,7 @@ export default function App() {
             <Route path="/register" element={<Register  />} />
             <Route path="/main-screen" element={<MainScreen />} />
             <Route path="/manga-info" element={<MangaInfoScreen />} />
+            <Route path="/user-info" element={<UserInfoScreen />} />
         </Routes>
         </div>
         </BrowserRouter>
