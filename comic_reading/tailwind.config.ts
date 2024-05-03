@@ -22,6 +22,9 @@ export default {
           "saira": ["Saira Condensed", "sans-serif"],
         },
       },
+      textShadow: {
+        default: '0 5px 5px rgba(0, 0, 0, 0.5)',
+      },
     },},
   },
   plugins: [addVariablesForColors],

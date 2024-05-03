@@ -7,8 +7,8 @@ export function Footer() {
     
 
     return (
-            <div className="w-full flex bg-black mt-6 bottom-0 items-center">
-                <div className="h-40 w-1/2">
+            <div className="w-full h-fit flex bg-black mt-6 bottom-0 items-center">
+                <div className="h-fit w-1/2">
                     <div className="h-full flex-col justify-start items-start p-5">
                         <h1 className="text-start font-saira font-bold text-xl text-white">
                             VANCHUONG
@@ -27,7 +27,7 @@ export function Footer() {
                         </h1>
                     </div>
                 </div>
-                <div className="h-40 w-1/4 flex flex-wrap items-start p-5">
+                <div className="h-fit w-1/4 flex flex-wrap items-start p-5">
                     <Tag text="Trinh thám" />
                     <Tag text="Tình cảm" />
                     <Tag text="Hành động" />
