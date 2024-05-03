@@ -1,10 +1,10 @@
 "use client";
 import React, { useState } from "react";
-import { Label } from "./label";
-import { Input } from "./input";
-import { cn } from "../../utils/cn";
-import {Header} from './header';
-import { authService } from '../../src/service/authService';
+import { Label } from "../../util/label.tsx";
+import { Input } from "../../util/input.tsx";
+import { cn } from "../../../utils/cn";
+import {Header} from '../../util/header.tsx';
+import { authService } from '../../../src/service/authService';
 import {
     IconBrandGoogle,
 } from "@tabler/icons-react";

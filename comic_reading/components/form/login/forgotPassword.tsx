@@ -1,8 +1,8 @@
 "use client";
 import React from "react";
-import { Label } from "./label";
-import { Input } from "./input";
-import { cn } from "../../utils/cn";
+import { Label } from "../../util/label.tsx";
+import { Input } from "../../util/input.tsx";
+import { cn } from "../../../utils/cn";
 import {
     IconBrandGoogle,
 } from "@tabler/icons-react";

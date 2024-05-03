@@ -1,6 +1,6 @@
 import { useState } from "react";
-import Header from "./header";
-import UpdateUserInfoTab from "./updateUserInfoTab";
+import Header from "../util/header.tsx";
+import UpdateUserInfoTab from "./updateUserInfoTab.tsx";
 import UserOptionsList from "./userOptionsList";
 
 interface UserInfoScreenProps {

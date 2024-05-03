@@ -1,7 +1,7 @@
 "use client";
-import Header from "./header";
-import TagList from "./tagList";
-import ChapterLink from "./chapterLink";
+import Header from "../util/header.tsx";
+import TagList from "../tag/tagList.tsx";
+import ChapterLink from "./chapter/chapterLink.tsx";
 import {
   IconEye, IconMessageCircle, IconHeart
 } from "@tabler/icons-react";

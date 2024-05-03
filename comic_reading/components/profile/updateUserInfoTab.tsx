@@ -1,4 +1,4 @@
-import { DateTimeInput, Input, SelectInput } from './input'; // replace with actual path
+import { DateTimeInput, Input, SelectInput } from '../util/input.tsx'; // replace with actual path
 
 interface UpdateUserInfoTabProps {
     avatarPath: string;

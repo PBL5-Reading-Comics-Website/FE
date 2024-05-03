@@ -1,10 +1,10 @@
 "use client";
-import { Header } from "./header";
-import Footer from "./footer";
-import MangaList from "./mangaList";
-import MangaListItem from "./mangaListItem";
-import MangaHorizontalList from "./mangaHorizontalList";
-import MangaHorizontalListItem from "./mangaHorizontalListItem";
+import { Header } from "../util/header.tsx";
+import Footer from "../util/footer.tsx";
+import MangaList from "./manga/mangaList.tsx";
+import MangaListItem from "./manga/mangaListItem.tsx";
+import MangaHorizontalList from "./manga/mangaHorizontalList.tsx";
+import MangaHorizontalListItem from "./manga/mangaHorizontalListItem.tsx";
 
 export function MainScreen() {
   const imageLink = "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRxeHo9j4IlUFhygyd9bXGP2XqppHByB729-W-mxs29HvfKfYpHpYRSAUe4FtMi1HeuIHOUOQ";
