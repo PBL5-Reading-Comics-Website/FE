@@ -1,14 +1,11 @@
-import defaultTheme from "tailwindcss/defaultTheme";
  
-import colors from "tailwindcss/colors";
 import { default as flattenColorPalette } from "tailwindcss/lib/util/flattenColorPalette";
-import { backIn } from "framer-motion";
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
     './src/**/*.html',
     "./src/**/*.{js,ts,jsx,tsx}",
-    'components/ui/*.{js,ts,jsx,tsx}'
+    "components/**/*.{js,ts,jsx,tsx}"
   ],
   theme: {
     extend: {boxShadow: {
