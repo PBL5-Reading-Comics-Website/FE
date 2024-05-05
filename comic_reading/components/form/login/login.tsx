@@ -38,17 +38,17 @@ export function Login() {
         }
         try {
             const response = await authService.login(username, password);
-            if (response.status === 200) {
+            if (response.token) {
                 alert('Login success');
                 if (rememberMe) {
                     localStorage.setItem('token', response.data.token);
                 }
-                navigate('/main-screen');
+                navigate('/');
             } else {
                 setUsernameError('Tên đăng nhập hoặc mật khẩu không đúng');
             }
         } catch (error) {
-            setUsernameError('Tên đăng nhập hoặc mật khẩu không đúng');
+            console.error(error);
         }
     };
     return (

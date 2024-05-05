@@ -67,7 +67,7 @@ export function Register() {
             const response = await authService.register(username, email ,password);
             if (response) {
                 alert("Đăng ký thành công");
-                navigate("/");
+                navigate("/login");
             }
         } catch (error) {
             console.log(error);
