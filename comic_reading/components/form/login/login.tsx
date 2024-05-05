@@ -2,7 +2,8 @@
 import {
     IconBrandGoogle,
 } from "@tabler/icons-react";
-import React, { useState } from "react";
+import Cookies from 'js-cookie';
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import { authService } from '../../../src/service/authService';
 import { cn } from "../../../utils/cn";
@@ -13,8 +14,13 @@ export function Login() {
     const [password, setPassword] = useState('');
     const [usernameError, setUsernameError] = useState('');
     const [passwordError, setPasswordError] = useState('');
-    const [rememberMe, setRememberMe] = useState(false);
     const navigate = useNavigate();
+    useEffect(() => {
+        const token = Cookies.get('token');
+        if (token) {
+            navigate('/');
+        }
+    }, [navigate]);
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         let isValid = true;
         e.preventDefault();
@@ -39,16 +45,12 @@ export function Login() {
         try {
             const response = await authService.login(username, password);
             if (response.token) {
-                alert('Login success');
-                if (rememberMe) {
-                    localStorage.setItem('token', response.data.token);
-                }
                 navigate('/');
             } else {
                 setUsernameError('Tên đăng nhập hoặc mật khẩu không đúng');
             }
         } catch (error) {
-            console.error(error);
+            alert(error);
         }
     };
     return (
@@ -79,8 +81,6 @@ export function Login() {
                     </button>
                     <div className="flex justify-between items-center">
                         <label className="flex items-center">
-                        <input type="checkbox" className="form-checkbox h-5 w-5" checked={rememberMe} onChange={e => setRememberMe(e.target.checked)} />
-                            <span className="ml-2">Nhớ mật khẩu</span>
                         </label>
                         <Link to="/forgot-password" className="text-[#ED741B]">Quên mật khẩu?</Link>
                     </div>
@@ -88,16 +88,16 @@ export function Login() {
 
                     <div className="flex flex-col space-y-4">
                         <Link to="/main-screen">
-                        <button
-                            className="h-16 relative group/btn flex space-x-2 items-center justify-center px-4 w-full text-black rounded-md h-10 font-medium shadow-input bg-gray-50 dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_var(--neutral-800)]"
-                            type="submit"
-                        >
-                            <IconBrandGoogle className="h-6 w-6 text-neutral-800 dark:text-neutral-300" />
-                            <span className="text-neutral-700 dark:text-neutral-300 text-lg">
-                                Đăng nhập bằng google
-                            </span>
-                            <BottomGradient />
-                        </button>
+                            <button
+                                className="h-16 relative group/btn flex space-x-2 items-center justify-center px-4 w-full text-black rounded-md h-10 font-medium shadow-input bg-gray-50 dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_var(--neutral-800)]"
+                                type="submit"
+                            >
+                                <IconBrandGoogle className="h-6 w-6 text-neutral-800 dark:text-neutral-300" />
+                                <span className="text-neutral-700 dark:text-neutral-300 text-lg">
+                                    Đăng nhập bằng google
+                                </span>
+                                <BottomGradient />
+                            </button>
                         </Link>
                     </div>
                 </form>

@@ -1,21 +1,22 @@
 "use client";
-import React, { useState } from "react";
 import {
     IconBell,
     IconSearch,
 } from "@tabler/icons-react";
+import Cookies from 'js-cookie';
+import { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
+import { authService } from "../../src/service/authService";
 import { Input } from './input';
-
-let x = 0;
-
+let isLoggedIn = false;
 export function Header() {
     const [dropdownVisible, setDropdownVisible] = useState(false);
-
+    useEffect(() => {
+        const token = Cookies.get('token');
+        isLoggedIn = !!token;
+      }, []);
     const toggleDropdown = () => {
         setDropdownVisible(!dropdownVisible);
-
-        x = 1;
     };
 
     return (
@@ -63,7 +64,7 @@ export function Header() {
                         </div>
                         {dropdownVisible && (
                             <div className="flex flex-col p-1 h-fit w-full mt-1 justify-center items-center top-full bg-black absolute rounded-md">
-                                {x === 0 ? (
+                                {isLoggedIn === false ? (
                                     <Link to="/login" className="p-4">
                                         <h1 className="text-white text-base text-center">Đăng nhập</h1>
                                     </Link>
@@ -73,7 +74,7 @@ export function Header() {
                                             <h1 className="text-white text-base text-center">Thông tin cá nhân</h1>
                                         </Link>
                                         <div className="bg-gradient-to-r from-transparent via-white dark:via-white to-transparent h-[1px] w-full" />
-                                        <Link to="/login" className="p-4">
+                                        <Link to="/login" className="p-4" onClick={authService.logout}>
                                             <h1 className="text-white text-base">Đăng xuất</h1>
                                         </Link>
                                     </>
