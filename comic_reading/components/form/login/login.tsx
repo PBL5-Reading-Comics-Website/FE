@@ -1,19 +1,19 @@
 "use client";
-import React, { useState } from "react";
-import { Label } from "../../util/label.tsx";
-import { Input } from "../../util/input.tsx";
-import { cn } from "../../../utils/cn";
-import {Header} from '../../util/header.tsx';
-import { authService } from '../../../src/service/authService';
 import {
     IconBrandGoogle,
 } from "@tabler/icons-react";
+import React, { useState } from "react";
 import { Link, useNavigate } from 'react-router-dom';
+import { authService } from '../../../src/service/authService';
+import { cn } from "../../../utils/cn";
+import { Input } from "../../util/input.tsx";
+import { Label } from "../../util/label.tsx";
 export function Login() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [usernameError, setUsernameError] = useState('');
     const [passwordError, setPasswordError] = useState('');
+    const [rememberMe, setRememberMe] = useState(false);
     const navigate = useNavigate();
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         let isValid = true;
@@ -40,11 +40,15 @@ export function Login() {
             const response = await authService.login(username, password);
             if (response.status === 200) {
                 alert('Login success');
+                if (rememberMe) {
+                    localStorage.setItem('token', response.data.token);
+                }
+                navigate('/main-screen');
             } else {
-                console.error('Login failed');
+                setUsernameError('Tên đăng nhập hoặc mật khẩu không đúng');
             }
         } catch (error) {
-            console.error(error);
+            setUsernameError('Tên đăng nhập hoặc mật khẩu không đúng');
         }
     };
     return (
@@ -75,7 +79,7 @@ export function Login() {
                     </button>
                     <div className="flex justify-between items-center">
                         <label className="flex items-center">
-                            <input type="checkbox" className="form-checkbox h-5 w-5" />
+                        <input type="checkbox" className="form-checkbox h-5 w-5" checked={rememberMe} onChange={e => setRememberMe(e.target.checked)} />
                             <span className="ml-2">Nhớ mật khẩu</span>
                         </label>
                         <Link to="/forgot-password" className="text-[#ED741B]">Quên mật khẩu?</Link>

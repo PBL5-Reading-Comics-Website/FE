@@ -1,13 +1,13 @@
 "use client";
-import React, { useState } from "react";
-import { Label } from "../../util/label.tsx";
-import { Input } from "../../util/input.tsx";
-import { cn } from "../../../utils/cn";
-import { authService } from '../../../src/service/authService';
 import {
     IconBrandGoogle,
 } from "@tabler/icons-react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { authService } from '../../../src/service/authService';
+import { cn } from "../../../utils/cn";
+import { Input } from "../../util/input.tsx";
+import { Label } from "../../util/label.tsx";
 export function Register() {
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
@@ -17,6 +17,7 @@ export function Register() {
     const [emailError, setEmailError] = useState("");
     const [passwordError, setPasswordError] = useState("");
     const [confirmPasswordError, setConfirmPasswordError] = useState("");
+    const navigate = useNavigate();
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         let isValid = true;
@@ -66,6 +67,7 @@ export function Register() {
             const response = await authService.register(username, email ,password);
             if (response) {
                 alert("Đăng ký thành công");
+                navigate("/");
             }
         } catch (error) {
             console.log(error);

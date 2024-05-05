@@ -29,8 +29,6 @@ export const authService = {
         email,
         password,
       });
-      localStorage.setItem('token', response.data.token);
-
       return response.data;
     } catch (error) {
       if ((error as AxiosError).response) {
@@ -60,7 +58,6 @@ export const authService = {
         username,
         password,
       });
-      localStorage.setItem('token', response.data.token);
 
       return response.data;
     } catch (error) {
@@ -73,6 +70,21 @@ export const authService = {
     try {
       const response = await axiosInstance.post('/auth/forgot-password', {
         email,
+      });
+
+      return response.data;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  },
+
+  updatePassword: async (id: string, username: string, email: string, password: string) => {
+    try {
+      const response = await axiosInstance.put(`/auth/update-password/${id}`, {
+        username,
+        email,
+        password,
       });
 
       return response.data;
