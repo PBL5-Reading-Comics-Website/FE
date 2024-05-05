@@ -1,4 +1,5 @@
 import axios, { AxiosError } from 'axios';
+import Cookies from 'js-cookie';
 
 const API_URL = 'http://localhost:8080/api';
 
@@ -10,7 +11,7 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('token');
+    const token = Cookies.get('token');
     if (token) {
       config.headers['Authorization'] = 'Bearer ' + token;
     }
@@ -38,27 +39,13 @@ export const authService = {
       throw error;
     }
   },
-
-  authenticate: async (username: string, password: string) => {
-    try {
-      const response = await axiosInstance.post('/auth/authenticate', {
-        username,
-        password,
-      });
-      localStorage.setItem('token', response.data.token);
-      return response.data;
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
-  },
   login: async (username: string, password: string) => {
     try {
       const response = await axiosInstance.post('/auth/login', {
         username,
         password,
       });
-
+      Cookies.set('token', response.data.token);
       return response.data;
     } catch (error) {
       console.error(error);
@@ -88,6 +75,16 @@ export const authService = {
       });
 
       return response.data;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  },
+
+  logout: async () => {
+    try {
+      await axiosInstance.get('/auth/logout');
+      Cookies.remove('token');
     } catch (error) {
       console.error(error);
       throw error;
