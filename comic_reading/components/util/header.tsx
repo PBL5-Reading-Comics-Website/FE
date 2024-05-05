@@ -15,14 +15,14 @@ export function Header() {
     const toggleDropdown = () => {
         setDropdownVisible(!dropdownVisible);
 
-    x = 1;
+        x = 1;
     };
 
     return (
         <div className="w-full top-0 z-50 absolute">
             <div className="w-full h-fit flex bg-black justify-between items-center absolute">
                 <div className="h-16 flex items-center justify-center p-5">
-                    <Link to="/main-screen">
+                    <Link to="/">
                         <h1 className="text-center font-saira font-bold text-xl text-white">
                             VANCHUONG
                             <span className="text-[#ED741B]">VIET</span>
@@ -55,7 +55,7 @@ export function Header() {
                     <div className="flex p-5">
                         <IconBell className="text-white h-8 w-8" />
                     </div>
-                    <div className="p-5 h-16 items-center justify-center flex flex-col top-0 relative"> {/* Add relative positioning here */}
+                    <div className="p-5 h-16 items-center justify-center flex flex-col top-0 relative">
                         <div onClick={toggleDropdown} className="flex items-center justify-center">
                             <img className="w-10 h-10 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500" src="https://static.vecteezy.com/system/resources/previews/005/005/788/original/user-icon-in-trendy-flat-style-isolated-on-grey-background-user-symbol-for-your-web-site-design-logo-app-ui-illustration-eps10-free-vector.jpg">
                             </img>
@@ -73,7 +73,7 @@ export function Header() {
                                             <h1 className="text-white text-base text-center">Thông tin cá nhân</h1>
                                         </Link>
                                         <div className="bg-gradient-to-r from-transparent via-white dark:via-white to-transparent h-[1px] w-full" />
-                                        <Link to="/user-info" className="p-4">
+                                        <Link to="/login" className="p-4">
                                             <h1 className="text-white text-base">Đăng xuất</h1>
                                         </Link>
                                     </>

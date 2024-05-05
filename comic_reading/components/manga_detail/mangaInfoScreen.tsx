@@ -4,13 +4,18 @@ import TagList from "../tag/tagList";
 import ChapterList from "./chapter/chapterList";
 import CommentList from "../ui/commentList";
 import {
-  IconEye, IconMessageCircle, IconHeart
+  IconEye, IconMessageCircle, IconHeart, IconHeartFilled, IconBookmarkFilled,
+  IconBookmark
 } from "@tabler/icons-react";
 
 interface MangaInfoScreenProps {
   imageUrl?: string;
   mangaName?: string;
   author?: string;
+  artist?: string;
+  publicationDate?: string;
+  publisher?: string;
+  status?: string;
   views?: number;
   favorites?: number;
   comments?: number;
@@ -22,6 +27,10 @@ export function MangaInfoScreen({
   imageUrl = 'https://i0.wp.com/halcyonrealms.com/blogpics/leviuscover02.jpg?resize=750%2C1071&ssl=1',
   mangaName = 'Levius',
   author = 'Haruhisa Nakata',
+  artist = 'Haruhisa Nakata',
+  publicationDate = '2021-10-10',
+  publisher = 'Shogakukan',
+  status = 'Ongoing',
   views = 100000,
   favorites = 100000,
   comments = 100000,
@@ -39,7 +48,31 @@ export function MangaInfoScreen({
       </div>
       <div className="absolute flex top-0 w-full z-20">
         <div className="w-1/3 h-fit flex flex-col justify-center items-center">
-          <img src={imageUrl} className="h-80 mt-24 mr-0 ml-auto" alt="" />
+          <img src={imageUrl} className="w-5/6 mt-24 mr-0 ml-auto" alt="" />
+          <button className="font-saira mt-3 mr-0 flex items-center justify-center ml-auto hover:border-[#b8382f] hover:border-2 bg-[#ED741B] text-[#2E2E2E] w-5/6 h-16 text-lg font-bold" type="submit"> 
+            THÍCH TRUYỆN
+            <IconHeartFilled size={30} className="ml-3" />
+          </button>
+          <button className="font-saira mt-3 mr-0 flex items-center justify-center ml-auto bg-[#1BBBED] hover:border-2 text-[#2E2E2E] w-5/6 h-16 text-lg font-bold" type="submit"> 
+            THÍCH TRUYỆN
+            <IconBookmarkFilled size={30} className="ml-3" />
+          </button>
+          <div className="flex h-fit w-5/6 text-lg justify-between ml-auto mr-0 mt-3">
+            <div className="flex flex-col">
+              <h3>Tình trạng</h3>
+              <h3>NXB</h3>
+              <h3>Tác giả</h3>
+              <h3>Họa sĩ</h3>
+              <h3>Ngày xuất bản</h3>
+            </div>
+            <div className="flex flex-col mr-0 ml-auto items-end">
+              <h3>{status}</h3>
+              <h3>{publisher}</h3>
+              <h3>{author}</h3>
+              <h3>{artist}</h3>
+              <h3>{publicationDate}</h3>
+            </div>
+          </div>
         </div>
         <div className="w-full h-fit flex flex-col justify-start">
           <div className="w-full h-72 flex flex-col justify-end items-start text-white pl-8 pb-5">
