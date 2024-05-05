@@ -1,7 +1,8 @@
 "use client";
-import Header from "../util/header.tsx";
-import TagList from "../tag/tagList.tsx";
-import ChapterLink from "./chapter/chapterLink.tsx";
+import Header from "../util/header";
+import TagList from "../tag/tagList";
+import ChapterList from "./chapter/chapterList";
+import CommentList from "../ui/commentList";
 import {
   IconEye, IconMessageCircle, IconHeart
 } from "@tabler/icons-react";
@@ -60,12 +61,11 @@ export function MangaInfoScreen({
               <TagList tags={tags} />
             </div>
             <h3 className="pt-3 mb-10">{description}</h3>
-            <div className="w-full h-full bg-[#5F5F5F] flex flex-col items-center justify-start rounded-lg p-3 m-3">
-              <div className="w-full p-3 pt-0 border-2 flex flex-col rounded-lg">
-                <ChapterLink chapter="Chapter 3:Tên chap" time="1 ngày trước" poster="SomeGuy" />
-                <ChapterLink chapter="Chapter 2:Tên chap" time="2 ngày trước" poster="SomeGuy" />
-                <ChapterLink chapter="Chapter 1:Tên chap" time="3 ngày trước" poster="SomeGuy" />
-              </div>
+            <div className="w-full h-full bg-[#5F5F5F] flex flex-col items-center justify-start rounded-lg p-3">
+              <h1 className="text-2xl font-semibold pb-3">Danh sách chương</h1>
+              <ChapterList />
+              <h1 className="text-2xl font-semibold py-3">Bình luận</h1>
+              <CommentList />
             </div>
           </div>
         </div>

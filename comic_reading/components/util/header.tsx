@@ -9,10 +9,12 @@ export function Header() {
     return (
         <div className="w-full h-16 flex bg-black top-0 justify-between items-center z-50 absolute">
             <div className="h-full flex items-center justify-center p-5">
-                <h1 className="text-center font-saira font-bold text-xl text-white">
-                    VANCHUONG
-                    <span className="text-[#ED741B]">VIET</span>
-                </h1>
+                <Link to="/main-screen">
+                    <h1 className="text-center font-saira font-bold text-xl text-white">
+                        VANCHUONG
+                        <span className="text-[#ED741B]">VIET</span>
+                    </h1>
+                </Link>
             </div>
             <div className="h-full flex items-center justify-center p-5">
                 <h1 className="text-center font-saira font-bold text-xl text-white">
