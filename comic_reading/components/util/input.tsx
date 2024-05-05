@@ -164,7 +164,7 @@ const DateTimeInput = React.forwardRef<HTMLInputElement, DateTimeInputProps>(
       className="p-[2px] rounded-lg transition duration-300 group/input"
       >
         <input
-          type="datetime-local"
+          type="date" // Changed from "datetime-local" to "date"
           className={cn(
             `flex w-full border-none bg-gray-50 dark:bg-zinc-800 text-black dark:text-white shadow-input rounded-md px-3 py-2 text-lg  file:border-0 file:bg-transparent 
     file:text-lg file:font-medium placeholder:text-neutral-400 dark:placeholder-text-neutral-600 

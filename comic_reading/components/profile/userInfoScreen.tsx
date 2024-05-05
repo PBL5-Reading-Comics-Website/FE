@@ -1,8 +1,10 @@
 import { useState } from "react";
 import Header from "../util/header.tsx";
+import ChangePasswordTab from "./changePasswordTab.tsx";
+import { FollowHistoryItem, FollowHistoryTab } from "./followHistoryTab.tsx";
+import { ReadHistoryItem, ReadHistoryTab } from "./readHistoryTab.tsx";
 import UpdateUserInfoTab from "./updateUserInfoTab.tsx";
 import UserOptionsList from "./userOptionsList";
-
 interface UserInfoScreenProps {
   imageUrl?: string;
   userName?: string;
@@ -44,6 +46,15 @@ export function UserInfoScreen({
             </div>
             <div className="mt-4">
             {selectedOption === "Thông tin cá nhân" && <UpdateUserInfoTab avatarPath={imageUrl}/>}
+            {selectedOption === "Lịch sử đọc truyện" && <ReadHistoryTab>
+              <ReadHistoryItem/>
+              <ReadHistoryItem/>
+              </ReadHistoryTab>}
+              {selectedOption === "Thông tin theo dõi" && <FollowHistoryTab>
+              <FollowHistoryItem/>
+              <FollowHistoryItem/>
+              </FollowHistoryTab>}
+              {selectedOption === "Đổi mật khẩu" && <ChangePasswordTab/>}
             </div>
           </div>
         </div>
