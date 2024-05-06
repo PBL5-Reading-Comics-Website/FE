@@ -27,9 +27,9 @@ export function ForgotPassword() {
                         <Label htmlFor="email" className="px-2">Email</Label>
                         <Input id="email" placeholder="Nhập Email" type="email" />
                     </LabelInputContainer>
-                    <Link to="/forgot-password" className="text-[#ED741B] my-2">Quay lại trang đăng nhập</Link>
+                    <Link to="/login" className="text-[#ED741B] my-2">Quay lại trang đăng nhập</Link>
                     <button
-                        className="font-saira my-2 bg-[#ED741B] w-full h-12  text-sm font-bold"
+                        className="font-saira my-2 bg-[#ED741B] hover:border-2 hover:border-[#b8382f] w-full h-12  text-sm font-bold"
                         type="submit"
                     >
                         Gửi gmail đổi mật khẩu

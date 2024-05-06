@@ -73,7 +73,7 @@ export function Login() {
                         <Input id="password" placeholder="Nhập mật khẩu" type="password" value={password} onChange={e => setPassword(e.target.value)} />
                     </LabelInputContainer>
                     <button
-                        className="font-saira my-8 bg-[#ED741B] w-full h-16 text-lg font-bold"
+                        className="font-saira my-8 bg-[#ED741B] hover:border-2 hover:border-[#b8382f] w-full h-16 text-lg font-bold"
                         type="submit"
                     >
                         ĐĂNG NHẬP

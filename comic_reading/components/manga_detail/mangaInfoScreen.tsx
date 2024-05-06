@@ -49,13 +49,13 @@ export function MangaInfoScreen({
       <div className="absolute flex top-0 w-full z-20">
         <div className="w-1/3 h-fit flex flex-col justify-center items-center">
           <img src={imageUrl} className="w-5/6 mt-24 mr-0 ml-auto" alt="" />
-          <button className="font-saira mt-3 mr-0 flex items-center justify-center ml-auto hover:border-[#b8382f] hover:border-2 bg-[#ED741B] text-[#2E2E2E] w-5/6 h-16 text-lg font-bold" type="submit"> 
-            THÍCH TRUYỆN
-            <IconHeartFilled size={30} className="ml-3" />
+          <button className="font-saira mt-3 mr-0 flex items-center justify-center pl-16 ml-auto hover:border-[#b8382f] hover:border-2 bg-[#ED741B] text-[#2E2E2E] w-5/6 h-16 text-lg font-bold" type="submit"> 
+            <h3 className="w-2/3 text-center">THÍCH TRUYỆN</h3>
+            <IconHeartFilled size={30} className="mr-10 ml-auto" />
           </button>
-          <button className="font-saira mt-3 mr-0 flex items-center justify-center ml-auto bg-[#1BBBED] hover:border-2 text-[#2E2E2E] w-5/6 h-16 text-lg font-bold" type="submit"> 
-            THÍCH TRUYỆN
-            <IconBookmarkFilled size={30} className="ml-3" />
+          <button className="font-saira mt-3 mr-0 flex items-center justify-center pl-16 ml-auto bg-[#1BBBED] hover:border-2 text-[#2E2E2E] w-5/6 h-16 text-lg font-bold" type="submit"> 
+            <h3 className="w-2/3 text-center">THEO DÕI</h3>
+            <IconBookmarkFilled size={30} className="mr-10 ml-auto" />
           </button>
           <div className="flex h-fit w-5/6 text-lg justify-between ml-auto mr-0 mt-3">
             <div className="flex flex-col">
