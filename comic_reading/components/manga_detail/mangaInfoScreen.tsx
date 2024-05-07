@@ -6,8 +6,9 @@ import {
   IconMessageCircle
 } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { mangaService } from "../../src/service/mangaService";
+import ErrorPage from "../error/errorPage";
 import CommentList from "../ui/commentList";
 import Header from "../util/header";
 import ChapterList from "./chapter/chapterList";
@@ -46,26 +47,32 @@ interface MangaInfoScreenProps {
 export function MangaInfoScreen() {
   const { id } = useParams();
   const [manga, setManga] = useState<MangaData | null>(null);
-  const navigate = useNavigate();
+  const [error, setError] = useState(false);
+
   useEffect(() => {
-    if (!id) {
-      navigate('/error')
+    if (!id || parseInt(id) === 0) {
+      setError(true);
+      return;
     }
-    if (parseInt(id ?? "") == 0) {
-      navigate('/error')
-    }
+
     const fetchManga = async () => {
       try {
-        const data = await mangaService.getMangaById(parseInt(id ?? ""));
+        const data = await mangaService.getMangaById(parseInt(id));
         setManga(data);
       } catch (error) {
         console.error(error);
-      } 
+        setError(true);
+      }
     };
+
     fetchManga();
   }, [id]);
   const publishDate = manga?.publishAt ? new Date(manga.publishAt) : null;
   const formattedDate = publishDate ? `${publishDate.getDate()}-${publishDate.getMonth() + 1}-${publishDate.getFullYear()}` : '';
+  if (error) {
+    return <ErrorPage />;
+  }
+
   return (
     <div className="relative">
       <div className="w-full h-full">

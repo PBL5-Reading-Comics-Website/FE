@@ -123,24 +123,25 @@ export function MainScreen() {
           </div>
         </div>
         <div className="seasonal">
-  <h2 className="text-bold text-xl my-4">Theo mùa</h2>
-  <MangaHorizontalList className="mt-2">
-    {seasonalMangas.map((manga, index) => (
-      <MangaHorizontalListItem
-        key={index}
-        imageUrl={manga.coverImage}
-        mangaName={manga.name}
-      />
-    ))}
-                <MangaHorizontalListItem imageUrl={imageLink} mangaName="Manga 2" />
+          <h2 className="text-bold text-xl my-4">Theo mùa</h2>
+          <MangaHorizontalList className="mt-2">
+            {seasonalMangas.map((manga, index) => (
+              <MangaHorizontalListItem
+              id={manga.id}
+                key={index}
+                imageUrl={manga.coverImage}
+                mangaName={manga.name}
+              />
+            ))}
+            <MangaHorizontalListItem imageUrl={imageLink} mangaName="Manga 2" />
             <MangaHorizontalListItem imageUrl={imageLink} mangaName="Manga 3" />
             <MangaHorizontalListItem imageUrl={imageLink} mangaName="Manga 4" />
             <MangaHorizontalListItem imageUrl={imageLink} mangaName="Manga 5" />
             <MangaHorizontalListItem imageUrl={imageLink} mangaName="Manga 6" />
             <MangaHorizontalListItem imageUrl={imageLink} mangaName="Manga 7" />
             <MangaHorizontalListItem imageUrl={imageLink} mangaName="Manga 8" />
-  </MangaHorizontalList>
-</div>
+          </MangaHorizontalList>
+        </div>
         <div className="monthly">
           <h2 className="text-bold text-xl my-4">Theo tháng</h2>
           <MangaHorizontalList className="mt-2">

@@ -4,20 +4,19 @@ import {
     IconSearch,
 } from "@tabler/icons-react";
 import Cookies from 'js-cookie';
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link } from 'react-router-dom';
 import { authService } from "../../src/service/authService";
 import { Input } from './input';
 let isLoggedIn = false;
 export function Header() {
     const [dropdownVisible, setDropdownVisible] = useState(false);
-    useEffect(() => {
+    const toggleDropdown = () => {
         const token = Cookies.get('token');
         isLoggedIn = !!token;
-      }, []);
-    const toggleDropdown = () => {
         setDropdownVisible(!dropdownVisible);
-    };
+      };
+    
 
     return (
         <div className="w-full top-0 z-50 absolute">
