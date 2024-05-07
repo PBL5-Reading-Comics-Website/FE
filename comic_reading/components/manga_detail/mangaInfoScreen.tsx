@@ -43,7 +43,7 @@ interface MangaInfoScreenProps {
   defaultDescription?: string;
 }
 
-export function MangaInfoScreen( ) {
+export function MangaInfoScreen() {
   const { id } = useParams();
   const [manga, setManga] = useState<MangaData | null>(null);
   const navigate = useNavigate();
@@ -60,7 +60,7 @@ export function MangaInfoScreen( ) {
         setManga(data);
       } catch (error) {
         console.error(error);
-      }
+      } 
     };
     fetchManga();
   }, [id]);
@@ -77,30 +77,30 @@ export function MangaInfoScreen( ) {
       <div className="absolute flex top-0 w-full z-20">
         <div className="w-1/3 h-fit flex flex-col justify-center items-center">
           <img src={manga?.coverImage} className="w-5/6 mt-24 mr-0 ml-auto" alt="" />
-          <button className="font-saira mt-3 mr-0 flex items-center justify-center pl-16 ml-auto hover:border-[#b8382f] hover:border-2 bg-[#ED741B] text-[#2E2E2E] w-5/6 h-16 text-lg font-bold" type="submit"> 
+          <button className="font-saira mt-3 mr-0 flex items-center justify-center pl-16 ml-auto hover:border-[#b8382f] hover:border-2 bg-[#ED741B] text-[#2E2E2E] w-5/6 h-16 text-lg font-bold" type="submit">
             <h3 className="w-2/3 text-center">THÍCH TRUYỆN</h3>
             <IconHeartFilled size={30} className="mr-10 ml-auto" />
           </button>
-          <button className="font-saira mt-3 mr-0 flex items-center justify-center pl-16 ml-auto bg-[#1BBBED] hover:border-2 text-[#2E2E2E] w-5/6 h-16 text-lg font-bold" type="submit"> 
+          <button className="font-saira mt-3 mr-0 flex items-center justify-center pl-16 ml-auto bg-[#1BBBED] hover:border-2 text-[#2E2E2E] w-5/6 h-16 text-lg font-bold" type="submit">
             <h3 className="w-2/3 text-center">THEO DÕI</h3>
             <IconBookmarkFilled size={30} className="mr-10 ml-auto" />
           </button>
           <div className="flex h-fit w-5/6 text-lg justify-between ml-auto mr-0 mt-3">
-  <div className="flex flex-col">
-    <h3>Tình trạng</h3>
-    <h3>NXB</h3>
-    <h3>Tác giả</h3>
-    <h3>Họa sĩ</h3>
-    <h3>Ngày xuất bản</h3>
-  </div>
-  <div className="flex flex-col mr-0 ml-auto items-end">
-    <h3>{manga?.status ?? '\u00A0'}</h3>
-    <h3>{manga?.publisher ?? '\u00A0'}</h3>
-    <h3>{manga?.author ?? '\u00A0'}</h3>
-    <h3>{manga?.artist ?? '\u00A0'}</h3>
-    <h3>{formattedDate ?? '\u00A0'}</h3>
-  </div>
-</div>
+            <div className="flex flex-col">
+              <h3>Tình trạng</h3>
+              <h3>NXB</h3>
+              <h3>Tác giả</h3>
+              <h3>Họa sĩ</h3>
+              <h3>Ngày xuất bản</h3>
+            </div>
+            <div className="flex flex-col mr-0 ml-auto items-end">
+              <h3>{manga?.status ?? '\u00A0'}</h3>
+              <h3>{manga?.publisher ?? '\u00A0'}</h3>
+              <h3>{manga?.author ?? '\u00A0'}</h3>
+              <h3>{manga?.artist ?? '\u00A0'}</h3>
+              <h3>{formattedDate ?? '\u00A0'}</h3>
+            </div>
+          </div>
         </div>
         <div className="w-full h-fit flex flex-col justify-start">
           <div className="w-full h-72 flex flex-col justify-end items-start text-white pl-8 pb-5">
@@ -124,7 +124,7 @@ export function MangaInfoScreen( ) {
             <h3 className="pt-3 mb-10">{manga?.description}</h3>
             <div className="w-full h-full bg-[#5F5F5F] flex flex-col items-center justify-start rounded-lg p-3">
               <h1 className="text-2xl font-semibold pb-3">Danh sách chương</h1>
-              <ChapterList name={mangaName}/>
+              <ChapterList name={manga?.name ?? ''} />
               <h1 className="text-2xl font-semibold py-3">Bình luận</h1>
               <CommentList />
             </div>

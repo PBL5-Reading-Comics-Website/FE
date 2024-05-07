@@ -18,7 +18,7 @@ interface Manga {
 
 export function MainScreen() {
   const [mangas, setMangas] = useState<Manga[]>([]);
-
+  const [seasonalMangas, setSeasonalMangas] = useState<Manga[]>([]);
   useEffect(() => {
     const fetchMangas = async () => {
       try {
@@ -31,6 +31,31 @@ export function MainScreen() {
 
     fetchMangas();
   }, []);
+  useEffect(() => {
+    const fetchSeasonalMangas = async () => {
+      try {
+        const month = new Date().getMonth() + 1;
+        let data;
+
+        if (month <= 3) {
+          data = await mangaService.getMangaPublishedInFirstQuarter();
+        } else if (month <= 6) {
+          data = await mangaService.getMangaPublishedInSecondQuarter();
+        } else if (month <= 9) {
+          data = await mangaService.getMangaPublishedInThirdQuarter();
+        } else {
+          data = await mangaService.getMangaPublishedInFourthQuarter();
+        }
+
+        setSeasonalMangas(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchSeasonalMangas();
+  }, []);
+
   function timeSince(date: string) {
     const seconds = Math.floor((new Date().getTime() - new Date(date).getTime()) / 1000);
 
@@ -98,18 +123,24 @@ export function MainScreen() {
           </div>
         </div>
         <div className="seasonal">
-          <h2 className="text-bold text-xl my-4">Theo mùa</h2>
-          <MangaHorizontalList className="mt-2">
-            <MangaHorizontalListItem imageUrl="https://play-lh.googleusercontent.com/PNwko2YeBrS_qw2Cjst-zXsc_AsZ8zT9CY9SA_uj1LKaI4ONdG8yX-xZsa8GmIQWVg=w526-h296-rw" mangaName="Manga 1" />
-            <MangaHorizontalListItem imageUrl={imageLink} mangaName="Manga 2" />
+  <h2 className="text-bold text-xl my-4">Theo mùa</h2>
+  <MangaHorizontalList className="mt-2">
+    {seasonalMangas.map((manga, index) => (
+      <MangaHorizontalListItem
+        key={index}
+        imageUrl={manga.coverImage}
+        mangaName={manga.name}
+      />
+    ))}
+                <MangaHorizontalListItem imageUrl={imageLink} mangaName="Manga 2" />
             <MangaHorizontalListItem imageUrl={imageLink} mangaName="Manga 3" />
             <MangaHorizontalListItem imageUrl={imageLink} mangaName="Manga 4" />
             <MangaHorizontalListItem imageUrl={imageLink} mangaName="Manga 5" />
             <MangaHorizontalListItem imageUrl={imageLink} mangaName="Manga 6" />
             <MangaHorizontalListItem imageUrl={imageLink} mangaName="Manga 7" />
             <MangaHorizontalListItem imageUrl={imageLink} mangaName="Manga 8" />
-          </MangaHorizontalList>
-        </div>
+  </MangaHorizontalList>
+</div>
         <div className="monthly">
           <h2 className="text-bold text-xl my-4">Theo tháng</h2>
           <MangaHorizontalList className="mt-2">
