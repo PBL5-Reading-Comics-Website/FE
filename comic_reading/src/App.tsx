@@ -8,6 +8,8 @@ import Register from '../components/form/register/register.tsx'
 import ChapterScreen from '../components/manga_detail/chapterScreen.tsx'
 import MangaInfoScreen from '../components/manga_detail/mangaInfoScreen.tsx'
 import UserInfoScreen from '../components/profile/userInfoScreen.tsx'
+import OtherUserInfo from '../components/profile/otherUserInfo.tsx'
+import PostingPage from '../components/posting_page/posting.tsx'
 import './App.css'
 
 export default function App() {
@@ -25,6 +27,8 @@ export default function App() {
             <Route path="/user-info" element={<UserInfoScreen />} />
             <Route path="/manga-info/chapter/:name/:chapter" element={<ChapterScreen />} />
             <Route path="/admin-page" element={<AdminPage />} />
+            <Route path="/other-user" element={<OtherUserInfo />} />
+            <Route path="/posting" element={<PostingPage />} />
         </Routes>
         </div>
         </BrowserRouter>

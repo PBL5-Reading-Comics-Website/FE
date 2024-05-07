@@ -35,7 +35,7 @@ export function Tag({ text }: TagProps) {
         onMouseLeave={() => setVisible(false)}
         className="p-[1px] rounded-xl w-fit h-fit transition duration-300 group/input m-0.5 mt-0"
       >
-        <div className="p-1 bg-[#6A6A6A] text-white hover:bg rounded-xl w-fit h-fit">
+        <div className="p-1 bg-[#313131] text-white hover:bg rounded-xl w-fit h-fit">
             {text}
         </div>
     </motion.div>

@@ -1,12 +1,8 @@
 "use client";
 import Header from "../util/header";
-import TagList from "../tag/tagList";
-import ChapterList from "./chapter/chapterList";
-import CommentList from "../ui/commentList";
 import {
   IconReload,IconArrowLeft,IconArrowRight
 } from "@tabler/icons-react";
-import React from "react";
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { useState } from 'react';
