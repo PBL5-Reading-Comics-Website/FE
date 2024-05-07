@@ -9,6 +9,7 @@ import MangaList from "./manga/mangaList.tsx";
 import MangaListItem from "./manga/mangaListItem.tsx";
 
 interface Manga {
+  id: string;
   coverImage: string;
   name: string;
   author: string;
@@ -21,7 +22,7 @@ export function MainScreen() {
   useEffect(() => {
     const fetchMangas = async () => {
       try {
-        const data = await mangaService.getAllMangas();
+        const data = await mangaService.getTop10NewestManga();
         setMangas(data);
       } catch (error) {
         console.error(error);
@@ -32,9 +33,9 @@ export function MainScreen() {
   }, []);
   function timeSince(date: string) {
     const seconds = Math.floor((new Date().getTime() - new Date(date).getTime()) / 1000);
-  
+
     let interval = Math.floor(seconds / 31536000);
-  
+
     if (interval > 1) {
       return interval + " năm";
     }
@@ -67,6 +68,7 @@ export function MainScreen() {
             <MangaList className="w-1/2 mr-2">
               {mangas.slice(0, 5).map((manga, index) => (
                 <MangaListItem
+                  id={manga.id}
                   key={index}
                   imageUrl={manga.coverImage}
                   mangaName={manga.name}
@@ -81,6 +83,7 @@ export function MainScreen() {
             <MangaList className="w-1/2 mr-2">
               {mangas.slice(5, 10).map((manga, index) => (
                 <MangaListItem
+                  id={manga.id}
                   key={index}
                   imageUrl={manga.coverImage}
                   mangaName={manga.name}
