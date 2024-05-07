@@ -2,7 +2,11 @@ import React, { useState, useEffect } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import ChapterLink from "./chapterLink";
 
-function ChapterList() {
+interface ChapterLinkProps {
+    name: string;
+}
+
+function ChapterList({name}: ChapterLinkProps) {
   return (
     <div className="w-full p-3 pt-0 border-2 flex flex-col rounded-lg">
         <InfiniteScroll
@@ -20,7 +24,9 @@ function ChapterList() {
             {[...Array(10)].map((_, index) => (
             <ChapterLink
                 key={index}
-                chapter={`Chương ${index + 1}`}
+                name={name}
+                chapter={`${index + 1}`}
+                chapterName="Chap mới"
                 time="1 ngày trước"
                 poster="Người đăng: Admin"
             />
