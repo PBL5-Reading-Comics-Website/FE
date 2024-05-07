@@ -1,16 +1,16 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
-const API_URL = 'http://localhost:8080/api/user';
+const API_URL = 'http://localhost:8080/api/';
 
-const userService = axios.create({
+const axiosInstance = axios.create({
     baseURL: API_URL,
     headers: {
         'Content-Type': 'application/json',
     },
 });
 
-userService.interceptors.request.use(
+axiosInstance.interceptors.request.use(
     (config) => {
         const token = Cookies.get('token');
         if (token) {
@@ -23,44 +23,124 @@ userService.interceptors.request.use(
     }
 );
 
-export default {
-    getAllFollowings: function () {
-        return userService.get(`/followings`);
+export const userService = {
+    getAllUsers: async () => {
+        try {
+            const response = await axiosInstance.get('public/users');
+            return response.data;
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
     },
 
-    getFollowingById: function (id: number) {
-        return userService.get(`/following/${id}`);
+    getUserById: async (id: number) => {
+        try {
+            const response = await axiosInstance.get(`user/user/${id}`);
+            return response.data;
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
     },
 
-    deleteFollowingById: function (id: number) {
-        return userService.delete(`/following/${id}`);
+    deleteUserById: async (id: number) => {
+        try {
+            const response = await axiosInstance.delete(`user/user/${id}`);
+            return response.data;
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
     },
 
-    getReadingHistoryById: function (id: number) {
-        return userService.get(`/reading-history/${id}`);
+    getAllFollowings: async () => {
+        try {
+            const response = await axiosInstance.get('user/followings');
+            return response.data;
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
     },
 
-    deleteReadingHistoryById: function (id: number) {
-        return userService.delete(`/reading-history/${id}`);
+    getFollowingById: async (id: number) => {
+        try {
+            const response = await axiosInstance.get(`user/following/${id}`);
+            return response.data;
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
     },
 
-    getUserById: function (id: number) {
-        return userService.get(`/user/${id}`);
+    deleteFollowingById: async (id: number) => {
+        try {
+            const response = await axiosInstance.delete(`user/following/${id}`);
+            return response.data;
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
     },
 
-    getCommentById: function (id: number) {
-        return userService.get(`/comment/${id}`);
+    getReadingHistoryById: async (id: number) => {
+        try {
+            const response = await axiosInstance.get(`user/reading-history/${id}`);
+            return response.data;
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
     },
 
-    deleteCommentById: function (id: number) {
-        return userService.delete(`/comment/${id}`);
+    deleteReadingHistoryById: async (id: number) => {
+        try {
+            const response = await axiosInstance.delete(`user/reading-history/${id}`);
+            return response.data;
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
     },
 
-    getMangaById: function (id: number) {
-        return userService.get(`/manga/${id}`);
+    getCommentById: async (id: number) => {
+        try {
+            const response = await axiosInstance.get(`user/comment/${id}`);
+            return response.data;
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
     },
 
-    likeManga: function (id: number) {
-        return userService.put(`/like-manga/${id}`);
+    deleteCommentById: async (id: number) => {
+        try {
+            const response = await axiosInstance.delete(`user/comment/${id}`);
+            return response.data;
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
     },
-};
+
+    getMangaById: async (id: number) => {
+        try {
+            const response = await axiosInstance.get(`user/manga/${id}`);
+            return response.data;
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
+    },
+
+    likeManga: async (id: number) => {
+        try {
+            const response = await axiosInstance.put(`user/like-manga/${id}`);
+            return response.data;
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
+    },
+}
