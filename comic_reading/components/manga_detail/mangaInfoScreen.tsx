@@ -96,7 +96,7 @@ export function MangaInfoScreen({
             <h3 className="pt-3 mb-10">{description}</h3>
             <div className="w-full h-full bg-[#5F5F5F] flex flex-col items-center justify-start rounded-lg p-3">
               <h1 className="text-2xl font-semibold pb-3">Danh sách chương</h1>
-              <ChapterList />
+              <ChapterList name={mangaName}/>
               <h1 className="text-2xl font-semibold py-3">Bình luận</h1>
               <CommentList />
             </div>
