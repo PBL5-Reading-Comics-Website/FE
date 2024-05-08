@@ -8,7 +8,6 @@ import MangaHorizontalList from "./manga/mangaHorizontalList.tsx";
 import MangaHorizontalListItem from "./manga/mangaHorizontalListItem.tsx";
 import MangaList from "./manga/mangaList.tsx";
 import MangaListItem from "./manga/mangaListItem.tsx";
-
 interface Manga {
   id: string;
   coverImage: string;
@@ -28,7 +27,9 @@ export function MainScreen() {
       } catch (error) {
         console.error(error);
       }
-    };
+    }
+
+
 
     fetchMangas();
   }, []);

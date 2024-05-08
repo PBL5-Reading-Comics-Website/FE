@@ -17,22 +17,22 @@ export default function App() {
 
     return (
         <BrowserRouter>
-         <div style={{height: '100%', width: '100%' }}>
-        <Routes>
-            <Route path='/error' element={<ErrorPage />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/forgot-password" element={<ForgotPassword />} />
-            <Route path="/register" element={<Register  />} />
-            <Route path="/" element={<MainScreen />} />
-            <Route path="/manga-info/:id" element={<MangaInfoScreen />} />
-            <Route path="/user-info" element={<UserInfoScreen />} />
-            <Route path="/manga-info/:name/:chapter" element={<ChapterScreen />} />
-            <Route path="/admin-page" element={<AdminPage />} />
-            <Route path="/other-user" element={<OtherUserInfo />} />
-            <Route path="/posting" element={<PostingPage />} />
-            <Route path="/search" element={<MangaSearchPage />} />
-        </Routes>
-        </div>
+            <div style={{ height: '100%', width: '100%' }}>
+                <Routes>
+                    <Route path='/error' element={<ErrorPage />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/forgot-password" element={<ForgotPassword />} />
+                    <Route path="/register" element={<Register />} />
+                    <Route path="/" element={<MainScreen />} />
+                    <Route path="/manga-info/:id" element={<MangaInfoScreen />} />
+                    <Route path="/user-info" element={<UserInfoScreen />} />
+                    <Route path="/read-manga/:id" element={<ChapterScreen />} />
+                    <Route path="/admin-page" element={<AdminPage />} />
+                    <Route path="/other-user" element={<OtherUserInfo />} />
+                    <Route path="/posting" element={<PostingPage />} />
+                    <Route path="/search" element={<MangaSearchPage />} />
+                </Routes>
+            </div>
         </BrowserRouter>
     )
 }

@@ -1,4 +1,5 @@
 import { ChangeEvent, useState } from 'react';
+import { authService } from '../../src/service/authService.tsx';
 import { Input } from '../util/input.tsx';
 
 export function ChangePasswordTab() {
@@ -28,6 +29,20 @@ export function ChangePasswordTab() {
         setIsConfirmPasswordTouched(true);
     }
 
+    const handleChangePassword = async () => {
+        if (isFormValid()) {
+          try {
+            const response = await authService.updatePassword(1, currentPassword, newPassword); // replace 1 with the actual user id
+            if (response.status == "success"){
+                alert("Đổi mật khẩu thành công");
+                window.location.reload();
+            }
+          } catch (error) {
+            console.error(error);
+          }
+        }
+      };
+
     return (
         <div>
             <h2 className='text-bold my-4'>ĐỔI MẬT KHẨU</h2>
@@ -55,7 +70,7 @@ export function ChangePasswordTab() {
                     {confirmPassword && newPassword !== confirmPassword && isConfirmPasswordTouched && <p className="text-red-500">Mật khẩu không trùng khớp</p>}
                 </div>
                 <div className='m-8'></div>
-                <button className="bg-[#ED741B] text-white font-bold py-2 px-4 rounded mt-4 w-full" onClick={isFormValid}>
+                <button className="bg-[#ED741B] text-white font-bold py-2 px-4 rounded mt-4 w-full" onClick={handleChangePassword}>
                     CẬP NHẬT MẬT KHẨU
                 </button>
             </div>

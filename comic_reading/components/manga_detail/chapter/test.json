@@ -1,0 +1,97 @@
+{
+    "status": "success",
+    "data": {
+        "chapter": {
+            "id": 1,
+            "name": "Vol. 1 Ch. 1",
+            "number": 1,
+            "data": null,
+            "commentNumber": 0,
+            "publishAt": "2024-05-08",
+            "updateAt": "2024-05-08",
+            "manga": {
+                "id": 1,
+                "name": "BE BLUES Ao ni Nare",
+                "publishingCompany": "Publishing Company",
+                "author": "Tanaka Yasuki",
+                "artist": "Artist Name",
+                "coverImage": "https://res.cloudinary.com/dpkxkkrnl/image/upload/v1714683288/van_chuong_viet/BE%20BLUES%20%7EAo%20ni%20Nare%7E/cover_a6dejj.png",
+                "status": "ONGOING",
+                "readingStatus": "",
+                "viewNumber": 76,
+                "favouriteNumber": 0,
+                "commentNumber": 0,
+                "publishAt": "2024-05-08 13:32:41",
+                "updateAt": "2024-05-08 13:32:41",
+                "updateUser": null,
+                "tags": []
+            }
+        },
+        "images": [
+            {
+                "id": 1,
+                "name": "00_m0kuuz",
+                "imageUrl": "https://res.cloudinary.com/dpkxkkrnl/image/upload/v1714697856/van_chuong_viet/BE%20BLUES%20Ao%20ni%20Nare/Vol.%201%20Ch.%201/00_m0kuuz.jpg",
+                "imageId": "Image ID",
+                "chapter": {
+                    "id": 1,
+                    "name": "Vol. 1 Ch. 1",
+                    "number": 1,
+                    "data": null,
+                    "commentNumber": 0,
+                    "publishAt": "2024-05-08",
+                    "updateAt": "2024-05-08",
+                    "manga": {
+                        "id": 1,
+                        "name": "BE BLUES Ao ni Nare",
+                        "publishingCompany": "Publishing Company",
+                        "author": "Tanaka Yasuki",
+                        "artist": "Artist Name",
+                        "coverImage": "https://res.cloudinary.com/dpkxkkrnl/image/upload/v1714683288/van_chuong_viet/BE%20BLUES%20%7EAo%20ni%20Nare%7E/cover_a6dejj.png",
+                        "status": "ONGOING",
+                        "readingStatus": "",
+                        "viewNumber": 76,
+                        "favouriteNumber": 0,
+                        "commentNumber": 0,
+                        "publishAt": "2024-05-08 13:32:41",
+                        "updateAt": "2024-05-08 13:32:41",
+                        "updateUser": null,
+                        "tags": []
+                    }
+                }
+            },
+            {
+                "id": 2,
+                "name": "01_lt8uan",
+                "imageUrl": "https://res.cloudinary.com/dpkxkkrnl/image/upload/v1714697856/van_chuong_viet/BE%20BLUES%20Ao%20ni%20Nare/Vol.%201%20Ch.%201/01_lt8uan.jpg",
+                "imageId": "Image ID",
+                "chapter": {
+                    "id": 1,
+                    "name": "Vol. 1 Ch. 1",
+                    "number": 1,
+                    "data": null,
+                    "commentNumber": 0,
+                    "publishAt": "2024-05-08",
+                    "updateAt": "2024-05-08",
+                    "manga": {
+                        "id": 1,
+                        "name": "BE BLUES Ao ni Nare",
+                        "publishingCompany": "Publishing Company",
+                        "author": "Tanaka Yasuki",
+                        "artist": "Artist Name",
+                        "coverImage": "https://res.cloudinary.com/dpkxkkrnl/image/upload/v1714683288/van_chuong_viet/BE%20BLUES%20%7EAo%20ni%20Nare%7E/cover_a6dejj.png",
+                        "status": "ONGOING",
+                        "readingStatus": "",
+                        "viewNumber": 76,
+                        "favouriteNumber": 0,
+                        "commentNumber": 0,
+                        "publishAt": "2024-05-08 13:32:41",
+                        "updateAt": "2024-05-08 13:32:41",
+                        "updateUser": null,
+                        "tags": []
+                    }
+                }
+            }
+        ]
+    }
+}

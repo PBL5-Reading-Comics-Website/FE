@@ -113,6 +113,7 @@ const SelectInput = React.forwardRef<HTMLSelectElement, SelectInputProps>(
             className
           )}
           ref={ref}
+    
           {...props}
         >
           {options.map(option => (

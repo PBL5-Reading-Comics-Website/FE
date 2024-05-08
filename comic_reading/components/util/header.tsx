@@ -4,19 +4,70 @@ import {
     IconSearch,
 } from "@tabler/icons-react";
 import Cookies from 'js-cookie';
-import { useState } from "react";
+import { jwtDecode } from "jwt-decode";
+import { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
 import { authService } from "../../src/service/authService";
+import { userService } from "../../src/service/userService";
 import { Input } from './input';
 let isLoggedIn = false;
+
+interface User {
+    id: number;
+    username: string;
+    password: string;
+    name: string;
+    dateOfBirth: string;
+    gender: boolean;
+    email: string;
+    avatar: string;
+    registrationDate: string;
+    role: string;
+    enabled: boolean;
+    accountNonLocked: boolean;
+    accountNonExpired: boolean;
+    credentialsNonExpired: boolean;
+    authorities: Array<{ authority: string }>;
+}
+
 export function Header() {
     const [dropdownVisible, setDropdownVisible] = useState(false);
+    const [user, setUser] = useState<User>();
+
     const toggleDropdown = () => {
         const token = Cookies.get('token');
-        isLoggedIn = !!token;
+        if (token) {
+            isLoggedIn = true;
+        }else {
+            isLoggedIn = false;
+        }
         setDropdownVisible(!dropdownVisible);
-      };
-    
+    };
+    useEffect(() => {
+        const token = Cookies.get('token');
+        if (token) {
+            isLoggedIn = true;
+        }
+    });
+    useEffect(() => {
+        const getUser = async () => {
+            try {
+                const token = Cookies.get('token');
+                if (!token) {
+                    console.log('No token found');
+                    return;
+                }
+                const decodedToken: any = jwtDecode(token);
+                const data = await userService.getUserById(decodedToken.userId);
+                setUser(data.data);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        getUser();
+    }, []);
+
 
     return (
         <div className="w-full top-0 z-50 absolute">
@@ -57,9 +108,9 @@ export function Header() {
                     </div>
                     <div className="p-5 h-16 items-center justify-center flex flex-col top-0 relative">
                         <div onClick={toggleDropdown} className="flex items-center justify-center">
-                            <img className="w-10 h-10 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500" src="https://static.vecteezy.com/system/resources/previews/005/005/788/original/user-icon-in-trendy-flat-style-isolated-on-grey-background-user-symbol-for-your-web-site-design-logo-app-ui-illustration-eps10-free-vector.jpg">
+                            <img className="w-10 h-10 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500" src={user?.avatar}>
                             </img>
-                            <h1 className="text-white text-xl mx-3">Username</h1>
+                            <h1 className="text-white text-xl mx-3">{user?.username || ''}</h1>
                         </div>
                         {dropdownVisible && (
                             <div className="flex flex-col p-1 h-fit w-full mt-1 justify-center items-center top-full bg-black absolute rounded-md">

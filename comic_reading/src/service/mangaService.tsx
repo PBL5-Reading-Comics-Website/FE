@@ -137,4 +137,32 @@ export const mangaService = {
       throw error;
     }
   },
+  getAllChapters: async ({ sortField, sortOrder, page, size }: { sortField: string, sortOrder: string, page: number, size: number }) => {
+    const response = await axios.get(`${API_URL}/chapters`, {
+      params: {
+        sortField,
+        sortOrder,
+        page,
+        size
+      }
+    });
+    return response.data;
+  },
+
+  getChapterById: async (id: string) => {
+    const response = await axios.get(`${API_URL}/chapter/${id}`);
+    return response.data;
+  },
+
+  getChaptersByMangaId: async ({ id, sortField, sortOrder, page, size }: { id: string, sortField: string, sortOrder: string, page: number, size: number }) => {
+    const response = await axios.get(`${API_URL}/manga/${id}/chapters`, {
+      params: {
+        sortField,
+        sortOrder,
+        page,
+        size
+      }
+    });
+    return response.data;
+  },
 };
