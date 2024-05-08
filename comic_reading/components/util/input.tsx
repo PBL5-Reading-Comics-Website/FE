@@ -38,9 +38,9 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         onMouseMove={handleMouseMove}
         onMouseEnter={() => setVisible(true)}
         onMouseLeave={() => setVisible(false)}
-        className="p-[2px] rounded-lg transition duration-300 group/input"
+        className="p-[2px] rounded-lg flex transition duration-300 group/input"
       >
-
+       
         <input
           type={type}
           className={cn(
@@ -50,13 +50,14 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     disabled:cursor-not-allowed disabled:opacity-50
     dark:shadow-[0px_0px_1px_1px_var(--neutral-700)]
     group-hover/input:shadow-none transition duration-400
-    ${icon ? 'pl-6' : ''}`,
+    ${icon ? 'pl-9' : ''}`,
             className
           )}
           ref={ref}
           {...props}
         />
-        {icon && <div className="absolute inset-y-0  flex items-center pointer-events-none">{icon}</div>}
+        {icon && <div className="absolute self-end flex items-center pointer-events-none">{icon}</div>}
+        
       </motion.div>
     );
   }
