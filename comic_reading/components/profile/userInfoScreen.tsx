@@ -27,7 +27,7 @@ export function UserInfoScreen({
       <div className="w-full h-full">
         <Header />
       </div>
-      <div className="h-72 w-full bg-center bg-cover relative z-10" style={{ backgroundImage: `url(${imageUrl})` }}>
+      <div className="h-72 w-full bg-center bg-cover relative z-10 bg-[#ED741B]" >
         <div className="absolute inset-0 backdrop-blur-sm"></div>
       </div>
       <div className="absolute flex top-0 w-full z-20">

@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { mangaService } from "../../src/service/mangaService";
 import ErrorPage from "../error/errorPage";
+import TagList from "../tag/tagList";
 import CommentList from "../ui/commentList";
 import Header from "../util/header";
 import ChapterList from "./chapter/chapterList";
@@ -22,11 +23,37 @@ interface MangaData {
   publishAt: string;
   publisher: string;
   status: string;
-  views: number;
-  favorites: number;
-  comments: number;
+  viewNumber: number;
+  favouriteNumber: number;
+  commentNumber: number;
   tags: string[];
   description: string;
+  chapters: {
+    id: number;
+    name: string;
+    number: number;
+    data: any;
+    commentNumber: number;
+    publishAt: string;
+    updateAt: string;
+    manga: {
+      id: number;
+      name: string;
+      publishingCompany: string;
+      author: string;
+      artist: string;
+      coverImage: string;
+      status: string;
+      readingStatus: string;
+      viewNumber: number;
+      favouriteNumber: number;
+      commentNumber: number;
+      publishAt: string;
+      updateAt: string;
+      updateUser: any;
+      tags: any[];
+    }
+  }[];
 }
 
 interface MangaInfoScreenProps {
@@ -58,7 +85,11 @@ export function MangaInfoScreen() {
     const fetchManga = async () => {
       try {
         const data = await mangaService.getMangaById(parseInt(id));
-        setManga(data);
+        if (data && data.data.tags) {
+          const tags = data.data.tags.map((tag: { name: string; }) => tag.name);
+          const chapters = data.data.chapters;
+          setManga({ ...data.data.manga, tags, chapters });
+        }
       } catch (error) {
         console.error(error);
         setError(true);
@@ -118,20 +149,20 @@ export function MangaInfoScreen() {
           <div className="h-fit w-full pl-8 pr-8 pt-3">
             <div className="flex w-fit items-center">
               <IconEye size={40} />
-              <h1 className="h-full text-center text-2xl font-semibold">{manga?.views ?? '0'}</h1>
+              <h1 className="h-full text-center text-2xl font-semibold">{manga?.viewNumber ?? '0'}</h1>
               <IconMessageCircle size={40} className="ml-20" />
-              <h1 className="h-full text-center text-2xl font-semibold">{manga?.comments ?? '0'}</h1>
+              <h1 className="h-full text-center text-2xl font-semibold">{manga?.commentNumber ?? '0'}</h1>
               <IconHeart size={40} className="ml-20" />
-              <h1 className="h-full text-center text-2xl font-semibold">{manga?.favorites ?? '0'}</h1>
+              <h1 className="h-full text-center text-2xl font-semibold">{manga?.favouriteNumber ?? '0'}</h1>
             </div>
             <h1 className="text-2xl font-light mt-3">Thể loại</h1>
             <div className="w-full border-t pt-2 border-white">
-              {/* <TagList tags={tags} /> */}
+              <TagList tags={manga?.tags ?? []} />
             </div>
             <h3 className="pt-3 mb-10">{manga?.description}</h3>
             <div className="w-full h-full bg-[#5F5F5F] flex flex-col items-center justify-start rounded-lg p-3">
               <h1 className="text-2xl font-semibold pb-3">Danh sách chương</h1>
-              <ChapterList name={manga?.name ?? ''} />
+              <ChapterList chapters={manga?.chapters ?? []} />
               <h1 className="text-2xl font-semibold py-3">Bình luận</h1>
               <CommentList />
             </div>

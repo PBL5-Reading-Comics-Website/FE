@@ -1,17 +1,50 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import ChapterLink from "./chapterLink";
 
 interface ChapterLinkProps {
     name: string;
+    chapter: string;
+    chapterName: string;
+    time: string;
+    poster: string;
 }
 
-function ChapterList({name}: ChapterLinkProps) {
+interface Chapter {
+    id: number;
+    name: string;
+    number: number;
+    data: null;
+    commentNumber: number;
+    publishAt: string;
+    updateAt: string;
+    manga: {
+        id: number;
+        name: string;
+        publishingCompany: string;
+        author: string;
+        artist: string;
+        coverImage: string;
+        status: string;
+        readingStatus: string;
+        viewNumber: number;
+        favouriteNumber: number;
+        commentNumber: number;
+        publishAt: string;
+        updateAt: string;
+        updateUser: null;
+        tags: any[]; // Changed from [] to any[]
+    };
+}
+interface ChapterListProps {
+    chapters: Chapter[];
+}
+
+const ChapterList: React.FC<ChapterListProps> = ({ chapters }) => {
   return (
     <div className="w-full p-3 pt-0 border-2 flex flex-col rounded-lg">
         <InfiniteScroll
-            dataLength={10}
-            style={{height: "50vh"}}
+            dataLength={chapters.length}
             next={() => {}}
             hasMore={true}
             loader={<h4></h4>}
@@ -21,14 +54,14 @@ function ChapterList({name}: ChapterLinkProps) {
             </p>
             }
         >
-            {[...Array(10)].map((_, index) => (
+            {chapters.map((chapter, index) => (
             <ChapterLink
                 key={index}
-                name={name}
-                chapter={`${index + 1}`}
-                chapterName="Chap mới"
-                time="1 ngày trước"
-                poster="Người đăng: Admin"
+                name={chapter.manga.name}
+                chapter={chapter.id.toString()}
+                chapterName={chapter.name}
+                time={chapter.publishAt}
+                poster={`Người đăng: ${chapter.manga.author}`}
             />
             ))}
         </InfiniteScroll>

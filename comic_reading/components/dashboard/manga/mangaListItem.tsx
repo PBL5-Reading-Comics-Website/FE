@@ -16,7 +16,7 @@ export function MangaListItem({
     postTime = '10 minutes ago' 
 }: MangaListItemProps) {
     return (
-        <Link to={`/manga-info/${id}`} className="w-full h-18 flex items-center pb-2 hover:bg-gray-600 no-underline text-white text-decoration-none p-4 rounded-xl hover:text-white">
+        <Link to={`/manga-info/${id}`} className="w-full h-18 flex items-center hover:bg-gray-600 no-underline text-white text-decoration-none p-4 rounded-xl hover:text-white">
             <img src={imageUrl} alt="Manga" className="w-20 h-24 mr-4" />
             <div className="flex flex-col justify-between">
                 <span className="text-bold text-xl">{mangaName}</span>

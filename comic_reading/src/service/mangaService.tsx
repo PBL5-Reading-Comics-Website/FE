@@ -8,9 +8,19 @@ const axiosInstance = axios.create({
   withCredentials: false,
 });
 export const mangaService = {
-  getAllMangas: async () => {
+  getAllMangas: async ({ sortField, sortOrder, page, size }: { sortField?: string, sortOrder?: string, page?: number, size?: number } = {}) => {
     try {
-      const response = await axiosInstance.get('/mangas');
+      let url = '/mangas';
+      const params = new URLSearchParams();
+
+      if (sortField) params.append('sortField', sortField);
+      if (sortOrder) params.append('sortOrder', sortOrder);
+      if (page) params.append('page', page.toString());
+      if (size) params.append('size', size.toString());
+
+      if (params.toString()) url += `?${params.toString()}`;
+
+      const response = await axiosInstance.get(url);
       return response.data;
     } catch (error) {
       console.error(error);
@@ -48,9 +58,19 @@ export const mangaService = {
     }
   },
 
-  getMangaPublishedInFirstQuarter: async () => {
+  getMangaPublishedInFirstQuarter: async ({ sortField, sortOrder, page, size }: { sortField?: string, sortOrder?: string, page?: number, size?: number } = {}) => {
     try {
-      const response = await axiosInstance.get('/manga/first-quarter');
+      let url = '/manga/first-quarter';
+      const params = new URLSearchParams();
+
+      if (sortField) params.append('sortField', sortField);
+      if (sortOrder) params.append('sortOrder', sortOrder);
+      if (page) params.append('page', page.toString());
+      if (size) params.append('size', size.toString());
+
+      if (params.toString()) url += `?${params.toString()}`;
+
+      const response = await axiosInstance.get(url);
       return response.data;
     } catch (error) {
       console.error(error);
@@ -58,9 +78,19 @@ export const mangaService = {
     }
   },
 
-  getMangaPublishedInSecondQuarter: async () => {
+  getMangaPublishedInSecondQuarter: async ({ sortField, sortOrder, page, size }: { sortField?: string, sortOrder?: string, page?: number, size?: number } = {}) => {
     try {
-      const response = await axiosInstance.get('/manga/second-quarter');
+      let url = '/manga/second-quarter';
+      const params = new URLSearchParams();
+
+      if (sortField) params.append('sortField', sortField);
+      if (sortOrder) params.append('sortOrder', sortOrder);
+      if (page) params.append('page', page.toString());
+      if (size) params.append('size', size.toString());
+
+      if (params.toString()) url += `?${params.toString()}`;
+
+      const response = await axiosInstance.get(url);
       return response.data;
     } catch (error) {
       console.error(error);
@@ -68,9 +98,19 @@ export const mangaService = {
     }
   },
 
-  getMangaPublishedInThirdQuarter: async () => {
+  getMangaPublishedInThirdQuarter: async ({ sortField, sortOrder, page, size }: { sortField?: string, sortOrder?: string, page?: number, size?: number } = {}) => {
     try {
-      const response = await axiosInstance.get('/manga/third-quarter');
+      let url = '/manga/third-quarter';
+      const params = new URLSearchParams();
+
+      if (sortField) params.append('sortField', sortField);
+      if (sortOrder) params.append('sortOrder', sortOrder);
+      if (page) params.append('page', page.toString());
+      if (size) params.append('size', size.toString());
+
+      if (params.toString()) url += `?${params.toString()}`;
+
+      const response = await axiosInstance.get(url);
       return response.data;
     } catch (error) {
       console.error(error);
@@ -78,9 +118,19 @@ export const mangaService = {
     }
   },
 
-  getMangaPublishedInFourthQuarter: async () => {
+  getMangaPublishedInFourthQuarter: async ({ sortField, sortOrder, page, size }: { sortField?: string, sortOrder?: string, page?: number, size?: number } = {}) => {
     try {
-      const response = await axiosInstance.get('/manga/fourth-quarter');
+      let url = '/manga/fourth-quarter';
+      const params = new URLSearchParams();
+
+      if (sortField) params.append('sortField', sortField);
+      if (sortOrder) params.append('sortOrder', sortOrder);
+      if (page) params.append('page', page.toString());
+      if (size) params.append('size', size.toString());
+
+      if (params.toString()) url += `?${params.toString()}`;
+
+      const response = await axiosInstance.get(url);
       return response.data;
     } catch (error) {
       console.error(error);

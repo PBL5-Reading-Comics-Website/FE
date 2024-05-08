@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { mangaService } from "../../src/service/mangaService.tsx";
 import Footer from "../util/footer.tsx";
 import { Header } from "../util/header.tsx";
@@ -23,7 +24,7 @@ export function MainScreen() {
     const fetchMangas = async () => {
       try {
         const data = await mangaService.getTop10NewestManga();
-        setMangas(data);
+        setMangas(data.data);
       } catch (error) {
         console.error(error);
       }
@@ -36,7 +37,6 @@ export function MainScreen() {
       try {
         const month = new Date().getMonth() + 1;
         let data;
-
         if (month <= 3) {
           data = await mangaService.getMangaPublishedInFirstQuarter();
         } else if (month <= 6) {
@@ -47,7 +47,7 @@ export function MainScreen() {
           data = await mangaService.getMangaPublishedInFourthQuarter();
         }
 
-        setSeasonalMangas(data);
+        setSeasonalMangas(data.data);
       } catch (error) {
         console.error(error);
       }
@@ -88,7 +88,14 @@ export function MainScreen() {
       <Header />
       <div className="w-full h-full px-4 mt-16 flex flex-col">
         <div className="new_update">
-          <h2 className="text-bold text-xl my-4">Cập nhật mới nhất</h2>
+        <div className="flex items-center">
+            <h2 className="text-bold text-xl my-4 inline-block mr-2">Cập nhật mới nhất</h2>
+            <Link to="/search" className="inline-block">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 text-white hover:text-gray-500 transition-colors duration-300">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+            </Link>
+          </div>
           <div className="flex justify-between">
             <MangaList className="w-1/2 mr-2">
               {mangas.slice(0, 5).map((manga, index) => (

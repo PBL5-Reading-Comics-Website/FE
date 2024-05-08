@@ -1,6 +1,6 @@
 "use client";
+import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
 import React from "react";
-import { useMotionTemplate, useMotionValue, motion } from "framer-motion";
 import { Link } from "react-router-dom";
 
 interface ChapterLinkProps {
@@ -25,7 +25,7 @@ export function ChapterLink({ name, chapter, time, poster, chapterName }: Chapte
     mouseY.set(clientY - top);
   }
   return (
-    <Link to={`/manga-info/chapter/${name}/${chapter}`}>
+    <Link to={`/manga-info/${name.replace(/\s/g, '-')}/${chapter}`}>
       <motion.div
         style={{
           background: useMotionTemplate`
