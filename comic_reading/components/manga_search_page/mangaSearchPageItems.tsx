@@ -29,19 +29,16 @@ export function MangaSearchPageItem({
     status
 }: Manga) {
     return (
-        <Link to={`/manga-info/${id}`} className="w-full h-auto flex flex-col items-start no-underline text-white text-decoration-none p-4 rounded-xl hover:text-white">
-            <div className="w-full flex items-center mb-4">
+        <Link to={`/manga-info/${id}`} className="w-full">
+            <div className="flex h-auto w-full items-start no-underline text-white text-decoration-none p-2 rounded-xl hover:text-white">
                 <img src={coverImage} alt="Manga" className="w-32 h-48 mr-4 rounded-xl" />
-                <div className="flex flex-col justify-between">
-                    <span className="text-bold text-xl">{name}</span>
-                    <span>{author}</span>
-                </div>
-                <div className="w-px bg-orange-500 mr-4"></div>
-                <div className="flex flex-col justify-between ml-auto">
-                    <span>Posted by: {updateUser}</span>
-                    <span>Views: {viewNumber}</span>
-                    <span>Status: {status}</span>
-                    <span>Updated at: {updateAt}</span>
+                <div className="flex flex-col">
+                    <span className="font-bold text-xl">{name}</span>
+                    <span className="font-semibold text-lg">{author}</span>
+                    <span>Đăng bởi: {updateUser}</span>
+                    <span>Lượt xem: {viewNumber}</span>
+                    <span>Tình trạng: {status}</span>
+                    <span>Cập nhật mới nhất: {updateAt}</span>
                 </div>
             </div>
         </Link>

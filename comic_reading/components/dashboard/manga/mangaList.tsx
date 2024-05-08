@@ -7,7 +7,7 @@ interface MangaListProps {
 
 function MangaList({ className = '', children }: MangaListProps) {
     return (
-        <div className={`bg-[#444444] rounded-3xl p-8 h-[5h] ${className}`}>
+        <div className={`bg-[#444444] rounded-3xl p-4 pb-0 h-[5h] ${className}`}>
             {children}
         </div>
     );

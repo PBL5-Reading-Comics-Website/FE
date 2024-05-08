@@ -1,0 +1,40 @@
+.page-upload {
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+    margin-top: 10px;
+  }
+  
+  .cross {
+    width: 200px;
+    height: 300px;
+    border: 3px dotted gray;
+    position: relative;
+  }
+  
+  .crosss::before,
+  .cross::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 3px;
+    background-color: gray;
+  }
+  
+  .cross::before {
+    transform: translate(-50%, -50%);
+  }
+  
+  .cross::after {
+    transform: translate(-50%, -50%) rotate(90deg);
+  }
+  
+  .page-display {
+    display: flex;
+    align-items: start;
+    flex-wrap: wrap;
+    overflow: hidden;
+    margin-left: 10px;
+  }

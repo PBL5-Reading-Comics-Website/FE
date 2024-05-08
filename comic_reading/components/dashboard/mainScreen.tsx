@@ -133,7 +133,6 @@ export function MainScreen() {
                         </MangaList>
                     </div>
                 </div>
-                <ChapterImage/>
                 <div className="seasonal">
                     <h2 className="text-bold text-xl my-4">Theo mùa</h2>
                     <MangaHorizontalList className="mt-2">
