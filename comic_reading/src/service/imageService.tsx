@@ -1,6 +1,7 @@
-import {CloudConfig, Cloudinary, CloudinaryImage, URLConfig} from "@cloudinary/url-gen";
+import { AdvancedImage } from '@cloudinary/react'
+import { Cloudinary } from '@cloudinary/url-gen';
 import {sepia} from "@cloudinary/url-gen/actions/effect";
-import {AdvancedImage} from "@cloudinary/react";
+
 
 const ImageService = () => {
     // Create and configure your Cloudinary instance.
