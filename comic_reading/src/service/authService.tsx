@@ -65,15 +65,12 @@ export const authService = {
       throw error;
     }
   },
-
-  updatePassword: async (id: string, username: string, email: string, password: string) => {
+  updatePassword: async (id: number, oldPassword: string, newPassword: string) => {
     try {
-      const response = await axiosInstance.put(`/auth/update-password/${id}`, {
-        username,
-        email,
-        password,
+      const response = await axiosInstance.put(`/auth/${id}/update-password`, {
+        oldPassword,
+        newPassword,
       });
-
       return response.data;
     } catch (error) {
       console.error(error);
@@ -83,11 +80,30 @@ export const authService = {
 
   logout: async () => {
     try {
-      await axiosInstance.get('/auth/logout');
       Cookies.remove('token');
+      await axiosInstance.get('/auth/logout');
+
     } catch (error) {
       console.error(error);
       throw error;
     }
   },
+
+  updateInfo: async (userInfo: { id: string, username: string, email: string, name: string, dob: string, gender: boolean }) => {
+    try {
+      const response = await axiosInstance.put(`/auth/${userInfo.id}/update-info`, {
+        username: userInfo.username,
+        email: userInfo.email,
+        name: userInfo.name,
+        dateOfBirth: userInfo.dob,
+        gender: userInfo.gender,
+      });
+
+      return response.data;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  },
+
 };

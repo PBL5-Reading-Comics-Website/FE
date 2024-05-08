@@ -25,7 +25,7 @@ export function ChapterLink({ name, chapter, time, poster, chapterName }: Chapte
     mouseY.set(clientY - top);
   }
   return (
-    <Link to={`/manga-info/${name.replace(/\s/g, '-')}/${chapter}`}>
+    <Link to={`/read-manga/${chapter}`}>
       <motion.div
         style={{
           background: useMotionTemplate`

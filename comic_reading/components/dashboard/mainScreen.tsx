@@ -1,14 +1,13 @@
 "use client";
-import {useEffect, useState} from "react";
-import {Link} from "react-router-dom";
-import {mangaService} from "../../src/service/mangaService.tsx";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { mangaService } from "../../src/service/mangaService.tsx";
 import Footer from "../util/footer.tsx";
-import {Header} from "../util/header.tsx";
+import { Header } from "../util/header.tsx";
 import MangaHorizontalList from "./manga/mangaHorizontalList.tsx";
 import MangaHorizontalListItem from "./manga/mangaHorizontalListItem.tsx";
 import MangaList from "./manga/mangaList.tsx";
 import MangaListItem from "./manga/mangaListItem.tsx";
-import ChapterImage from "../util/chapterImage.tsx";
 
 interface Manga {
     id: string;
@@ -19,17 +18,17 @@ interface Manga {
 }
 
 export function MainScreen() {
-    const [mangas, setMangas] = useState<Manga[]>([]);
-    const [seasonalMangas, setSeasonalMangas] = useState<Manga[]>([]);
-    useEffect(() => {
-        const fetchMangas = async () => {
-            try {
-                const data = await mangaService.getTop10NewestManga();
-                setMangas(data.data);
-            } catch (error) {
-                console.error(error);
-            }
-        };
+  const [mangas, setMangas] = useState<Manga[]>([]);
+  const [seasonalMangas, setSeasonalMangas] = useState<Manga[]>([]);
+  useEffect(() => {
+    const fetchMangas = async () => {
+      try {
+        const data = await mangaService.getTop10NewestManga();
+        setMangas(data.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
         fetchMangas();
     }, []);

@@ -8,6 +8,7 @@ import {
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { mangaService } from "../../src/service/mangaService";
+import { userService } from "../../src/service/userService";
 import ErrorPage from "../error/errorPage";
 import TagList from "../tag/tagList";
 import CommentList from "../ui/commentList";
@@ -78,13 +79,13 @@ export function MangaInfoScreen() {
 
   useEffect(() => {
     if (!id || parseInt(id) === 0) {
-      setError(true);
       return;
     }
 
     const fetchManga = async () => {
       try {
         const data = await mangaService.getMangaById(parseInt(id));
+        console.log("called")
         if (data && data.data.tags) {
           const tags = data.data.tags.map((tag: { name: string; }) => tag.name);
           const chapters = data.data.chapters;
@@ -116,7 +117,19 @@ export function MangaInfoScreen() {
         <div className="w-1/3 h-fit flex flex-col justify-center items-center">
           <img src={manga?.coverImage} className="w-5/6 mt-24 mr-0 ml-auto" alt="" />
           <button className="font-saira mt-3 mr-0 flex items-center justify-center pl-16 ml-auto hover:border-[#b8382f] hover:border-2 bg-[#ED741B] text-[#2E2E2E] w-5/6 h-16 text-lg font-bold" type="submit">
-            <h3 className="w-2/3 text-center">THÍCH TRUYỆN</h3>
+            <h3 className="w-2/3 text-center" onClick={async () => {
+              if (manga?.id) {
+                try {
+                  const response = await userService.likeManga(manga.id);
+                  if(response.status == "success") {
+                    alert("Thích truyện thành công");
+                    window.location.reload();
+                  }
+                } catch (error) {
+                  console.error(error);
+                }
+              }
+            }}>THÍCH TRUYỆN</h3>
             <IconHeartFilled size={30} className="mr-10 ml-auto" />
           </button>
           <button className="font-saira mt-3 mr-0 flex items-center justify-center pl-16 ml-auto bg-[#1BBBED] hover:border-2 text-[#2E2E2E] w-5/6 h-16 text-lg font-bold" type="submit">

@@ -1,6 +1,5 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
-
 const API_URL = 'http://localhost:8080/api/';
 
 const axiosInstance = axios.create({
@@ -12,16 +11,17 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
     (config) => {
-        const token = Cookies.get('token');
-        if (token) {
-            config.headers['Authorization'] = `Bearer ${token}`;
-        }
-        return config;
+      const token = Cookies.get('token');
+      if (token) {
+        config.headers['Authorization'] = 'Bearer ' + token;
+      }
+      return config;
     },
     (error) => {
-        return Promise.reject(error);
+      Promise.reject(error);
     }
-);
+  );
+  
 
 export const userService = {
     getAllUsers: async () => {
@@ -36,7 +36,7 @@ export const userService = {
 
     getUserById: async (id: number) => {
         try {
-            const response = await axiosInstance.get(`user/user/${id}`);
+            const response = await axiosInstance.get(`public/user/${id}`);
             return response.data;
         } catch (error) {
             console.error(error);
