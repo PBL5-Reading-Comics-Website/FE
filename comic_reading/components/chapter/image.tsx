@@ -1,6 +1,7 @@
 import React from "react";
 
 interface ImageProps {
+    name: string;
     imageUrl: string;
 }
 
