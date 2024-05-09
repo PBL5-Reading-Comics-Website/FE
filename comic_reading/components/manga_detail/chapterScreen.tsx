@@ -96,14 +96,14 @@ function ChapterScreen() {
                 <div className="flex items-center justify-center my-4">
                     <button
                         onClick={handlePreviousChapter}
-                        className="px-4 py-2 bg-blue-500 text-white rounded mr-2 w-34"
+                        className="px-4 py-2 bg-orange-500 hover:border-red-500 rounded-full text-white mr-2 w-34"
                         hidden={chapterNumber === 1}
                     >
                         Chương trước
                     </button>
                     <select
                         onChange={handleChapterChange}
-                        className="border-2 border-gray-300 rounded px-3 py-2 mr-2"
+                        className="border-2 border-neutral-700 bg-white text-black rounded-full px-3 py-2 mr-2"
                         value={chapterNumber}
                     >
                         {
@@ -114,7 +114,7 @@ function ChapterScreen() {
                     </select>
                     <button
                         onClick={handleNextChapter}
-                        className="px-4 py-2 bg-blue-500 text-white rounded w-34"
+                        className="px-4 py-2 bg-orange-500 hover:border-red-500 rounded-full text-white w-34"
                         hidden={chapterNumber === numberOfChapter}
                     >
                         Chương sau

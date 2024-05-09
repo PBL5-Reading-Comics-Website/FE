@@ -6,7 +6,7 @@ interface UserOptionsListProps {
 }
 
 export function UserOptionsList({ selectedOption, setSelectedOption }: UserOptionsListProps) {
-    const options = ["Thông tin cá nhân", "Lịch sử đọc truyện", "Thông tin theo dõi", "Đổi mật khẩu"];
+    const options = ["Thông tin cá nhân", "Lịch sử đọc truyện", "Lịch sử đăng truyện","Thông tin theo dõi", "Đổi mật khẩu", ];
     const markerRef = useRef<HTMLDivElement | null>(null);
     const optionRefs = useRef<(HTMLDivElement | null)[]>([]);
   
