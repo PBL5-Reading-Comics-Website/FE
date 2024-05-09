@@ -2,6 +2,7 @@ import { IconSend2 } from "@tabler/icons-react";
 import React, { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { mangaService } from "../../src/service/mangaService";
+import { userService } from "../../src/service/userService";
 import Comment from "./comment";
 
 interface User {
@@ -55,7 +56,7 @@ function CommentList(
 ) {
     const [text, setText] = useState("");
     const [comments, setComments] = useState<Comment[]>([]);
-
+    const [commentAdded, setCommentAdded] = useState(false);
     useEffect(() => {
         const fetchComments = async () => {
             try {
@@ -68,14 +69,24 @@ function CommentList(
         };
 
         fetchComments();
-    }, [mangaId, chapterChange]);
+    }, [mangaId, chapterChange, commentAdded]);
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        console.log(text);
-        setText("");
+        try {
+            const userId = 1;
+            const response = await userService.postComment({ userId, mangaId, content: text });
+            console.log(response.data)
+            if (response.status == "success") {
+                alert("Bình luận thành công");
+                setCommentAdded(!commentAdded);
+                console.log(response);
+            }
+            setText("");
+        } catch (error) {
+            console.error(error);
+        }
     };
-
     return (
         <div className="w-full p-3 pt-0 border-2 flex flex-col rounded-lg">
             <InfiniteScroll

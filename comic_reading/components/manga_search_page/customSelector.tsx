@@ -1,13 +1,20 @@
-import { useState, useEffect, useRef } from 'react';
-import TagList from '../tag/tagList';
 import { IconChevronDown } from '@tabler/icons-react';
+import { useEffect, useRef, useState } from 'react';
+import TagList from '../tag/tagList';
 
-const CustomSelector = () => {
+const CustomSelector = ({ onTagChange }: { onTagChange: (tag: string | null) => void }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedTag, setSelectedTag] = useState('Chọn thể loại');
     const ref = useRef<HTMLDivElement>(null);
+  
+    const tags = [
+      { id: 1, name: 'Thể thao', englishName: 'Sports' },
+      { id: 2, name: 'Chính kịch', englishName: 'Drama' },
+      { id: 3, name: 'Đời thường', englishName: 'Slice of Life' },
+      { id: 4, name: 'Lãng mạn', englishName: 'Romance' },
+      { id: 5, name: 'Hài hước', englishName: 'Comedy' },
 
-    const tags = ['Trinh thám', 'Tình cảm', 'Hành động', 'Khoa học viễn tưởng', 'Truyện nước ngoài', 'Harem', 'Shoujo', 'Truyện Việt Nam', 'Action', 'Adventure', 'Fantasy', 'Comedy', 'Drama', 'Slice of life', 'Mystery', 'Horror', 'Psychological', 'Romance', 'School life', 'Sci-fi', 'Shounen', 'Shoujo', 'Shounen ai', 'Shoujo ai', 'Sports', 'Supernatural', 'Tragedy', 'Yaoi', 'Yuri', 'Mecha', 'Music', 'Historical', 'Military', 'Parody', 'Magic', 'Demons', 'Vampire', 'Samurai', 'Martial arts', 'Super power', 'Space', 'Police', 'Kids', 'Josei', 'Seinen', 'Shounen ai', 'Shoujo ai', 'Doujinshi'];
+   ];
 
     const handleClickOutside = (event: { target: any; }) => {
         if (ref.current && !ref.current.contains(event.target as Node)) {
@@ -15,11 +22,11 @@ const CustomSelector = () => {
         }
     };
 
-    const handleTagClick = (tag: string) => {
-        setSelectedTag(tag);
+    const handleTagClick = (tag: { id: number, name: string }) => {
+        setSelectedTag(tag.name);
         setIsOpen(false);
-    };
-
+        onTagChange(tag.id.toString()); // Pass tag.id as a string
+      };
     useEffect(() => {
         document.addEventListener('mousedown', handleClickOutside);
         return () => {
@@ -35,9 +42,11 @@ const CustomSelector = () => {
             </button>
             {isOpen && <div className="h-full fixed backdrop-blur-sm inset-x-0 top-0 w-full flex items-center justify-center" onClick={() => setIsOpen(!isOpen)}>
             </div>}
-            {isOpen && <div className="bg-[#1a1a1a] w-1/2 inset-x-1/4 top-40 rounded-xl p-4 fixed" onClick={handleClickOutside}>
-            <TagList tags={tags} onTagClick={handleTagClick} style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}/>
-            </div>}
+            {isOpen && (
+                <div className="bg-[#1a1a1a] w-1/2 inset-x-1/4 top-40 rounded-xl p-4 fixed" onClick={handleClickOutside}>
+                    <TagList tags={tags} onTagClick={handleTagClick} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }} />
+                </div>
+            )}
         </div>
     );
 };

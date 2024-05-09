@@ -30,18 +30,39 @@ export function MangaSearchPage() {
     const [mangas, setMangas] = useState<Manga[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
-
+    const [searchQuery, setSearchQuery] = useState('');
+    const [selectedTag, setSelectedTag] = useState('');
     useEffect(() => {
         const fetchMangas = async () => {
-          const response = await mangaService.getAllMangas({ page: currentPage });
-          console.log(response);
-          const start = (currentPage - 1) * 10;
-          const end = start + 10;
-          setMangas(response.data);
-          setTotalPages(response.meta.totalPage);
+            try {
+                const tagId: number | undefined = selectedTag !== '' ? parseInt(selectedTag, 10) : undefined;
+                console.log(tagId)
+                const response = await mangaService.getMangaByTagAndName(
+                    {
+                        tagId: tagId == undefined ? null: tagId,
+                        name: searchQuery,
+                        page: currentPage
+                    }
+                );
+                setMangas(response.data);
+                setTotalPages(response.meta.totalPage);
+            } catch (error) {
+                console.error('Error fetching mangas:', error);
+            }
         };
+
         fetchMangas();
-      }, [currentPage]);
+    }, [currentPage, selectedTag, searchQuery]);
+
+    const handleTagChange = (tag: string | null) => {
+        setSelectedTag(tag ?? '');
+        setCurrentPage(1);
+    };
+
+    const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchQuery(event.target.value);
+        setCurrentPage(1);
+    };
 
     const nextPage = () => {
         if (currentPage < totalPages) {
@@ -60,10 +81,15 @@ export function MangaSearchPage() {
             <Header />
             <div className='px-8 space-y-4 mt-24'>
                 <div className='h-fit'>
-                    <Input type="text" className="bg-gray-700 w-full h-full rounded-md" icon={<IconSearch className="my-2 ml-2" />}>
-                    </Input>
+                    <Input
+                        type="text"
+                        className="bg-gray-700 w-full h-full rounded-md"
+                        icon={<IconSearch className="my-2 ml-2" />}
+                        onChange={handleSearchChange} 
+                        placeholder="Search..."
+                    />
                 </div>
-                <CustomSelector />
+                <CustomSelector onTagChange={handleTagChange} />
                 <div className='flex justify-between'>
                 </div>
                 <div className=' w-full flex flex-wrap h-auto justify-between'>

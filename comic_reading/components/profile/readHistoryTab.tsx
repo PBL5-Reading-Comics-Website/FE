@@ -39,10 +39,9 @@ export function ReadHistoryTab(
   return (
     <div>
       <h2 className='text-bold my-4'>LỊCH SỬ ĐỌC TRUYỆN</h2>
-      <div className={`bg-[#444444] rounded-xl p-4 pr-12 mb-4 last:mb-0 ${className} w-3/4`}>
-        {readingHistories.map((history, index) => (
+      {readingHistories.map((history, index) => (
+        <div key={index} className={`bg-[#444444] rounded-xl p-4 pr-12 mb-4 last:mb-0 ${className}`}>
           <ReadHistoryItem
-            key={index}
             id={history.manga.id}
             imageUrl={history.manga.coverImage}
             mangaName={history.manga.name}
@@ -50,8 +49,8 @@ export function ReadHistoryTab(
             postTime={history.endAt}
             chapter={history.chapter.name}
           />
-        ))}
-      </div>
+        </div>
+      ))}
     </div>
   );
 }
@@ -82,11 +81,11 @@ export function ReadHistoryItem(
       <img src={imageUrl} alt="Manga" className="w-20 h-24 mr-4" />
       <div className="flex flex-col justify-between mr-4">
         <Link to={`/manga-info/${id}`}>
-          <span className="text-bold text-xl">{mangaName}</span>
+          <span className="text-bold text-xl" style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{mangaName}</span>
         </Link>
         <span>{posterName}</span>
       </div>
-      <div className="flex flex-grow items-center justify-center">
+      <div className="flex flex-grow items-end justify-center">
         <Link to={`/read-manga/${id}`}>
           <span>{chapter}</span>
         </Link>

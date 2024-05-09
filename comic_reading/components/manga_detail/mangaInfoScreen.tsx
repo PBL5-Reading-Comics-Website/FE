@@ -5,6 +5,8 @@ import {
   IconHeart, IconHeartFilled,
   IconMessageCircle
 } from "@tabler/icons-react";
+import Cookies from 'js-cookie';
+import { jwtDecode } from "jwt-decode";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { mangaService } from "../../src/service/mangaService";
@@ -14,7 +16,6 @@ import TagList from "../tag/tagList";
 import CommentList from "../ui/commentList";
 import Header from "../util/header";
 import ChapterList from "./chapter/chapterList";
-
 interface MangaData {
   id: number;
   coverImage: string;
@@ -76,8 +77,20 @@ interface MangaInfoScreenProps {
 
 export function MangaInfoScreen() {
   const { id } = useParams();
+  const [userId, setUserId] = useState(0);
+
   const [manga, setManga] = useState<MangaData | null>(null);
   const [error, setError] = useState(false);
+  let isLoggedIn = false;
+
+  useEffect(() => {
+    const token = Cookies.get('token');
+    if (token) {
+      const decodedToken: any = jwtDecode(token);
+      setUserId(decodedToken.userId);
+      isLoggedIn = true;
+    }
+  });
 
   useEffect(() => {
     if (!id || parseInt(id) === 0) {
@@ -118,23 +131,35 @@ export function MangaInfoScreen() {
       <div className="absolute flex top-0 w-full z-20">
         <div className="w-1/3 h-fit flex flex-col justify-center items-center">
           <img src={manga?.coverImage} className="w-5/6 mt-24 mr-0 ml-auto" alt="" />
-          <button className="font-saira mt-3 mr-0 flex items-center justify-center pl-16 ml-auto hover:border-[#b8382f] hover:border-2 bg-[#ED741B] text-[#2E2E2E] w-5/6 h-16 text-lg font-bold" type="submit">
-            <h3 className="w-2/3 text-center" onClick={async () => {
-              if (manga?.id) {
-                try {
-                  const response = await userService.likeManga(manga.id);
-                  if (response.status == "success") {
-                    alert("Thích truyện thành công");
-                    window.location.reload();
-                  }
-                } catch (error) {
-                  console.error(error);
+          <button className="font-saira mt-3 mr-0 flex items-center justify-center pl-16 ml-auto hover:border-[#b8382f] hover:border-2 bg-[#ED741B] text-[#2E2E2E] w-5/6 h-16 text-lg font-bold" type="submit" disabled={isLoggedIn} onClick={async () => {
+            if (manga?.id) {
+              try {
+                const response = await userService.likeManga(manga.id);
+                if (response.status == "success") {
+                  alert("Thích truyện thành công");
+                  window.location.reload();
                 }
+              } catch (error) {
+                console.error(error);
               }
-            }}>THÍCH TRUYỆN</h3>
+            }
+          }}>
+            <h3 className="w-2/3 text-center" >THÍCH TRUYỆN</h3>
             <IconHeartFilled size={30} className="mr-10 ml-auto" />
           </button>
-          <button className="font-saira mt-3 mr-0 flex items-center justify-center pl-16 ml-auto bg-[#1BBBED] hover:border-2 text-[#2E2E2E] w-5/6 h-16 text-lg font-bold" type="submit">
+          <button className="font-saira mt-3 mr-0 flex items-center justify-center pl-16 ml-auto bg-[#1BBBED] hover:border-2 text-[#2E2E2E] w-5/6 h-16 text-lg font-bold" disabled={isLoggedIn} type="submit" onClick={async () => {
+            if (manga?.id) {
+              try {
+                const response = await userService.following({ userId: userId, mangaId: manga.id });
+                if (response.status == "success") {
+                  alert("Theo dõi thành công");
+                  window.location.reload();
+                }
+              } catch (error) {
+                console.error(error);
+              }
+            }
+          }}>
             <h3 className="w-2/3 text-center">THEO DÕI</h3>
             <IconBookmarkFilled size={30} className="mr-10 ml-auto" />
           </button>
@@ -182,9 +207,9 @@ export function MangaInfoScreen() {
             </div>
             <h1 className="text-2xl font-light mt-3">Thể loại</h1>
             <div className="w-full border-t pt-2 border-white">
-              <TagList tags={manga?.tags ?? []} onTagClick={function (tag: string): void {
+              <TagList tags={manga?.tags.map(tag => ({ id: 0, name: tag })) ?? []} onTagClick={function (tag: { id: number; name: string; }): void {
                 throw new Error("Function not implemented.");
-              }} />
+              } } />
             </div>
             <h3 className="pt-3 mb-10">{manga?.description}</h3>
             <div className="w-full h-full bg-[#5F5F5F] flex flex-col items-center justify-start rounded-lg p-3">

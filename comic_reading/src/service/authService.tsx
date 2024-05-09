@@ -9,19 +9,6 @@ const axiosInstance = axios.create({
   withCredentials: false,
 });
 
-axiosInstance.interceptors.request.use(
-  (config) => {
-    const token = Cookies.get('token');
-    if (token) {
-      config.headers['Authorization'] = 'Bearer ' + token;
-    }
-    return config;
-  },
-  (error) => {
-    Promise.reject(error);
-  }
-);
-
 export const authService = {
   register: async (username: string, email: string, password: string) => {
     try {

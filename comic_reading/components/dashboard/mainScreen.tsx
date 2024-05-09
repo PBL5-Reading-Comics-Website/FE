@@ -46,7 +46,7 @@ export function MainScreen() {
                 } else {
                     data = await mangaService.getMangaPublishedInFourthQuarter();
                 }
-
+                console.log(data.data);
                 setSeasonalMangas(data.data);
             } catch (error) {
                 console.error(error);
@@ -144,13 +144,6 @@ export function MainScreen() {
                                 mangaName={manga.name}
                             />
                         ))}
-                        <MangaHorizontalListItem imageUrl={imageLink} mangaName="Manga 2"/>
-                        <MangaHorizontalListItem imageUrl={imageLink} mangaName="Manga 3"/>
-                        <MangaHorizontalListItem imageUrl={imageLink} mangaName="Manga 4"/>
-                        <MangaHorizontalListItem imageUrl={imageLink} mangaName="Manga 5"/>
-                        <MangaHorizontalListItem imageUrl={imageLink} mangaName="Manga 6"/>
-                        <MangaHorizontalListItem imageUrl={imageLink} mangaName="Manga 7"/>
-                        <MangaHorizontalListItem imageUrl={imageLink} mangaName="Manga 8"/>
                     </MangaHorizontalList>
                 </div>
                 <div className="monthly">

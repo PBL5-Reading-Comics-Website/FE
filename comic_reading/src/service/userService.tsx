@@ -159,4 +159,29 @@ export const userService = {
             throw error;
         }
     },
+    postComment: async ({ userId, mangaId, content }: { userId: number, mangaId: number, content?: string }) => {
+        try {
+            const response = await axiosInstance.post(`user/comment`, { content }, {
+                params: {
+                    mangaId,
+                    userId
+                }
+            });
+            return response.data;
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
+    },
+    following: async ({ userId, mangaId }: { userId: number, mangaId: number}) => {
+        try {
+            const response = await axiosInstance.post(`user/following/?mangaId=${mangaId}&userId=${userId}`);
+            return response.data;
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
+    },
+    
+
 }
