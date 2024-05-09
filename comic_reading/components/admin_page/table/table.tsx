@@ -48,24 +48,22 @@ function AdminMangaTable() {
     };
 
     return (
-        <div className="bg-gray-900 text-white w-10/12 overflow-auto rounded-xl">
-
+        <div className="bg-gray-900 text-white overflow-auto h-full w-full">
             <table className="divide-y divide-orange-500 mx-auto my-8">
                 <thead >
                     <tr>
                         <th className="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase tracking-wider">ID</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase tracking-wider">Name</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase tracking-wider">Author</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase tracking-wider">Artist</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase tracking-wider">Status</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase tracking-wider">Reading Status</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase tracking-wider">View Number</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase tracking-wider">Favourite Number</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase tracking-wider">Comment Number</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase tracking-wider">Publish At</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase tracking-wider">Update At</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase tracking-wider">Update User</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase tracking-wider">Actions</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase tracking-wider">Tên</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase tracking-wider">Tác giả</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase tracking-wider">Họa sĩ</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase tracking-wider">Trạng thái</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase tracking-wider">Lượt đọc</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase tracking-wider">Lượt thích</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase tracking-wider">Lượt bình luận</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase tracking-wider">Đăng ngày</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase tracking-wider">Cập nhật ngày</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase tracking-wider">Cập nhật</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase tracking-wider">Xóa</th>
                     </tr>
                 </thead>
                 <tbody className="divide-y divide-orange-500">
@@ -81,7 +79,6 @@ function AdminMangaTable() {
                             <td className="px-6 py-4 whitespace-nowrap">{manga.commentNumber}</td>
                             <td className="px-6 py-4 whitespace-nowrap">{manga.publishAt}</td>
                             <td className="px-6 py-4 whitespace-nowrap">{manga.updateAt}</td>
-                            <td className="px-6 py-4 whitespace-nowrap">{manga.updateUser}</td>
                             <td className="px-6 py-4 whitespace-nowrap">
                                 <button onClick={() => handleUpdate(manga.id)} className="mx-1 px-4 py-2 rounded-md text-white bg-blue-500">Update</button>
                             </td>
@@ -92,7 +89,7 @@ function AdminMangaTable() {
                     ))}
                 </tbody>
             </table>
-            <div className="flex justify-end m-4">
+            <div className="flex justify-center items-center m-4">
                 {Array.from({ length: totalPages }, (_, i) => (
                     <button
                         key={i}
@@ -156,21 +153,21 @@ function AdminUserTable() {
     };
 
     return (
-        <div className="bg-gray-900 text-white w-9/12 overflow-auto rounded-xl">
+        <div className="bg-gray-900 text-white w-full overflow-auto">
             <table className="divide-y divide-orange-500 mx-auto my-8">
                 <thead>
                     <tr>
                         <th className="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase tracking-wider">ID</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase tracking-wider">Username</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase tracking-wider">Name</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase tracking-wider">Date of Birth</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase tracking-wider">Gender</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase tracking-wider">Tên người dùng</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase tracking-wider">Tên hiển thị</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase tracking-wider">Ngày sinh</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase tracking-wider">Giới tính</th>
                         <th className="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase tracking-wider">Email</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase tracking-wider">Registration Date</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase tracking-wider">Role</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase tracking-wider">Ngày đăng ký</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase tracking-wider">Quyền</th>
                         <th className="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase tracking-wider">Enabled</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase tracking-wider">Update User</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase tracking-wider">Actions</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase tracking-wider">Cập nhật</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase tracking-wider">Xóa</th>
                     </tr>
                 </thead>
                 <tbody className="divide-y divide-orange-500">
@@ -195,7 +192,7 @@ function AdminUserTable() {
                     ))}
                 </tbody>
             </table>
-            <div className="flex justify-end m-4">
+            <div className="flex justify-center items-center m-4">
                 {Array.from({ length: totalPages }, (_, i) => (
                     <button
                         key={i}
