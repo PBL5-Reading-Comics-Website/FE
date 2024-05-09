@@ -11,6 +11,7 @@ import { MangaSearchPage } from '../components/manga_search_page/mangaSearchPage
 import PostingPage from '../components/posting_page/posting.tsx'
 import OtherUserInfo from '../components/profile/otherUserInfo.tsx'
 import UserInfoScreen from '../components/profile/userInfoScreen.tsx'
+import NewManga from '../components/posting_page/newManga.tsx'
 import './App.css'
 
 export default function App() {
@@ -31,6 +32,7 @@ export default function App() {
                     <Route path="/other-user" element={<OtherUserInfo />} />
                     <Route path="/posting" element={<PostingPage />} />
                     <Route path="/search" element={<MangaSearchPage />} />
+                    <Route path="/new-manga" element={<NewManga />} />
                 </Routes>
             </div>
         </BrowserRouter>
