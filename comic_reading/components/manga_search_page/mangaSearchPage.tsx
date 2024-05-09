@@ -1,12 +1,12 @@
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { IconSearch } from '@tabler/icons-react';
 import { useEffect, useState } from 'react';
 import { mangaService } from '../../src/service/mangaService';
 import Header from '../util/header';
-import MangaSearchPageItem from './mangaSearchPageItems';
 import { Input } from '../util/input';
-import { IconSearch } from '@tabler/icons-react';
 import CustomSelector from './customSelector';
+import MangaSearchPageItem from './mangaSearchPageItems';
 
 interface Manga {
     id: number;
@@ -52,10 +52,11 @@ export function MangaSearchPage() {
     useEffect(() => {
         const fetchMangas = async () => {
           const response = await mangaService.getAllMangas({ page: currentPage });
+          console.log(response);
           const start = (currentPage - 1) * 10;
           const end = start + 10;
-          setMangas(dummyMangas.slice(start, end));
-          setTotalPages(Math.ceil(dummyMangas.length / 10));
+          setMangas(response.data);
+          setTotalPages(response.meta.totalPage);
         };
         fetchMangas();
       }, [currentPage]);

@@ -85,7 +85,7 @@ export function MangaInfoScreen() {
     const fetchManga = async () => {
       try {
         const data = await mangaService.getMangaById(parseInt(id));
-        console.log("called")
+        console.log(data.data)
         if (data && data.data.tags) {
           const tags = data.data.tags.map((tag: { name: string; }) => tag.name);
           const chapters = data.data.chapters;
@@ -170,7 +170,9 @@ export function MangaInfoScreen() {
             </div>
             <h1 className="text-2xl font-light mt-3">Thể loại</h1>
             <div className="w-full border-t pt-2 border-white">
-              <TagList tags={manga?.tags ?? []} />
+              <TagList tags={manga?.tags ?? []} onTagClick={function (tag: string): void {
+                throw new Error("Function not implemented.");
+              } } />
             </div>
             <h3 className="pt-3 mb-10">{manga?.description}</h3>
             <div className="w-full h-full bg-[#5F5F5F] flex flex-col items-center justify-start rounded-lg p-3">

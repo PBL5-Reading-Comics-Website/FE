@@ -1,11 +1,10 @@
-import {useEffect, useState} from 'react';
-import {useParams, useNavigate} from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import Header from "../util/header";
 
-import {mangaService} from "../../src/service/mangaService";
-import {ImageService} from "../../utils/imageService.tsx";
+import { mangaService } from "../../src/service/mangaService";
+import { ImageService } from "../../utils/imageService.tsx";
 import ChapterImage from "../util/chapterImage.tsx";
-import Image from "../chapter/image.tsx";
 
 function ChapterScreen() {
     const {chapterId} = useParams();
@@ -16,7 +15,7 @@ function ChapterScreen() {
     useEffect(() => {
         const fetchChapter = async () => {
             try {
-                const response = await mangaService.getChapterById(chapterId);
+                const response = await mangaService.getChapterById(chapterId ?? '1');
                 setMangaName(response.data.chapter.manga.name);
                 setChapterName(response.data.chapter.name);
                 console.log(response)
@@ -40,6 +39,7 @@ function ChapterScreen() {
                 {
                     chapterImages.map((imageName, index) => {
                         const imageId = ImageService.makeImageId(mangaName, chapterName, imageName);
+                        console.log(imageId);
                         return (
                             <ChapterImage imageId={imageId} key={index}/>
                         )
