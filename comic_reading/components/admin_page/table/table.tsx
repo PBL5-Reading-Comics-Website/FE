@@ -19,39 +19,21 @@ interface Manga {
 function AdminMangaTable() {
     const [mangas, setMangas] = useState<Manga[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 10;
-    const dummyMangas: Manga[] = Array.from({ length: 20 }, (_, i) => ({
-        id: i + 1,
-        name: `Manga ${i + 1}`,
-        author: `Author ${i + 1}`,
-        artist: `Artist ${i + 1}`,
-        coverImage: `Cover Image ${i + 1}`,
-        status: `Status ${i + 1}`,
-        readingStatus: `Reading Status ${i + 1}`,
-        viewNumber: i + 1,
-        favouriteNumber: i + 1,
-        commentNumber: i + 1,
-        publishAt: `Publish At ${i + 1}`,
-        updateAt: `Update At ${i + 1}`,
-        updateUser: `Update User ${i + 1}`,
-    }));
-
-    const mangasForCurrentPage = mangas.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
-
-    const totalPages = Math.ceil(mangas.length / itemsPerPage);
+    const [totalPages, setTotalPages] = useState(0);
     useEffect(() => {
         const fetchMangas = async () => {
             try {
-                const data = await mangaService.getAllMangas();
-                console.log(data);
-                setMangas(data);
+                const response = await mangaService.getAllMangas({ page: currentPage }); // Pass an object with the property 'page'
+                setMangas(response.data);
+                setCurrentPage(response.meta.currentPage);
+                setTotalPages(response.meta.totalPage);
             } catch (error) {
                 console.error(error);
             }
         };
 
         fetchMangas();
-    }, []);
+    }, [currentPage]);
 
     const handleDelete = (id: number) => {
         // Filter out the manga with the given id
@@ -87,7 +69,7 @@ function AdminMangaTable() {
                     </tr>
                 </thead>
                 <tbody className="divide-y divide-orange-500">
-                    {mangasForCurrentPage.map((manga) => (
+                    {mangas.map((manga) => (
                         <tr key={manga.id}>
                             <td className="px-6 py-4 whitespace-nowrap">{manga.id}</td>
                             <td className="px-6 py-4 whitespace-nowrap">{manga.name}</td>
@@ -148,24 +130,21 @@ interface User {
 function AdminUserTable() {
     const [users, setUsers] = useState<User[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 10;
-
-    const usersForCurrentPage = users.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
-
-    const totalPages = Math.ceil(users.length / itemsPerPage);
+    const [totalPages, setTotalPages] = useState(0);
     useEffect(() => {
         const fetchUsers = async () => {
             try {
                 const data = await userService.getAllUsers();
-                console.log(data);
-                setUsers(data);
+                setUsers(data.data);
+                setCurrentPage(data.meta.currentPage);
+                setTotalPages(data.meta.totalPage);
             } catch (error) {
                 console.error(error);
             }
         };
 
         fetchUsers();
-    }, []);
+    }, [currentPage]);
 
     const handleDelete = (id: number) => {
         const updatedUsers = users.filter(user => user.id !== id);
@@ -195,7 +174,7 @@ function AdminUserTable() {
                     </tr>
                 </thead>
                 <tbody className="divide-y divide-orange-500">
-                    {usersForCurrentPage.map((user) => (
+                    {users.map((user) => (
                         <tr key={user.id}>
                             <td className="px-6 py-4 whitespace-nowrap">{user.id}</td>
                             <td className="px-6 py-4 whitespace-nowrap">{user.username}</td>

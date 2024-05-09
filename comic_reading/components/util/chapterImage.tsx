@@ -1,5 +1,5 @@
+import { AdvancedImage } from "@cloudinary/react";
 import MyCloudinary from "../../utils/myCloudinary";
-import {AdvancedImage} from "@cloudinary/react";
 
 const ChapterImage = ({imageId}: {imageId: string}) => {
     const image = MyCloudinary.image(imageId);
