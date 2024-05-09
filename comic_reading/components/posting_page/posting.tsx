@@ -23,16 +23,16 @@ export function PostingPage() {
                                     <Input id="name" type="text" className="h-10" />
                                 </div>
                                 <div className="mb-2">
-                                    <label className="block  text-sm font-bold mb-1" htmlFor="email">
+                                    <label className="block  text-sm font-bold mb-1" htmlFor="number">
                                         Chương
                                     </label>
-                                    <Input id="email" type="email" className="h-10" />
+                                    <Input id="number" type="text" className="h-10" />
                                 </div>
                                 <div className="mb-2">
-                                    <label className="block  text-sm font-bold mb-1" htmlFor="username">
+                                    <label className="block  text-sm font-bold mb-1" htmlFor="chapter_name">
                                         Tên chương
                                     </label>
-                                    <Input id="username" type="text" className="h-10" />
+                                    <Input id="chapter_name" type="text" className="h-10" />
                                 </div>
                             </div>
                         </div>
