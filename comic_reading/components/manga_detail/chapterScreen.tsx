@@ -4,6 +4,7 @@ import Header from "../util/header";
 
 import { mangaService } from "../../src/service/mangaService";
 import { ImageService } from "../../utils/imageService.tsx";
+import CommentList from '../ui/commentList.tsx';
 const ChapterImage = lazy(() => import("../util/chapterImage.tsx"));
 interface Image {
     id: number;
@@ -45,6 +46,8 @@ function ChapterScreen() {
     const [chapterName, setChapterName] = useState("");
     const [chapterNumber, setChapterNumber] = useState(0);
     const [numberOfChapter, setNumberOfChapter] = useState(0);
+    const [mangaId, setMangaId] = useState(0);
+    const [commentChange, setCommentChange] = useState(false);
     useEffect(() => {
         const fetchChapter = async () => {
             try {
@@ -57,6 +60,8 @@ function ChapterScreen() {
                 setChapterImages(imageUrls);
                 const numberOfChapter = await mangaService.getMangaById(response.data.chapter.manga.id);
                 setNumberOfChapter(numberOfChapter.data.chapters.length);
+                setMangaId(response.data.chapter.manga.id);
+                setCommentChange(!commentChange);
             } catch (error) {
                 console.error('Failed to fetch chapter:', error);
             }
@@ -154,6 +159,10 @@ function ChapterScreen() {
                         Chương sau
                     </button>
                 </div>
+            </div>
+            <div className="w-3/5 bg-[#5F5F5F] flex flex-col items-center justify-start rounded-lg p-3">
+                <h2 className='text-bold text-4xl m-2'>Bình luận</h2>
+            <CommentList mangaId={1} chapterChange={commentChange} />
             </div>
         </div>
     );

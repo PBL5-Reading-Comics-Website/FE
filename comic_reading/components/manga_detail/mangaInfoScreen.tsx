@@ -191,7 +191,7 @@ export function MangaInfoScreen() {
               <h1 className="text-2xl font-semibold pb-3">Danh sách chương</h1>
               <ChapterList chapters={manga?.chapters ?? []} />
               <h1 className="text-2xl font-semibold py-3">Bình luận</h1>
-              <CommentList mangaId={manga?.id ?? 0}/>
+              <CommentList mangaId={parseInt(id ?? '0')} />
             </div>
           </div>
         </div>

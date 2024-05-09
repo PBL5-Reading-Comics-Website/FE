@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from "react";
 
 interface CommentProps {
+    imgAvatar: string;
     name: string;
     time: string;
     content: string;
 }
 
 export function Comment({
+    imgAvatar,
     name,
     time,
     content,
@@ -14,7 +15,7 @@ export function Comment({
     return (
         <div className="w-full flex h-fit mt-3">
 
-            <img className="w-10 h-10 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500" src="https://static.vecteezy.com/system/resources/previews/005/005/788/original/user-icon-in-trendy-flat-style-isolated-on-grey-background-user-symbol-for-your-web-site-design-logo-app-ui-illustration-eps10-free-vector.jpg"></img>
+            <img className="w-10 h-10 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500" src={imgAvatar}></img>
 
             <div className="p-3 m-3 mt-0 bg-[#515151] text-white hover:bg rounded-xl w-full h-fit flex flex-col">
                 <div className="w-full flex justify-between border-b border-[#FCA565] pb-1">

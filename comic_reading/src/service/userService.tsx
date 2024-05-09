@@ -11,17 +11,17 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
     (config) => {
-      const token = Cookies.get('token');
-      if (token) {
-        config.headers['Authorization'] = 'Bearer ' + token;
-      }
-      return config;
+        const token = Cookies.get('token');
+        if (token) {
+            config.headers['Authorization'] = 'Bearer ' + token;
+        }
+        return config;
     },
     (error) => {
-      Promise.reject(error);
+        Promise.reject(error);
     }
-  );
-  
+);
+
 
 export const userService = {
     getAllUsers: async () => {
@@ -64,9 +64,9 @@ export const userService = {
         }
     },
 
-    getFollowingById: async (id: number) => {
+    getFollowingById: async ({ userId, sortField = 'id', sortOrder = 'asc', page = 1, size = 10 }: { userId: number, sortField?: string, sortOrder?: string, page?: number, size?: number }) => {
         try {
-            const response = await axiosInstance.get(`user/following/${id}`);
+            const response = await axiosInstance.get(`user/followings/${userId}`);
             return response.data;
         } catch (error) {
             console.error(error);
@@ -137,6 +137,22 @@ export const userService = {
     likeManga: async (id: number) => {
         try {
             const response = await axiosInstance.put(`user/like-manga/${id}`);
+            return response.data;
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
+    },
+    getReadingHistoriesByUserId: async ({ userId, sortField = 'id', sortOrder = 'asc', page = 1, size = 10 }: { userId: number, sortField?: string, sortOrder?: string, page?: number, size?: number }) => {
+        try {
+            const response = await axiosInstance.get(`user/reading-histories/${userId}`, {
+                // params: {
+                //   sortField,
+                //   sortOrder,
+                //   page,
+                //   size
+                // }
+            });
             return response.data;
         } catch (error) {
             console.error(error);

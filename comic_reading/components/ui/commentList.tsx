@@ -1,8 +1,8 @@
+import { IconSend2 } from "@tabler/icons-react";
 import React, { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-import Comment from "./comment";
-import { IconSend2 } from "@tabler/icons-react";
 import { mangaService } from "../../src/service/mangaService";
+import Comment from "./comment";
 
 interface User {
     id: number;
@@ -47,10 +47,11 @@ interface Comment {
 
 interface CommentListProp {
     mangaId: number;
+    chapterChange?: boolean;
 }
 
 function CommentList(
-    { mangaId }: CommentListProp
+    { mangaId, chapterChange }: CommentListProp
 ) {
     const [text, setText] = useState("");
     const [comments, setComments] = useState<Comment[]>([]);
@@ -58,15 +59,16 @@ function CommentList(
     useEffect(() => {
         const fetchComments = async () => {
             try {
-                const comment = await mangaService.getCommentById(mangaId);
-                setComments(prevComments => [...prevComments, comment]);
+                const comment = await mangaService.getMangaCommentById(mangaId);
+                console.log(comment.data)
+                setComments(comment.data);
             } catch (error) {
                 console.error(error);
             }
         };
 
         fetchComments();
-    }, [mangaId]);
+    }, [mangaId, chapterChange]);
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -78,7 +80,6 @@ function CommentList(
         <div className="w-full p-3 pt-0 border-2 flex flex-col rounded-lg">
             <InfiniteScroll
                 dataLength={10}
-                style={{ height: "50vh" }}
                 next={() => { }}
                 hasMore={true}
                 loader={<h4></h4>}
@@ -89,13 +90,14 @@ function CommentList(
                 }
             >
                 {comments.length > 0 && comments.map((comment, index) => (
-  <Comment
-    key={index}
-    name={comment.user.username}
-    time={comment.updateAt}
-    content={comment.content}
-  />
-))}
+                    <Comment
+                        imgAvatar={comment.user.avatar}
+                        key={index}
+                        name={comment.user.username}
+                        time={comment.updateAt}
+                        content={comment.content}
+                    />
+                ))}
             </InfiniteScroll>
             <form onSubmit={handleSubmit} className="flex w-full items-center bg-neutral-800 border-2 border-black rounded-xl mt-2">
                 <textarea
