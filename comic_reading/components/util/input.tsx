@@ -121,7 +121,7 @@ const SelectInput = React.forwardRef<HTMLSelectElement, SelectInputProps>(
             <option key={option.value} value={option.value}>{option.label}</option>
           ))}
         </select>
-        {icon && <div className="absolute inset-y-0  flex items-center pointer-events-none">{icon}</div>}
+        {icon && <div className="absolute inset-y-0 flex items-center pointer-events-none">{icon}</div>}
       </motion.div>
     );
   }

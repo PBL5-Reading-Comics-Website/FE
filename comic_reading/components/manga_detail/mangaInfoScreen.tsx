@@ -57,6 +57,8 @@ interface MangaData {
   }[];
 }
 
+
+
 interface MangaInfoScreenProps {
   defaultImageUrl?: string;
   defaultMangaName?: string;
@@ -121,7 +123,7 @@ export function MangaInfoScreen() {
               if (manga?.id) {
                 try {
                   const response = await userService.likeManga(manga.id);
-                  if(response.status == "success") {
+                  if (response.status == "success") {
                     alert("Thích truyện thành công");
                     window.location.reload();
                   }
@@ -137,20 +139,30 @@ export function MangaInfoScreen() {
             <IconBookmarkFilled size={30} className="mr-10 ml-auto" />
           </button>
           <div className="flex h-fit w-5/6 text-lg justify-between ml-auto mr-0 mt-3">
-            <div className="flex flex-col">
-              <h3>Tình trạng</h3>
-              <h3>NXB</h3>
-              <h3>Tác giả</h3>
-              <h3>Họa sĩ</h3>
-              <h3>Ngày xuất bản</h3>
-            </div>
-            <div className="flex flex-col mr-0 ml-auto items-end">
-              <h3>{manga?.status ?? '\u00A0'}</h3>
-              <h3>{manga?.publisher ?? '\u00A0'}</h3>
-              <h3>{manga?.author ?? '\u00A0'}</h3>
-              <h3>{manga?.artist ?? '\u00A0'}</h3>
-              <h3>{formattedDate ?? '\u00A0'}</h3>
-            </div>
+            <table className="w-full">
+              <tbody>
+                <tr className="flex">
+                  <td className="w-1/2"><h3>Tình trạng</h3></td>
+                  <td className="w-1/2 text-right"><h3>{manga?.status ?? '\u00A0'}</h3></td>
+                </tr>
+                <tr className="flex">
+                  <td className="w-1/2"><h3>NXB</h3></td>
+                  <td className="w-1/2 text-right"><h3>{manga?.publisher ?? '\u00A0'}</h3></td>
+                </tr>
+                <tr className="flex">
+                  <td className="w-1/2"><h3>Tác giả</h3></td>
+                  <td className="w-1/2 text-right"><h3>{manga?.author ?? '\u00A0'}</h3></td>
+                </tr>
+                <tr className="flex">
+                  <td className="w-1/2"><h3>Họa sĩ</h3></td>
+                  <td className="w-1/2 text-right"><h3>{manga?.artist ?? '\u00A0'}</h3></td>
+                </tr>
+                <tr className="flex">
+                  <td className="w-1/2"><h3>Ngày xuất bản</h3></td>
+                  <td className="w-1/2 text-right"><h3>{formattedDate ?? '\u00A0'}</h3></td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
         <div className="w-full h-fit flex flex-col justify-start">
@@ -172,14 +184,14 @@ export function MangaInfoScreen() {
             <div className="w-full border-t pt-2 border-white">
               <TagList tags={manga?.tags ?? []} onTagClick={function (tag: string): void {
                 throw new Error("Function not implemented.");
-              } } />
+              }} />
             </div>
             <h3 className="pt-3 mb-10">{manga?.description}</h3>
             <div className="w-full h-full bg-[#5F5F5F] flex flex-col items-center justify-start rounded-lg p-3">
               <h1 className="text-2xl font-semibold pb-3">Danh sách chương</h1>
               <ChapterList chapters={manga?.chapters ?? []} />
               <h1 className="text-2xl font-semibold py-3">Bình luận</h1>
-              <CommentList />
+              <CommentList mangaId={manga?.id ?? 0}/>
             </div>
           </div>
         </div>

@@ -165,4 +165,14 @@ export const mangaService = {
     });
     return response.data;
   },
+
+  getCommentById: async (id: number) => {
+    try {
+      const response = await axiosInstance.get(`/comment/${id}`);
+      return response.data;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  },
 };

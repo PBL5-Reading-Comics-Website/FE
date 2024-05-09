@@ -106,14 +106,14 @@ export function Header() {
                     <div className="flex p-5">
                         <IconBell className="text-white h-8 w-8" />
                     </div>
-                    <div className="p-5 h-16 items-center justify-center flex flex-col top-0 relative">
+                    <div className="p-5 h-16 items-end justify-center flex flex-col top-0 relative">
                         <div onClick={toggleDropdown} className="flex items-center justify-center">
                             <img className="w-10 h-10 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500" src={user?.avatar}>
                             </img>
                             <h1 className="text-white text-xl mx-3">{user?.username || ''}</h1>
                         </div>
                         {dropdownVisible && (
-                            <div className="flex flex-col p-1 h-fit w-full mt-1 justify-center items-center top-full bg-black absolute rounded-md">
+                            <div className="flex flex-col p-1 w-[200%] h-fit mt-1 justify-center items-center top-full bg-neutral-800 border-2 border-white absolute rounded-md">
                                 {isLoggedIn === false ? (
                                     <Link to="/login" className="p-4">
                                         <h1 className="text-white text-base text-center">Đăng nhập</h1>
@@ -122,6 +122,10 @@ export function Header() {
                                     <>
                                         <Link to="/user-info" className="p-4">
                                             <h1 className="text-white text-base text-center">Thông tin cá nhân</h1>
+                                        </Link>
+                                        <div className="bg-gradient-to-r from-transparent via-white dark:via-white to-transparent h-[1px] w-full" />
+                                        <Link to="/posting" className="p-4" onClick={authService.logout}>
+                                            <h1 className="text-white text-base">Đăng truyện</h1>
                                         </Link>
                                         <div className="bg-gradient-to-r from-transparent via-white dark:via-white to-transparent h-[1px] w-full" />
                                         <Link to="/login" className="p-4" onClick={authService.logout}>

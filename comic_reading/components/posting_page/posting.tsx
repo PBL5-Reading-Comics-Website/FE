@@ -3,7 +3,7 @@ import { Input } from '../util/input.tsx';
 import Header from "../util/header";
 import PageUpload from "./pageUpload.tsx";
 
-export function chapterScreen() {
+export function PostingPage() {
 
     return (
         <div>
@@ -52,4 +52,4 @@ export function chapterScreen() {
     );
 }
 
-export default chapterScreen;
+export default PostingPage;

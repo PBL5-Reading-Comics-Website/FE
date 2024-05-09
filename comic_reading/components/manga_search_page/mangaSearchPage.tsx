@@ -31,24 +31,6 @@ export function MangaSearchPage() {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
 
-    const dummyMangas: Manga[] = Array.from({ length: 12 }, (_, index) => ({
-        id: index,
-        name: `Manga ${index + 1}`,
-        publishingCompany: `Company ${index + 1}`,
-        author: `Author ${index + 1}`,
-        artist: `Artist ${index + 1}`,
-        coverImage: `https://example.com/manga${index + 1}.jpg`,
-        status: 'Ongoing',
-        readingStatus: 'Not started',
-        viewNumber: Math.floor(Math.random() * 10000),
-        favouriteNumber: Math.floor(Math.random() * 1000),
-        commentNumber: Math.floor(Math.random() * 500),
-        publishAt: new Date().toISOString(),
-        updateAt: new Date().toISOString(),
-        updateUser: null,
-        tags: ['Action', 'Adventure', 'Fantasy'],
-      }));
-
     useEffect(() => {
         const fetchMangas = async () => {
           const response = await mangaService.getAllMangas({ page: currentPage });
