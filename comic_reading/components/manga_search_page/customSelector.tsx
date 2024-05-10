@@ -8,13 +8,24 @@ const CustomSelector = ({ onTagChange }: { onTagChange: (tag: string | null) => 
     const ref = useRef<HTMLDivElement>(null);
   
     const tags = [
-      { id: 1, name: 'Thể thao', englishName: 'Sports' },
-      { id: 2, name: 'Chính kịch', englishName: 'Drama' },
-      { id: 3, name: 'Đời thường', englishName: 'Slice of Life' },
-      { id: 4, name: 'Lãng mạn', englishName: 'Romance' },
-      { id: 5, name: 'Hài hước', englishName: 'Comedy' },
-
-   ];
+        { id: 1, name: 'Thể thao', englishName: 'Sports' },
+        { id: 2, name: 'Chính kịch', englishName: 'Drama' },
+        { id: 3, name: 'Đời thường', englishName: 'Slice of Life' },
+        { id: 4, name: 'Lãng mạn', englishName: 'Romance' },
+        { id: 5, name: 'Hài hước', englishName: 'Comedy' },
+        { id: 6, name: 'Kinh dị', englishName: 'Horror' },
+        { id: 7, name: 'Bí ẩn', englishName: 'Mystery' },
+        { id: 8, name: 'Hành động', englishName: 'Action' },
+        { id: 9, name: 'Phiêu lưu', englishName: 'Adventure' },
+        { id: 10, name: 'Fantasy', englishName: 'Fantasy' },
+        { id: 11, name: 'Hồi hộp', englishName: 'Thriller' },
+        { id: 12, name: 'Khoa học viễn tưởng', englishName: 'Sci-Fi' },
+        { id: 13, name: 'Tâm lý', englishName: 'Psychological' },
+        { id: 14, name: 'Lịch sử', englishName: 'Historical' },
+        { id: 15, name: 'Tội phạm', englishName: 'Crime' },
+        { id: 16, name: 'Cô gái phép thuật', englishName: 'Magical Girls' },
+        { id: 17, name: 'Bi kịch', englishName: 'Tragedy' },
+      ];
 
     const handleClickOutside = (event: { target: any; }) => {
         if (ref.current && !ref.current.contains(event.target as Node)) {
