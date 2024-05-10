@@ -79,6 +79,11 @@ export function Login() {
                         ĐĂNG NHẬP
                         <BottomGradient />
                     </button>
+                    <div className="flex justify-between items-center">
+                        <label className="flex items-center">
+                        </label>
+                        <Link to="/forgot-password" className="text-[#ED741B]">Quên mật khẩu?</Link>
+                    </div>
                     <div className="bg-gradient-to-r from-transparent via-white dark:via-white to-transparent my-8 h-[1px] w-full" />
 
                     <div className="flex flex-col space-y-4">
