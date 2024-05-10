@@ -7,6 +7,7 @@ import Header from '../util/header';
 import { Input } from '../util/input';
 import CustomSelector from './customSelector';
 import MangaSearchPageItem from './mangaSearchPageItems';
+import { useParams } from 'react-router-dom';
 
 interface Manga {
     id: number;
@@ -27,6 +28,7 @@ interface Manga {
 }
 
 export function MangaSearchPage() {
+    const field = useParams()
     const [mangas, setMangas] = useState<Manga[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
@@ -35,13 +37,16 @@ export function MangaSearchPage() {
     useEffect(() => {
         const fetchMangas = async () => {
             try {
-                const tagId: number | undefined = selectedTag !== '' ? parseInt(selectedTag, 10) : undefined;
-                console.log(tagId)
+                const tag = selectedTag;
+                console.log(tag)
+                console.log(field)
                 const response = await mangaService.getMangaByTagAndName(
                     {
-                        tagId: tagId == undefined ? null: tagId,
+                        tag: tag,
                         name: searchQuery,
-                        page: currentPage
+                        page: currentPage,
+                        sortOrder: 'asc',
+                        sortField: 'name',
                     }
                 );
                 setMangas(response.data);
@@ -50,12 +55,11 @@ export function MangaSearchPage() {
                 console.error('Error fetching mangas:', error);
             }
         };
-
         fetchMangas();
     }, [currentPage, selectedTag, searchQuery]);
 
     const handleTagChange = (tag: string | null) => {
-        setSelectedTag(tag ?? '');
+        setSelectedTag(tag || '');
         setCurrentPage(1);
     };
 
