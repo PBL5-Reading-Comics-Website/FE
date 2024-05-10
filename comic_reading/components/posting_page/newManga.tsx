@@ -1,15 +1,72 @@
 "use client";
-import { Input } from '../util/input.tsx';
+import {Input} from '../util/input.tsx';
 import Header from "../util/header";
 import ImgUpload from "./imgUpload.tsx";
 import TagListSelector from "./tagListSelector.tsx";
+import React, {useEffect, useState} from "react";
+import axios from "axios";
+import {mangaService} from "../../src/service/mangaService.tsx";
+
+interface UploadProgress {
+    [filename: string]: number;
+}
 
 export function NewManga() {
+    const [image, setImage] = useState<File | null>(null);
+    const [mangaName, setMangaName] = useState('');
+    const [author, setAuthor] = useState('');
+    const [artist, setArtist] = useState('');
+    const [description, setDescription] = useState('');
+    const [publishingCompany, setPublishingCompany] = useState('');
+
+    const [folderName, setFolderName] = useState(`van_chuong_viet/${mangaName}`);
+    const [uploadProgress, setUploadProgress] = useState<UploadProgress>({});
+
+
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setImage(e.target.files);
+    };
+
+    const handleFolderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setFolderName(e.target.value);
+    };
+
+    const uploadImage = async () => {
+        if (!image) return;
+        const formData = new FormData();
+        formData.append('file', image);
+        formData.append('upload_preset', 'dtmyad0y');
+        formData.append('folder', folderName);
+
+        try {
+            console.log('Uploading:', image.name);
+            console.log(formData)
+            const response = await axios.post(
+                'https://api.cloudinary.com/v1_1/dpkxkkrnl/image/upload',
+                formData
+            );
+
+            console.log('Upload successful:', response.data);
+            // Clear progress for the uploaded file
+            setUploadProgress((prevProgress) => {
+                const {[image.name]: _, ...rest} = prevProgress;
+                return rest;
+            });
+        } catch (error) {
+            console.error('Upload failed:', error);
+        }
+    };
+
+    function createManga() {
+        // mangaService.
+        console.log("meme")
+    }
+
 
     return (
         <div>
             <div className="w-full h-full">
-                <Header />
+                <Header/>
             </div>
             <div className='top-20 mt-28 w-full p-5'>
                 <div className='flex w-full'>
@@ -21,31 +78,39 @@ export function NewManga() {
                                     <label className="block  text-sm font-bold mb-1" htmlFor="name">
                                         Tên truyện
                                     </label>
-                                    <Input id="name" type="text" className="h-10" />
+                                    <Input id="name" type="text" className="h-10" value={mangaName}
+                                           onChange={e => setMangaName(e.target.value)}/>
                                 </div>
                                 <div className="mb-2">
                                     <label className="block  text-sm font-bold mb-1" htmlFor="name">
                                         Nhà xuất bản
                                     </label>
-                                    <Input id="name" type="text" className="h-10" />
+                                    <Input id="name" type="text" className="h-10" value={publishingCompany}
+                                           onChange={e => setPublishingCompany(e.target.value)}/>
                                 </div>
                                 <div className="mb-2">
                                     <label className="block  text-sm font-bold mb-1" htmlFor="name">
                                         Tác giả
                                     </label>
-                                    <Input id="name" type="text" className="h-10" />
+                                    <Input id="name" type="text" className="h-10" value={author
+                                    }
+                                           onChange={e => setAuthor(e.target.value)}/>
                                 </div>
                                 <div className="mb-2">
                                     <label className="block  text-sm font-bold mb-1" htmlFor="name">
                                         Họa sĩ
                                     </label>
-                                    <Input id="name" type="text" className="h-10" />
+                                    <Input id="name" type="text" className="h-10" value={artist}
+                                           onChange={e => setArtist(e.target.value)}/>
                                 </div>
                                 <div className="mb-2">
                                     <label className="block  text-sm font-bold mb-1" htmlFor="email">
                                         Tóm tắt
                                     </label>
-                                    <textarea className='rounded-lg bg-zinc-800 border-2 border-neutral-500 resize-none focus:outline-none h-32 w-full' name="" id=""></textarea>
+                                    <textarea
+                                        className='rounded-lg bg-zinc-800 border-2 border-neutral-500 resize-none focus:outline-none h-32 w-full'
+                                        name="" id="" value={description}
+                                        onChange={e => setDescription(e.target.value)}></textarea>
                                 </div>
 
                             </div>
@@ -55,15 +120,16 @@ export function NewManga() {
                         <label className='block  text-sm font-bold mb-1' htmlFor="name">
                             Bìa truyện
                         </label>
-                        <ImgUpload />
+                        <ImgUpload/>
                     </div>
                 </div>
                 <div className="mb-2 z-10 w-full border-b pb-4">
                     <label className="block  text-sm font-bold mb-1" htmlFor="email">
                         Chọn thể loại
                     </label>
-                    <TagListSelector />
+                    <TagListSelector/>
                 </div>
+                <button type="button" onClick={uploadImage}>Send</button>
             </div>
         </div>
     );
