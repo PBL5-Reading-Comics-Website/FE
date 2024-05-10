@@ -81,19 +81,25 @@ export function Header() {
                     </Link>
                 </div>
                 <div className="h-16 flex items-center justify-center p-5">
+                    <Link to="/search/publishAt">
                     <h1 className="text-center font-saira font-bold text-xl text-white">
                         TRUYỆN MỚI
                     </h1>
+                    </Link>
                 </div>
                 <div className="h-16 flex items-center justify-center p-5">
+                    <Link to="/search/name">
                     <h1 className="text-center font-saira font-bold text-xl text-white">
                         DANH SÁCH TRUYỆN
                     </h1>
+                    </Link>
                 </div>
                 <div className="h-16 flex items-center justify-center p-5">
+                    <Link to="/search/viewNumber">
                     <h1 className="text-center font-saira font-bold text-xl text-white">
                         TRUYỆN HOT
                     </h1>
+                    </Link>
                 </div>
                 <div className="flex items-center w-fit relative">
                     <form action="">

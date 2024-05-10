@@ -3,15 +3,16 @@ import { useEffect, useRef, useState } from 'react';
 import TagList from '../tag/tagList';
 
 interface TagListProps {
-    chosenTag: string;
+    onTagChange: (tag: string | null) => void;
 }
 
-const CustomSelector = ({ onTagChange }: { onTagChange: (tag: string | null) => void }) => {
+const CustomSelector = ({ onTagChange }: TagListProps) => {
     const [isOpen, setIsOpen] = useState(false);
-    const [selectedTag, setSelectedTag] = useState('');
+    const chosenTag = "";
+    const [selectedTag, setSelectedTag] = useState(chosenTag);
     const ref = useRef<HTMLDivElement>(null);
   
-    const tags = ["Sport", "Slice of Life", "Shounen", "Shoujo", "Shounen Ai", "Shoujo Ai", "Supernatural", "Tragedy", "Yaoi", "Yuri", "Mecha", "Music", "Historical", "Military", "Parody", "Magic", "Demons", "Vampire", "Samurai", "Martial Arts", "Super Power", "Space", "Police", "Kids", "Josei", "Seinen", "Shounen Ai", "Shoujo Ai", "Doujinshi"];
+    const tags = ["Sports", "Slice of Life", "Shounen", "Shoujo", "Shounen Ai", "Shoujo Ai", "Supernatural", "Tragedy", "Yaoi", "Yuri", "Mecha", "Music", "Historical", "Military", "Parody", "Magic", "Demons", "Vampire", "Samurai", "Martial Arts", "Super Power", "Space", "Police", "Kids", "Josei", "Seinen", "Shounen Ai", "Shoujo Ai", "Doujinshi"];
 
     const handleClickOutside = (event: { target: any; }) => {
         if (ref.current && !ref.current.contains(event.target as Node)) {

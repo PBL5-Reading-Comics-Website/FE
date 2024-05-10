@@ -175,11 +175,11 @@ export const mangaService = {
       throw error;
     }
   },
-  getMangaByTagAndName: async ({ tagId, name, sortField, sortOrder, page = 1, size = 10 }: { tagId: number | null, name?: string ,sortField?: string, sortOrder?: string, page?: number, size?: number }) => {
+  getMangaByTagAndName: async ({ tag, name, sortField, sortOrder, page = 1, size = 10 }: { tag: string | null, name?: string ,sortField?: string, sortOrder?: string, page?: number, size?: number }) => {
     try {
       const response = await axiosInstance.get('/manga', {
         params: {
-          tagId,
+          tag,
           name,
           sortField,
           sortOrder,
