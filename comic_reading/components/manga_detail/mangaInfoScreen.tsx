@@ -207,7 +207,7 @@ export function MangaInfoScreen() {
             </div>
             <h1 className="text-2xl font-light mt-3">Thể loại</h1>
             <div className="w-full border-t pt-2 border-white">
-              <TagList tags={manga?.tags.map(tag => ({ id: 0, name: tag })) ?? []} onTagClick={function (tag: { id: number; name: string; }): void {
+              <TagList tags={manga?.tags.map(tag => tag) ?? []} onTagClick={function (text: string): void {
                 throw new Error("Function not implemented.");
               } } />
             </div>
