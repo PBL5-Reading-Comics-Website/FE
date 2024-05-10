@@ -2,11 +2,15 @@ import { useEffect, useRef } from "react";
 
 interface UserOptionsListProps {
   selectedOption: string;
+  role: string;
   setSelectedOption: (option: string) => void;
 }
 
-export function UserOptionsList({ selectedOption, setSelectedOption }: UserOptionsListProps) {
-    const options = ["Thông tin cá nhân", "Lịch sử đọc truyện", "Lịch sử đăng truyện","Thông tin theo dõi", "Đổi mật khẩu", ];
+export function UserOptionsList({ selectedOption, setSelectedOption, role }: UserOptionsListProps) {
+    const options = ["Thông tin cá nhân", "Lịch sử đọc truyện", "Thông tin theo dõi", "Đổi mật khẩu", ];
+    if (role === 'POSTER') {
+      options.push("Lịch sử đăng truyện");
+    }
     const markerRef = useRef<HTMLDivElement | null>(null);
     const optionRefs = useRef<(HTMLDivElement | null)[]>([]);
   

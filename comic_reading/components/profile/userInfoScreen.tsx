@@ -84,7 +84,7 @@ export function UserInfoScreen({
               <h1 className="text-3xl font-bold">{user?.username}</h1>
             </div>
             <div className="mt-4">
-              <UserOptionsList selectedOption={selectedOption} setSelectedOption={setSelectedOption} />
+              <UserOptionsList role={user?.role || ""} selectedOption={selectedOption} setSelectedOption={setSelectedOption} />
             </div>
             <div className="mt-4">
               {selectedOption === "Thông tin cá nhân" && <UpdateUserInfoTab avatarPath={imageUrl} user={user} />}

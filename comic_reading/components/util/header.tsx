@@ -38,7 +38,7 @@ export function Header() {
         const token = Cookies.get('token');
         if (token) {
             isLoggedIn = true;
-        }else {
+        } else {
             isLoggedIn = false;
         }
         setDropdownVisible(!dropdownVisible);
@@ -124,10 +124,14 @@ export function Header() {
                                             <h1 className="text-white text-base text-center">Thông tin cá nhân</h1>
                                         </Link>
                                         <div className="bg-gradient-to-r from-transparent via-white dark:via-white to-transparent h-[1px] w-full" />
-                                        <Link to="/posting" className="p-4" onClick={authService.logout}>
-                                            <h1 className="text-white text-base">Đăng truyện</h1>
-                                        </Link>
-                                        <div className="bg-gradient-to-r from-transparent via-white dark:via-white to-transparent h-[1px] w-full" />
+                                        {user?.role === "POSTER" && (
+                                            <>
+                                                <Link to="/new-manga" className="p-4">
+                                                    <h1 className="text-white text-base">Đăng truyện</h1>
+                                                </Link>
+                                                <div className="bg-gradient-to-r from-transparent via-white dark:via-white to-transparent h-[1px] w-full" />
+                                            </>
+                                        )}
                                         <Link to="/login" className="p-4" onClick={authService.logout}>
                                             <h1 className="text-white text-base">Đăng xuất</h1>
                                         </Link>

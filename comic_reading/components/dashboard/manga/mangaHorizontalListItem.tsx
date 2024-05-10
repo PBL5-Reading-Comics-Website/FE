@@ -15,7 +15,7 @@ export function MangaHorizontalListItem({
         <Link to={`/manga-info/${id}`}>
         <div className="flex flex-col items-center">
             <img src={imageUrl} alt={mangaName} className="object-cover w-40 h-60 rounded border border-gray-300 overflow-hidden" />
-            <p className="text-center text-lg mt-2">{mangaName}</p>
+            <p className="text-center text-orange-500 text-lg mt-2">{mangaName}</p>
         </div>
         </Link>
     );
