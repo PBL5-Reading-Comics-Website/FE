@@ -6,37 +6,52 @@ import TagListSelector from "./tagListSelector.tsx";
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {mangaService} from "../../src/service/mangaService.tsx";
+import Cookies from "js-cookie";
+import {jwtDecode} from "jwt-decode";
+import {userService} from "../../src/service/userService.tsx";
+import {posterService} from "../../src/service/posterService.tsx";
 
 interface UploadProgress {
     [filename: string]: number;
 }
 
 export function NewManga() {
+    const [user, setUser] = useState<any>();
     const [image, setImage] = useState<File | null>(null);
     const [mangaName, setMangaName] = useState('');
     const [author, setAuthor] = useState('');
     const [artist, setArtist] = useState('');
     const [description, setDescription] = useState('');
     const [publishingCompany, setPublishingCompany] = useState('');
-
     const [folderName, setFolderName] = useState(`van_chuong_viet/${mangaName}`);
     const [uploadProgress, setUploadProgress] = useState<UploadProgress>({});
 
+    useEffect(() => {
+        const getUser = async () => {
+            try {
+                const token = Cookies.get('token');
+                if (!token) {
+                    console.log('No token found');
+                    return;
+                }
 
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setImage(e.target.files);
-    };
+                const decodedToken: any = jwtDecode(token);
+                const data = await userService.getUserById(decodedToken.userId);
+                setUser(data.data);
+            } catch (error) {
+                console.error(error);
+            }
+        };
 
-    const handleFolderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setFolderName(e.target.value);
-    };
+        getUser();
+    }, []);
 
     const uploadImage = async () => {
         if (!image) return;
         const formData = new FormData();
         formData.append('file', image);
         formData.append('upload_preset', 'dtmyad0y');
-        formData.append('folder', folderName);
+        formData.append('folder', mangaName);
 
         try {
             console.log('Uploading:', image.name);
@@ -57,11 +72,19 @@ export function NewManga() {
         }
     };
 
-    function createManga() {
-        // mangaService.
-        console.log("meme")
+    const sendManga = async () => {
+        let imageUrl = ""
+        imageUrl = await uploadImage();
+        const manga = {
+            name: mangaName,
+            publishingCompany: publishingCompany,
+            artist: artist,
+            author: author,
+            description: description,
+            imageUrl: imageUrl
+        }
+        posterService.createManga(manga, user)
     }
-
 
     return (
         <div>
@@ -129,7 +152,7 @@ export function NewManga() {
                     </label>
                     <TagListSelector/>
                 </div>
-                <button type="button" onClick={uploadImage}>Send</button>
+                <button type="button" onClick={sendManga}>Send</button>
             </div>
         </div>
     );
