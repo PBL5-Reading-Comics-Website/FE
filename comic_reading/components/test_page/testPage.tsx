@@ -28,7 +28,7 @@ const ImageUploader: React.FC = () => {
       formData.append('upload_preset', 'dtmyad0y');
       formData.append('folder', folderName);
 
-      try { 
+      try {
         const response = await axios.post(
             'https://api.cloudinary.com/v1_1/dpkxkkrnl/image/upload',
             formData,
