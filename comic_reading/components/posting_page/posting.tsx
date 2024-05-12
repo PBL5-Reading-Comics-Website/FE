@@ -1,6 +1,6 @@
 "use client";
-import { Input } from '../util/input.tsx';
 import Header from "../util/header";
+import { Input } from '../util/input.tsx';
 import PageUpload from "./pageUpload.tsx";
 
 export function PostingPage() {
@@ -10,7 +10,7 @@ export function PostingPage() {
             <div className="w-full h-full">
                 <Header />
             </div>
-            <div className='top-20 mt-36 w-full p-5'>
+            <div className='mt-24 w-full p-5'>
                 <div className='flex w-full pb-4 border-b'>
                     <div className='w-full'>
                         <h2 className='font-extrabold my-4'>ĐĂNG TRUYỆN</h2>

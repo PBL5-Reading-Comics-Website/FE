@@ -98,7 +98,7 @@ export function UpdateUserInfoTab({ avatarPath, user }: UpdateUserInfoTabProps) 
                         <label className="block  text-sm font-bold mb-1" htmlFor="username">
                             Tên hiển thị
                         </label>
-                        <Input id="username" type="text" onChange={e => setUsername(e.target.value)} value={username} className={`h-10 ${!isEditable ? 'bg-gray-200' : ''}`} disabled={!isEditable} />
+                        <Input id="username" type="text" onChange={e => setUsername(e.target.value)} value={username} className={`h-10 ${!isEditable ? 'bg-gray-200' : ''}`} disabled={true} />
                     </div>
                     <div className="flex mb-2">
                         <div className="w-1/2 pr-1">
