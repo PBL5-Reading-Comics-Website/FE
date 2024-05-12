@@ -78,6 +78,7 @@ interface MangaInfoScreenProps {
 export function MangaInfoScreen() {
   const { id } = useParams();
   const [userId, setUserId] = useState(0);
+  const [isLiked, setIsLiked] = useState(false);
 
   const [manga, setManga] = useState<MangaData | null>(null);
   const [error, setError] = useState(false);
@@ -134,7 +135,7 @@ export function MangaInfoScreen() {
           <button className="font-saira mt-3 mr-0 flex items-center justify-center pl-16 ml-auto hover:border-[#b8382f] hover:border-2 bg-[#ED741B] text-[#2E2E2E] w-5/6 h-16 text-lg font-bold" type="submit" disabled={isLoggedIn} onClick={async () => {
             if (manga?.id) {
               try {
-                const response = await userService.likeManga(manga.id);
+                const response = await userService.likeManga(manga.id, userId);
                 if (response.status == "success") {
                   alert("Thích truyện thành công");
                   window.location.reload();
