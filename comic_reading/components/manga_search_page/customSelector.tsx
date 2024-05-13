@@ -1,5 +1,5 @@
 import { IconChevronDown } from '@tabler/icons-react';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import TagList from '../tag/tagList';
 
 interface TagListProps {

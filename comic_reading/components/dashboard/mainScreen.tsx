@@ -91,7 +91,7 @@ export function MainScreen() {
                 <div className="new_update">
                     <div className="flex items-center">
                         <h2 className="text-bold text-xl my-4 inline-block mr-2">Cập nhật mới nhất</h2>
-                        <Link to="/search" className="inline-block">
+                        <Link to="/search/name" className="inline-block">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                  stroke="currentColor"
                                  className="w-6 h-6 text-white hover:text-gray-500 transition-colors duration-300">

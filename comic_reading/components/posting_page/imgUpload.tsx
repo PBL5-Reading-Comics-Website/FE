@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './imageUpload.css';
 
-function ImageUpload() {
+function ImageUpload({ onFileSelected }) {
   const [image, setImage] = useState<string | null>(null);
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -10,6 +10,7 @@ function ImageUpload() {
 
     reader.onloadend = () => {
       setImage(reader.result as string);
+      onFileSelected(file); // Call the callback function with the selected file
     };
 
     if (file) {
