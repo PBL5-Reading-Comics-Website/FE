@@ -134,26 +134,9 @@ export const userService = {
         }
     },
 
-    likeManga: async (id: number, userId: number) => {
+    likeManga: async (id: number) => {
         try {
-            const response = await axiosInstance.put(`user/like-manga/${id}`, {}, {
-                params: {
-                    userId
-                }
-            });
-            return response.data;
-        } catch (error) {
-            console.error(error);
-            throw error;
-        }
-    },
-    dislikeManga: async (id: number, userId: number) => {
-        try {
-            const response = await axiosInstance.put(`user/dislike-manga/${id}`, {}, {
-                params: {
-                    userId
-                }
-            });
+            const response = await axiosInstance.put(`user/like-manga/${id}`);
             return response.data;
         } catch (error) {
             console.error(error);
