@@ -58,7 +58,8 @@ const ChapterList: React.FC<ChapterListProps> = ({ chapters }) => {
             <ChapterLink
                 key={index}
                 name={chapter.manga.name}
-                chapter={chapter.id.toString()}
+                chapter={(index + 1).toString()}
+                chapterId={chapter.id.toString()}
                 chapterName={chapter.name}
                 time={chapter.publishAt}
                 poster={`Người đăng: ${chapter.manga.author}`}

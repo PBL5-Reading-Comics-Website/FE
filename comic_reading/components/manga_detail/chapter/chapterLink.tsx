@@ -6,12 +6,13 @@ import { Link } from "react-router-dom";
 interface ChapterLinkProps {
   name: string;
   chapter: string;
+  chapterId: string;
   chapterName: string;
   time: string;
   poster: string;
 }
 
-export function ChapterLink({ name, chapter, time, poster, chapterName }: ChapterLinkProps) {
+export function ChapterLink({ name, chapter, chapterId ,time, poster, chapterName }: ChapterLinkProps) {
   const radius = 100;
   const [visible, setVisible] = React.useState(false);
 
@@ -25,7 +26,7 @@ export function ChapterLink({ name, chapter, time, poster, chapterName }: Chapte
     mouseY.set(clientY - top);
   }
   return (
-    <Link to={`/read-manga/${chapter}`}>
+    <Link to={`/read-manga/${chapterId}`}>
       <motion.div
         style={{
           background: useMotionTemplate`

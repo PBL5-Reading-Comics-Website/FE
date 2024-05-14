@@ -1,14 +1,15 @@
 "use client";
+import Cookies from 'js-cookie';
+import { jwtDecode } from "jwt-decode";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { mangaService } from "../../src/service/mangaService.tsx";
 import Footer from "../util/footer.tsx";
 import { Header } from "../util/header.tsx";
-import MangaHorizontalList from "./manga/mangaHorizontalList.tsx";
+import { MangaHorizontalList, MangaHorizontalListRecommend } from "./manga/mangaHorizontalList.tsx";
 import MangaHorizontalListItem from "./manga/mangaHorizontalListItem.tsx";
 import MangaList from "./manga/mangaList.tsx";
 import MangaListItem from "./manga/mangaListItem.tsx";
-
 interface Manga {
     id: string;
     coverImage: string;
@@ -18,17 +19,33 @@ interface Manga {
 }
 
 export function MainScreen() {
-  const [mangas, setMangas] = useState<Manga[]>([]);
-  const [seasonalMangas, setSeasonalMangas] = useState<Manga[]>([]);
-  useEffect(() => {
-    const fetchMangas = async () => {
-      try {
-        const data = await mangaService.getTop10NewestManga();
-        setMangas(data.data);
-      } catch (error) {
-        console.error(error);
-      }
+    const [mangas, setMangas] = useState<Manga[]>([]);
+    const [seasonalMangas, setSeasonalMangas] = useState<Manga[]>([]);
+    const [userID, setUserId] = useState<number | null>(null); // Initialize as null
+
+    useEffect(() => {
+        const fetchUserId = async () => {
+        try {
+            const token = Cookies.get('token');
+            if (token) {
+                const decodedToken: any = await jwtDecode(token);
+                setUserId(decodedToken.userId);
+            }
+        } catch (error) {
+            console.error(error);
+        }
     };
+    fetchUserId();
+    }, [userID]);
+    useEffect(() => {
+        const fetchMangas = async () => {
+            try {
+                const data = await mangaService.getTop10NewestManga();
+                setMangas(data.data);
+            } catch (error) {
+                console.error(error);
+            }
+        };
 
         fetchMangas();
     }, []);
@@ -86,17 +103,17 @@ export function MainScreen() {
     const imageLink = "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRxeHo9j4IlUFhygyd9bXGP2XqppHByB729-W-mxs29HvfKfYpHpYRSAUe4FtMi1HeuIHOUOQ";
     return (
         <div className="w-full h-full">
-            <Header/>
+            <Header />
             <div className="w-full h-full px-4 mt-16 flex flex-col">
                 <div className="new_update">
                     <div className="flex items-center">
                         <h2 className="text-bold text-xl my-4 inline-block mr-2">Cập nhật mới nhất</h2>
                         <Link to="/search/name" className="inline-block">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                 stroke="currentColor"
-                                 className="w-6 h-6 text-white hover:text-gray-500 transition-colors duration-300">
+                                stroke="currentColor"
+                                className="w-6 h-6 text-white hover:text-gray-500 transition-colors duration-300">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                                      d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                                    d="M14 5l7 7m0 0l-7 7m7-7H3" />
                             </svg>
                         </Link>
                     </div>
@@ -113,7 +130,7 @@ export function MainScreen() {
                                 />
                             ))}
                             {Array(5 - mangas.slice(0, 5).length).fill({}).map((_, index) => (
-                                <MangaListItem key={mangas.length + index}/>
+                                <MangaListItem key={mangas.length + index} />
                             ))}
                         </MangaList>
                         <MangaList className="w-1/2 mr-2">
@@ -128,7 +145,7 @@ export function MainScreen() {
                                 />
                             ))}
                             {Array(5 - mangas.slice(5, 10).length).fill({}).map((_, index) => (
-                                <MangaListItem key={mangas.length + index + 5}/>
+                                <MangaListItem key={mangas.length + index + 5} />
                             ))}
                         </MangaList>
                     </div>
@@ -148,22 +165,13 @@ export function MainScreen() {
                 </div>
                 <div className="monthly">
                     <h2 className="text-bold text-xl my-4">Theo tháng</h2>
-                    <MangaHorizontalList className="mt-2">
-                        <MangaHorizontalListItem
-                            imageUrl="https://play-lh.googleusercontent.com/PNwko2YeBrS_qw2Cjst-zXsc_AsZ8zT9CY9SA_uj1LKaI4ONdG8yX-xZsa8GmIQWVg=w526-h296-rw"
-                            mangaName="Manga 1"/>
-                        <MangaHorizontalListItem imageUrl={imageLink} mangaName="Manga 2"/>
-                        <MangaHorizontalListItem imageUrl={imageLink} mangaName="Manga 3"/>
-                        <MangaHorizontalListItem imageUrl={imageLink} mangaName="Manga 4"/>
-                        <MangaHorizontalListItem imageUrl={imageLink} mangaName="Manga 5"/>
-                        <MangaHorizontalListItem imageUrl={imageLink} mangaName="Manga 6"/>
-                        <MangaHorizontalListItem imageUrl={imageLink} mangaName="Manga 7"/>
-                        <MangaHorizontalListItem imageUrl={imageLink} mangaName="Manga 8"/>
-                    </MangaHorizontalList>
+                    {userID !== null && (
+                        <MangaHorizontalListRecommend userId={userID} className="mt-2" />
+                    )}
                 </div>
                 <div className="h-64"></div>
             </div>
-            <Footer/>
+            <Footer />
         </div>
     );
 }
