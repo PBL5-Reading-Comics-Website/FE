@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { authService } from '../../src/service/authService.tsx';
+import { userService } from '../../src/service/userService.tsx';
 import { DateTimeInput, Input, SelectInput } from '../util/input.tsx';
 
 interface UpdateUserInfoTabProps {
@@ -32,6 +33,7 @@ export function UpdateUserInfoTab({ avatarPath, user }: UpdateUserInfoTabProps) 
     const [name, setName] = useState(user?.name || '');
     const [dob, setDob] = useState(user?.dateOfBirth || null);
     const [gender, setGender] = useState(user?.gender ? 'Nam' : 'Nữ');
+    const [imageUrl, setImageUrl] = useState<string>('');
     useEffect(() => {
         setUsername(user?.username ?? '');
         setEmail(user?.email ?? '');
@@ -68,19 +70,37 @@ export function UpdateUserInfoTab({ avatarPath, user }: UpdateUserInfoTabProps) 
                 if (updatedUser.status == "success") {
                     alert("Cập nhật thông tin thành công");
                     window.location.reload();
-                }   
+                }
             } catch (error) {
                 console.error(error);
             }
             setIsEditable(false);
         }
     };
-
+    const handleImageUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setImageUrl(event.target.value);
+    };
+    const handleUpload = async () => {
+        if (imageUrl) {
+            try {
+                console.log(imageUrl)
+                const response = await userService.updateUserImage(user?.id || 0, imageUrl);
+                if (response.status === 'success') {
+                    console.log(response.data)
+                    alert('Ảnh đại diện đã được cập nhật');
+                    window.location.reload();
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        } else {
+            alert('Vui lòng nhập URL hình ảnh');
+        }
+    };
     return (
         <div>
             <h2 className='text-bold my-4'>CẬP NHẬT THÔNG TIN CÁ NHÂN</h2>
             <div className="flex items-center">
-
                 <div className="w-7/12">
                     <div className="mb-2">
                         <label className="block  text-sm font-bold mb-1" htmlFor="name">
@@ -123,8 +143,9 @@ export function UpdateUserInfoTab({ avatarPath, user }: UpdateUserInfoTabProps) 
                     </button>
                 </div>
                 <div className="ml-4 flex flex-col items-center">
-                    <img className="w-24 h-24 rounded-full mb-4" src={avatarPath} alt="User Avatar" />
-                    <button className="bg-[#929292] text-white font-bold py-2 px-4 rounded" >
+                    {imageUrl != '' && <img className="w-24 h-24 rounded-full mb-4" src={imageUrl} alt="User Avatar" />}
+                    <input type="text" value={imageUrl} onChange={handleImageUrlChange} className="bg-[#929292] text-white font-bold py-2 px-4 rounded cursor-pointer" placeholder="Nhập URL hình ảnh" />
+                    <button className="bg-[#ED741B] text-white font-bold py-2 px-4 rounded mt-4 " onClick={handleUpload}>
                         Thay đổi ảnh đại diện
                     </button>
                 </div>

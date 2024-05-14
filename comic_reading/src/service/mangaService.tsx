@@ -213,7 +213,7 @@ export const mangaService = {
     },
     getMangaByTagAndName: async ({tag, name, sortField, sortOrder, page = 1, size = 10}: {
         tag: string | null,
-        name?: string,
+        name?: string | null,
         sortField?: string,
         sortOrder?: string,
         page?: number,

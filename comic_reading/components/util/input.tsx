@@ -7,12 +7,13 @@ import { cn } from "../../utils/cn";
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> { }
 export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  icon?: React.ReactNode; // Add this line
+  icon?: React.ReactNode;
+  suffixIcon?: React.ReactNode; // Add this line for the suffix icon
 }
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, type, icon, ...props }, ref) => {
-    const radius = 100; // change this to increase the rdaius of the hover effect
+  ({ className, type, icon, suffixIcon, ...props }, ref) => {
+    const radius = 100; // change this to increase the radius of the hover effect
     const [visible, setVisible] = React.useState(false);
 
     let mouseX = useMotionValue(0);
@@ -24,40 +25,48 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       mouseX.set(clientX - left);
       mouseY.set(clientY - top);
     }
+
     return (
       <motion.div
         style={{
           background: useMotionTemplate`
-        radial-gradient(
-          ${visible ? radius + "px" : "0px"} circle at ${mouseX}px ${mouseY}px,
-          var(--orange-500),
-          transparent 80%
-        )
-      `,
+                        radial-gradient(
+                            ${visible ? radius + "px" : "0px"} circle at ${mouseX}px ${mouseY}px,
+                            var(--orange-500),
+                            transparent 80%
+                        )
+                    `,
         }}
         onMouseMove={handleMouseMove}
         onMouseEnter={() => setVisible(true)}
         onMouseLeave={() => setVisible(false)}
-        className="p-[2px] rounded-lg flex transition duration-300 group/input"
+        className="p-[2px] rounded-lg flex transition duration-300 group/input relative"
       >
-       
+        {icon && (
+          <div className="absolute left-3 top-1/2 transform -translate-y-1/2 flex items-center">
+            {icon}
+          </div>
+        )}
         <input
           type={type}
           className={cn(
-            `flex h-16 w-full border-none bg-gray-50 dark:bg-zinc-800 text-black dark:text-white shadow-input rounded-md px-3 py-2 text-lg  file:border-0 file:bg-transparent 
-    file:text-lg file:font-medium placeholder:text-neutral-400 dark:placeholder-text-neutral-600 
-    focus-visible:outline-none focus-visible:ring-[2px]  focus-visible:ring-neutral-400 dark:focus-visible:ring-neutral-600
-    disabled:cursor-not-allowed disabled:opacity-50
-    dark:shadow-[0px_0px_1px_1px_var(--neutral-700)]
-    group-hover/input:shadow-none transition duration-400
-    ${icon ? 'pl-9' : ''}`,
+            `flex h-16 w-full border-none bg-gray-50 dark:bg-zinc-800 text-black dark:text-white shadow-input rounded-md px-3 py-2 text-lg file:border-0 file:bg-transparent 
+                        file:text-lg file:font-medium placeholder:text-neutral-400 dark:placeholder-text-neutral-600 
+                        focus-visible:outline-none focus-visible:ring-[2px] focus-visible:ring-neutral-400 dark:focus-visible:ring-neutral-600
+                        disabled:cursor-not-allowed disabled:opacity-50
+                        dark:shadow-[0px_0px_1px_1px_var(--neutral-700)]
+                        group-hover/input:shadow-none transition duration-400
+                        ${icon ? 'pl-9' : ''} ${suffixIcon ? 'pr-9' : ''}`,
             className
           )}
           ref={ref}
           {...props}
         />
-        {icon && <div className="absolute self-end flex items-center pointer-events-none">{icon}</div>}
-        
+        {suffixIcon && (
+          <div className="absolute right-3 top-1/2 transform -translate-y-1/2 flex items-center">
+            {suffixIcon}
+          </div>
+        )}
       </motion.div>
     );
   }
@@ -114,7 +123,7 @@ const SelectInput = React.forwardRef<HTMLSelectElement, SelectInputProps>(
             className
           )}
           ref={ref}
-    
+
           {...props}
         >
           {options.map(option => (
@@ -137,7 +146,7 @@ export interface DateTimeInputProps extends React.InputHTMLAttributes<HTMLInputE
 
 const DateTimeInput = React.forwardRef<HTMLInputElement, DateTimeInputProps>(
   ({ className, icon, ...props }, ref) => {
-    const radius = 100; 
+    const radius = 100;
     const [visible, setVisible] = React.useState(false);
 
     let mouseX = useMotionValue(0);
@@ -151,19 +160,19 @@ const DateTimeInput = React.forwardRef<HTMLInputElement, DateTimeInputProps>(
     }
     return (
       <motion.div
-      style={{
-        background: useMotionTemplate`
+        style={{
+          background: useMotionTemplate`
     radial-gradient(
       ${visible ? radius + "px" : "0px"} circle at ${mouseX}px ${mouseY}px,
       var(--orange-500),
       transparent 80%
     )
   `,
-      }}
-      onMouseMove={handleMouseMove}
-      onMouseEnter={() => setVisible(true)}
-      onMouseLeave={() => setVisible(false)}
-      className="p-[2px] rounded-lg transition duration-300 group/input"
+        }}
+        onMouseMove={handleMouseMove}
+        onMouseEnter={() => setVisible(true)}
+        onMouseLeave={() => setVisible(false)}
+        className="p-[2px] rounded-lg transition duration-300 group/input"
       >
         <input
           type="date" // Changed from "datetime-local" to "date"

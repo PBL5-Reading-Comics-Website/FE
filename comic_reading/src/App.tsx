@@ -32,7 +32,8 @@ export default function App() {
                     <Route path="/admin-page" element={<AdminPage />} />
                     <Route path="/other-user" element={<OtherUserInfo />} />
                     <Route path="/posting" element={<PostingPage />} />
-                    <Route path="/search/:field" element={<MangaSearchPage />} />
+                    <Route path="/search/:search/:tag" element={<MangaSearchPage />} />
+                    <Route path="/search" element={<MangaSearchPage />} />
                     <Route path="/new-manga" element={<NewManga />} />
                     <Route path="/test-manga" element={<ImageUploader />} />
                 </Routes>

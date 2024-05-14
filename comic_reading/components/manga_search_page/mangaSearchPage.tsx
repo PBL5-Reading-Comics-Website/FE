@@ -1,13 +1,13 @@
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { IconSearch } from '@tabler/icons-react';
+import { IconFaceMask, IconSearch } from '@tabler/icons-react';
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { mangaService } from '../../src/service/mangaService';
 import Header from '../util/header';
 import { Input } from '../util/input';
 import CustomSelector from './customSelector';
 import MangaSearchPageItem from './mangaSearchPageItems';
-import { useParams } from 'react-router-dom';
 
 interface Manga {
     id: number;
@@ -28,27 +28,36 @@ interface Manga {
 }
 
 export function MangaSearchPage() {
-    const field = useParams()
+    const { search, searchTag } = useParams();
     const [mangas, setMangas] = useState<Manga[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
-    const [searchQuery, setSearchQuery] = useState('');
-    const [selectedTag, setSelectedTag] = useState('');
+    const [searchQuery, setSearchQuery] = useState(search ?? null);
+    const [selectedTag, setSelectedTag] = useState(searchTag ?? null);
+    const [sortField, setSortField] = useState('name');
+    const [sortOrder, setSortOrder] = useState('asc');
+
+    useEffect(() => {
+        if (search) {
+            setSearchQuery(search);
+        }
+        if (searchTag) {
+            setSelectedTag(searchTag);
+        }
+    }, [])
+
     useEffect(() => {
         const fetchMangas = async () => {
+            IconFaceMask;
             try {
                 const tag = selectedTag;
-                console.log(tag)
-                console.log(field)
-                const response = await mangaService.getMangaByTagAndName(
-                    {
-                        tag: tag,
-                        name: searchQuery,
-                        page: currentPage,
-                        sortOrder: 'asc',
-                        sortField: 'name',
-                    }
-                );
+                const response = await mangaService.getMangaByTagAndName({
+                    tag: tag,
+                    name: searchQuery,
+                    page: currentPage,
+                    sortOrder: sortOrder,
+                    sortField: sortField,
+                });
                 setMangas(response.data);
                 setTotalPages(response.meta.totalPage);
             } catch (error) {
@@ -56,7 +65,7 @@ export function MangaSearchPage() {
             }
         };
         fetchMangas();
-    }, [currentPage, selectedTag, searchQuery]);
+    }, [currentPage, selectedTag, searchQuery, sortField, sortOrder]);
 
     const handleTagChange = (tag: string | null) => {
         setSelectedTag(tag || '');
@@ -65,6 +74,16 @@ export function MangaSearchPage() {
 
     const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSearchQuery(event.target.value);
+        setCurrentPage(1);
+    };
+
+    const handleSortFieldChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        setSortField(event.target.value);
+        setCurrentPage(1);
+    };
+
+    const handleSortOrderChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        setSortOrder(event.target.value);
         setCurrentPage(1);
     };
 
@@ -88,12 +107,24 @@ export function MangaSearchPage() {
                     <Input
                         type="text"
                         className="bg-gray-700 w-full h-full rounded-md"
-                        icon={<IconSearch className="my-2 ml-2" />}
-                        onChange={handleSearchChange} 
+                        suffixIcon={<IconSearch className="my-2 ml-2" />}
+                        onChange={handleSearchChange}
                         placeholder="Search..."
                     />
                 </div>
                 <CustomSelector onTagChange={handleTagChange} />
+                <div className="flex space-x-4">
+                    <select value={sortField} onChange={handleSortFieldChange} className="bg-gray-700 text-white rounded-md p-2">
+                        <option value="name">Name</option>
+                        <option value="viewNumber">Views</option>
+                        <option value="favouriteNumber">Favorites</option>
+                        <option value="publishAt">Published Date</option>
+                    </select>
+                    <select value={sortOrder} onChange={handleSortOrderChange} className="bg-gray-700 text-white rounded-md p-2">
+                        <option value="asc">Ascending</option>
+                        <option value="desc">Descending</option>
+                    </select>
+                </div>
                 <div className='flex justify-between'>
                 </div>
                 <div className=' w-full flex flex-wrap h-auto justify-between'>
@@ -103,7 +134,7 @@ export function MangaSearchPage() {
                         </div>
                     ))}
                 </div>
-                <div className="pagination flex items-center justify-end mb-5" >
+                <div className="pagination flex items-center justify-end mb-5">
                     <FontAwesomeIcon
                         icon={faChevronLeft}
                         onClick={prevPage}

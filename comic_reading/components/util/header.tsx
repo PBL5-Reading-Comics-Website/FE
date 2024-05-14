@@ -1,12 +1,12 @@
 "use client";
 import {
     IconBell,
-    IconSearch,
+    IconSearch
 } from "@tabler/icons-react";
 import Cookies from 'js-cookie';
 import { jwtDecode } from "jwt-decode";
 import { useEffect, useState } from "react";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { authService } from "../../src/service/authService";
 import { userService } from "../../src/service/userService";
 import { Input } from './input';
@@ -33,7 +33,8 @@ interface User {
 export function Header() {
     const [dropdownVisible, setDropdownVisible] = useState(false);
     const [user, setUser] = useState<User>();
-
+    const [searchQuery, setSearchQuery] = useState('');
+    const navigate = useNavigate();
     const toggleDropdown = () => {
         const token = Cookies.get('token');
         if (token) {
@@ -67,8 +68,15 @@ export function Header() {
 
         getUser();
     }, []);
-
-
+    
+    const handleSearch = (query: string) => {
+        setSearchQuery(query);
+        
+    }
+    const handleSearchSubmit = (event: React.FormEvent) => {
+        event.preventDefault();
+        navigate(`/search/${searchQuery}/null`);
+    };
     return (
         <div className="w-full top-0 z-50 absolute">
             <div className="w-full h-fit flex bg-black justify-between items-center absolute">
@@ -102,11 +110,17 @@ export function Header() {
                     </Link>
                 </div>
                 <div className="flex items-center w-fit relative">
-                    <form action="">
+                    <form action="submit" onSubmit={handleSearchSubmit}>
                         <div className="h-7 w-60 m-5 bg-gray-700  rounded-md flex">
-                            <Input type="text" className="bg-gray-700 w-full h-full rounded-md" icon={<IconSearch className="p-1" />}>
+                            <Input type="text" className="bg-gray-700 w-full h-full rounded-md" onChange={
+                                (e) => handleSearch(e.target.value)
+                            } 
+                             suffixIcon = {
+                                <Link to = {`/search/${searchQuery}/${null}`}>
+                             <IconSearch className="text-white h-4 w-4 z-10 cursor-pointer"/>
+                             </Link>
+                             } >
                             </Input>
-
                         </div>
                     </form>
                     <div className="flex p-5">

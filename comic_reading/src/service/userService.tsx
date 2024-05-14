@@ -182,6 +182,15 @@ export const userService = {
             throw error;
         }
     },
-    
-
+    updateUserImage: async (id: number, imageUrl: string) => {
+        try {
+            const response = await axiosInstance.put(`user/update-image/${id}`, {
+                imageUrl: imageUrl // Send imageUrl in the request body
+            });
+            return response.data;
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
+    },
 }
