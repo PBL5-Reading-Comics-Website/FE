@@ -89,14 +89,14 @@ export function Header() {
                     </Link>
                 </div>
                 <div className="h-16 flex items-center justify-center p-5">
-                    <Link to="/search/publishAt">
+                    <Link to="/search">
                     <h1 className="text-center font-saira font-bold text-xl text-white">
                         TRUYỆN MỚI
                     </h1>
                     </Link>
                 </div>
                 <div className="h-16 flex items-center justify-center p-5">
-                    <Link to="/search/name">
+                    <Link to="/search">
                     <h1 className="text-center font-saira font-bold text-xl text-white">
                         DANH SÁCH TRUYỆN
                     </h1>

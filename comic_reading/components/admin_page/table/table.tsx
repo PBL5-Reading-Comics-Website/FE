@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { mangaService } from '../../../src/service/mangaService';
 import { userService } from '../../../src/service/userService';
 interface Manga {
@@ -70,7 +71,9 @@ function AdminMangaTable() {
                     {mangas.map((manga) => (
                         <tr key={manga.id}>
                             <td className="px-6 py-4 whitespace-nowrap">{manga.id}</td>
+                            <Link to= {`/admin-manga-page/${manga.id}`} >
                             <td className="px-6 py-4 whitespace-nowrap">{manga.name}</td>
+                            </Link>
                             <td className="px-6 py-4 whitespace-nowrap">{manga.author}</td>
                             <td className="px-6 py-4 whitespace-nowrap">{manga.artist}</td>
                             <td className="px-6 py-4 whitespace-nowrap">{manga.status}</td>
@@ -208,4 +211,84 @@ function AdminUserTable() {
 }
 
 export { AdminUserTable };
+
+interface Chapter {
+    id: number;
+    name: string;
+    number: number;
+    commentNumber: number;
+    publishAt: string;
+    updateAt: string;
+}
+
+interface AdminChapterTableProps {
+    mangaId: number;
+}
+
+function AdminChapterTable({ mangaId }: AdminChapterTableProps) {
+    const [chapters, setChapters] = useState<Chapter[]>([]);
+    useEffect(() => {
+        const fetchMangas = async () => {
+            try {
+                console.log(mangaId)
+                const response = await mangaService.getMangaById(mangaId);
+                setChapters(response.data.chapters);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        fetchMangas();
+    }, []);
+
+    const handleDelete = (id: number) => {
+        // Filter out the manga with the given id
+        const updatedChapter = chapters.filter(chapter => chapter.id !== id);
+        // Update the state with the filtered mangas
+        setChapters(updatedChapter);
+    };
+
+    const handleUpdate = (id: number) => {
+        // Implement your update logic here
+        console.log(`Update manga with id ${id}`);
+    };
+
+    return (
+        <div className="bg-gray-900 text-white overflow-auto h-full w-full">
+            <table className="divide-y divide-orange-500 mx-auto my-8">
+                <thead >
+                    <tr>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase tracking-wider">ID</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase tracking-wider">Tên</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase tracking-wider">Lượt bình luận</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase tracking-wider">Đăng ngày</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase tracking-wider">Cập nhật ngày</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase tracking-wider">Cập nhật</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase tracking-wider">Xóa</th>
+                    </tr>
+                </thead>
+                <tbody className="divide-y divide-orange-500">
+                    {chapters.map((chapter) => (
+                        <tr key={chapter.id}>
+                            <td className="px-6 py-4 whitespace-nowrap">{chapter.id}</td>
+                            <td className="px-6 py-4 whitespace-nowrap">{chapter.name}</td>
+                            <td className="px-6 py-4 whitespace-nowrap">{chapter.commentNumber}</td>
+                            <td className="px-6 py-4 whitespace-nowrap">{chapter.publishAt}</td>
+                            <td className="px-6 py-4 whitespace-nowrap">{chapter.updateAt}</td>
+                            <td className="px-6 py-4 whitespace-nowrap">
+                                <button onClick={() => handleUpdate(chapter.id)} className="mx-1 px-4 py-2 rounded-md text-white bg-blue-500">Update</button>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap">
+                                <button onClick={() => handleDelete(chapter.id)} className="mx-1 px-4 py-2 rounded-md text-white bg-red-500">Delete</button>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+
+        </div>
+    );
+}
+
+export { AdminChapterTable };
 

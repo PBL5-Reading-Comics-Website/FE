@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import AdminMangaPage from '../components/admin_page/adminMangaPage.tsx'
 import AdminPage from '../components/admin_page/adminPage.tsx'
 import MainScreen from '../components/dashboard/mainScreen.tsx'
 import ErrorPage from '../components/error/errorPage.tsx'
@@ -30,6 +31,7 @@ export default function App() {
                     <Route path="/user-info" element={<UserInfoScreen />} />
                     <Route path="/read-manga/:id" element={<ChapterScreen />} />
                     <Route path="/admin-page" element={<AdminPage />} />
+                    <Route path="/admin-manga-page/:id" element={<AdminMangaPage />} />
                     <Route path="/other-user" element={<OtherUserInfo />} />
                     <Route path="/posting" element={<PostingPage />} />
                     <Route path="/search/:search/:tag" element={<MangaSearchPage />} />
