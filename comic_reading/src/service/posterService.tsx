@@ -41,4 +41,16 @@ export const posterService = {
             throw error;
         }
     },
+    creatChapter: async ({name, number}: {name?: string, number?: number}, mangaId: number) => {
+        try {
+            const response = await axiosInstance.post('/chapter', {name, number}, {
+                params: {mangaId}
+            });
+            console.log(response)
+            return response.data;
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
+    }
 };

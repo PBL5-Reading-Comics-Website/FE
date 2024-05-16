@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import './pageUpload.css';
-
-const PageUpload = () => {
+import axios from "axios";
+interface PageUploadProps {
+  onImageUpload?: (images: string[]) => void;
+}
+const PageUpload: React.FC<PageUploadProps> = ({ onImageUpload }) => {
   const [images, setImages] = useState<string[]>([]);
   const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
 
@@ -22,6 +25,9 @@ const PageUpload = () => {
       }
       setImages(newImages);
       setSelectedImageIndex(null);
+
+      // Call the onImageUpload callback with the new images
+      onImageUpload?.(newImages);
     };
 
     reader.readAsDataURL(file);
