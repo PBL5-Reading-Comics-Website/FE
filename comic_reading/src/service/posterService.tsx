@@ -22,6 +22,15 @@ axiosInstance.interceptors.request.use(
 );
 
 export const posterService = {
+    getMangaById: async (id: number) => {
+        try {
+            const response = await axiosInstance.get(`/manga/${id}`);
+            return response.data;
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
+    },
     createManga: async ({name, publishingCompany, artist, author, description, coverImage}: {
         name: string,
         publishingCompany?: string,
@@ -34,14 +43,14 @@ export const posterService = {
             const response = await axiosInstance.post('/manga', {name, publishingCompany, artist, author, description, coverImage}, {
                 params: {userId: user.id}
             });
-            console.log(response)
+            console.log(response);
             return response.data;
         } catch (error) {
             console.error(error);
             throw error;
         }
     },
-    creatChapter: async ({name, number}: {name?: string, number?: number}, mangaId: number) => {
+    createChapter: async ({name, number}: {name?: string, number?: number}, mangaId: number) => {
         try {
             const response = await axiosInstance.post('/chapter', {name, number}, {
                 params: {mangaId}

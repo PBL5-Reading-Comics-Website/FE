@@ -1,16 +1,11 @@
 import React, { useState } from 'react';
 import './pageUpload.css';
-import axios from "axios";
 interface PageUploadProps {
   onImageUpload?: (images: string[]) => void;
 }
 const PageUpload: React.FC<PageUploadProps> = ({ onImageUpload }) => {
   const [images, setImages] = useState<string[]>([]);
   const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
-
-  const getImages = () => {
-    return images;
-  };
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files![0];

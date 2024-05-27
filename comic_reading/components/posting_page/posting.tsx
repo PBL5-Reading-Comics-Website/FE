@@ -3,8 +3,10 @@ import Header from "../util/header";
 import { Input } from '../util/input.tsx';
 import PageUpload from "./pageUpload.tsx";
 import axios from "axios";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {posterService} from "../../src/service/posterService.tsx";
+import {useNavigate} from "react-router-dom";
+import {mangaService} from "../../src/service/mangaService.tsx";
 interface UploadProgress {
     [filename: string]: number;
 }
@@ -17,10 +19,27 @@ export function PostingPage() {
     const [chapterNumber, setChapterNumber] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [showAlert, setShowAlert] = useState(false);
+    const [manga, setManga] = useState<any>();
+    const navigate = useNavigate();
     const handleImageUpload = (images: string[]) => {
         console.log('Uploaded images:', images);
         // You can now use the images array here
     };
+    useEffect(() => {
+        const getManga = async () => {
+            try {
+                const data = await mangaService.getMangaByTagAndName({
+                    tag: '',
+                    name: mangaName
+                });
+                setManga(data.data);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        getManga();
+    }, [mangaName]);
+
     const uploadImages = async () => {
         if (!images) return;
 
@@ -62,10 +81,10 @@ export function PostingPage() {
         console.log('Image URL:', imageUrl);
         const chapter = {
             name: chapterName,
-            number: chapterNumber
+            number: parseInt(chapterNumber)
         };
         try {
-            await posterService.creatChapter(chapter, manga.id);
+            await posterService.createChapter(chapter, manga.id);
             setShowAlert(true);
             setTimeout(() => {
                 setShowAlert(false);
@@ -77,7 +96,7 @@ export function PostingPage() {
             setIsLoading(false); // Hide loading
         }
     }
-}
+
     return (
         <div>
             <div className="w-full h-full">
@@ -112,11 +131,12 @@ export function PostingPage() {
                     </div>
                 </div>
                 <div className="border-b-2 pb-2">
-                    <PageUpload onImageUpload={handleImageUpload}>
+                    <PageUpload onImageUpload={handleImageUpload}/>
                 </div>
                 <button
                     className="font-saira my-8 bg-[#ED741B] hover:border-2 hover:border-[#b8382f] self-end h-16 text-lg font-bold"
                     type="submit"
+                    onClick={sendChapter}
                 >
                     ĐĂNG TRUYỆN
                 </button>
