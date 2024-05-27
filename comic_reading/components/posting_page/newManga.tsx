@@ -164,7 +164,7 @@ export function NewManga() {
             <label className='block text-sm font-bold mb-1' htmlFor="name">
               Bìa truyện
             </label>
-            <ImgUpload onFileSelected={(file: File) => setImage(file)} />
+            <ImgUpload onFileSelected={(file: File | null) => setImage(file)} />
             {Object.entries(uploadProgress).map(([filename, progress]) => (
               <div key={filename}>
                 {filename}: {progress}%
