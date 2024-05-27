@@ -50,14 +50,14 @@ export function NewManga() {
     if (!image) return;
     const formData = new FormData();
     formData.append('file', image);
-    formData.append('upload_preset', 'dtmyad0y'); 
+    formData.append('upload_preset', 'team_upload');
     formData.append('folder', 'van_chuong_viet/' + mangaName); 
 
     try {
       console.log('Uploading:', image.name);
       console.log(formData)
       const response = await axios.post(
-        'https://api.cloudinary.com/v1_1/dpkxkkrnl/image/upload', 
+        'https://api.cloudinary.com/v1_1/dcwqcvfi6/image/upload',
         formData,
         {
           onUploadProgress: (progressEvent) => {

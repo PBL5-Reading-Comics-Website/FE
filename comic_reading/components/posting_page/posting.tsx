@@ -28,17 +28,15 @@ export function PostingPage() {
     useEffect(() => {
         const getManga = async () => {
             try {
-                const data = await mangaService.getMangaByTagAndName({
-                    tag: '',
-                    name: mangaName
-                });
+                const data = await mangaService.getMangaById(13);
+                console.log(data);
                 setManga(data.data);
             } catch (error) {
                 console.error(error);
             }
         };
         getManga();
-    }, [mangaName]);
+    }, []);
 
     const uploadImages = async () => {
         if (!images) return;
@@ -47,12 +45,12 @@ export function PostingPage() {
             const image = images[i];
             const formData = new FormData();
             formData.append('file', image);
-            formData.append('upload_preset', 'dtmyad0y');
+            formData.append('upload_preset', 'team_upload');
             formData.append('folder', mangaName + "/" + chapterName);
 
             try {
                 const response = await axios.post(
-                    'https://api.cloudinary.com/v1_1/dpkxkkrnl/image/upload',
+                    'https://api.cloudinary.com/v1_1/dcwqcvfi6/image/upload',
                     formData,
                     {
                         onUploadProgress: (progressEvent) => {
