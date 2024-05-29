@@ -31,18 +31,23 @@ export const posterService = {
             throw error;
         }
     },
-    createManga: async ({name, publishingCompany, artist, author, description, coverImage}: {
+    createManga: async ({name, publishingCompany, artist, author, description, coverImage, tags}: {
         name: string,
         publishingCompany?: string,
         artist?: string,
         author?: string,
         description?: string,
-        coverImage?: string
+        coverImage?: string,
+        tags?: string[]
     }, user: { id: string }) => {
         try {
-            const response = await axiosInstance.post('/manga', {name, publishingCompany, artist, author, description, coverImage}, {
-                params: {userId: user.id}
-            });
+            const response = await axiosInstance.post(
+                '/manga',
+                {name, publishingCompany, artist, author, description, coverImage, tags},
+                {
+                    params: {userId: user.id}
+                }
+            );
             console.log(response);
             return response.data;
         } catch (error) {
@@ -50,7 +55,7 @@ export const posterService = {
             throw error;
         }
     },
-    createChapter: async ({name, number}: {name?: string, number?: number}, mangaId: number) => {
+    createChapter: async ({name, number}: { name?: string, number?: number }, mangaId: number) => {
         try {
             const response = await axiosInstance.post('/chapter', {name, number}, {
                 params: {mangaId}

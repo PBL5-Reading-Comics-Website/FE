@@ -1,10 +1,11 @@
-import { useState, useEffect, useRef } from 'react';
+import {useState, useEffect, useRef} from 'react';
 import TagList from '../tag/tagList';
 import Tag from '../tag/tag';
-import { IconArrowNarrowRight
- } from '@tabler/icons-react';
+import {
+    IconArrowNarrowRight
+} from '@tabler/icons-react';
 
-const TagListSelector = () => {
+const TagListSelector = ({onTagsSelected}: { onTagsSelected: (tags: string[] | null) => void }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedTags, setSelectedTags] = useState<string[]>([]);
     const ref = useRef<HTMLDivElement>(null);
@@ -33,20 +34,30 @@ const TagListSelector = () => {
         };
     }, []);
 
+    useEffect(() => {
+        onTagsSelected(selectedTags);
+    }, [selectedTags]);
+
     return (
         <div ref={ref} className='flex items-center justify-start flex-wrap'>
-            <button className="text-black items-center justify-center flex p-2 py-1 bg-white border-gray-700 border-4 rounded-full hover:border-orange-400" onClick={() => setIsOpen(!isOpen)}>
+            <button
+                className="text-black items-center justify-center flex p-2 py-1 bg-white border-gray-700 border-4 rounded-full hover:border-orange-400"
+                onClick={() => setIsOpen(!isOpen)}>
                 Select Tags
                 <IconArrowNarrowRight
- size={24} className='pt-1'/>
+                    size={24} className='pt-1'/>
             </button>
             {selectedTags.map(tag => (
-                <Tag key={tag} text={tag} onClick={() => handleTagRemove(tag)} />
+                <Tag key={tag} text={tag} onClick={() => handleTagRemove(tag)}/>
             ))}
-            {isOpen && <div className="h-full fixed backdrop-blur-sm inset-x-0 top-0 w-full flex items-center justify-center" onClick={() => setIsOpen(!isOpen)}>
-            </div>}
-            {isOpen && <div className="bg-[#1a1a1a] w-1/2 inset-x-1/4 top-40 rounded-xl p-4 fixed" onClick={handleClickOutside}>
-            <TagList tags={tags} onTagClick={handleTagClick} style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}/>
+            {isOpen &&
+                <div className="h-full fixed backdrop-blur-sm inset-x-0 top-0 w-full flex items-center justify-center"
+                     onClick={() => setIsOpen(!isOpen)}>
+                </div>}
+            {isOpen && <div className="bg-[#1a1a1a] w-1/2 inset-x-1/4 top-40 rounded-xl p-4 fixed"
+                            onClick={handleClickOutside}>
+                <TagList tags={tags} onTagClick={handleTagClick}
+                         style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}/>
             </div>}
         </div>
     );

@@ -28,7 +28,7 @@ export function PostingPage() {
     useEffect(() => {
         const getManga = async () => {
             try {
-                const data = await mangaService.getMangaById(13);
+                const data = await mangaService.getMangaById(14);
                 console.log(data);
                 setManga(data.data);
             } catch (error) {

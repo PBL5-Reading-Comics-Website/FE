@@ -19,6 +19,7 @@ export function NewManga() {
   const navigate = useNavigate();
   const [user, setUser] = useState<any>();
   const [image, setImage] = useState<File | null>(null);
+    const [tags, setTags] = useState<string[]>([]);
   const [mangaName, setMangaName] = useState('');
   const [author, setAuthor] = useState('');
   const [artist, setArtist] = useState('');
@@ -108,6 +109,10 @@ export function NewManga() {
     }
   };
 
+    const handleTagsSelected = (tags: string[] | null) => {
+        setTags(tags ?? []);
+    };
+
   return (
     <div>
       <div className="w-full h-full">
@@ -176,7 +181,7 @@ export function NewManga() {
           <label className="block text-sm font-bold mb-1" htmlFor="email">
             Chọn thể loại
           </label>
-          <TagListSelector />
+          <TagListSelector onTagsSelected={handleTagsSelected} />
         </div>
         <button type="button" onClick={sendManga} disabled={isLoading}>
           {isLoading ? 'Đang tạo...' : 'Tạo truyện'}
