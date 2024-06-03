@@ -1,5 +1,6 @@
 import axios from 'axios';
 import Cookies from "js-cookie";
+import image from "../../components/chapter/image.tsx";
 
 const API_URL = 'http://localhost:8080/api/poster';
 
@@ -55,10 +56,11 @@ export const posterService = {
             throw error;
         }
     },
-    createChapter: async ({name, number}: { name?: string, number?: number }, mangaId: number) => {
+    // In your posterService.ts (frontend)
+    createChapter: async ({ name, number, images }: { name?: string, number?: number, images?: string[] }, mangaId: number) => {
         try {
-            const response = await axiosInstance.post('/chapter', {name, number}, {
-                params: {mangaId}
+            const response = await axiosInstance.post('/chapter', { name: name, number: number, images: images }, {
+                params: { mangaId }
             });
             console.log(response)
             return response.data;

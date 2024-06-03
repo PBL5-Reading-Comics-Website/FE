@@ -7,6 +7,7 @@ import React, {useEffect, useState} from "react";
 import {posterService} from "../../src/service/posterService.tsx";
 import {useNavigate} from "react-router-dom";
 import {mangaService} from "../../src/service/mangaService.tsx";
+
 interface UploadProgress {
     [filename: string]: number;
 }
@@ -21,10 +22,12 @@ export function PostingPage() {
     const [showAlert, setShowAlert] = useState(false);
     const [manga, setManga] = useState<any>();
     const navigate = useNavigate();
-    const handleImageUpload = (images: string[]) => {
-        console.log('Uploaded images:', images);
-        // You can now use the images array here
+
+    // Update handleImageUpload to set the images state
+    const handleImageUpload = (newImages: File[]) => {
+        setImages(newImages);
     };
+
     useEffect(() => {
         const getManga = async () => {
             try {
@@ -38,15 +41,18 @@ export function PostingPage() {
         getManga();
     }, []);
 
+    // Upload images to Cloudinary
     const uploadImages = async () => {
         if (!images) return;
+
+        const uploadedImageUrls: string[] = [];
 
         for (let i = 0; i < images.length; i++) {
             const image = images[i];
             const formData = new FormData();
             formData.append('file', image);
             formData.append('upload_preset', 'team_upload');
-            formData.append('folder', mangaName + "/" + chapterName);
+            formData.append('folder', "van_chuong_viet/" + mangaName + "/" + chapterName);
 
             try {
                 const response = await axios.post(
@@ -63,6 +69,8 @@ export function PostingPage() {
                 );
 
                 console.log('Upload successful:', response.data);
+                uploadedImageUrls.push(response.data.secure_url);
+
                 // Clear progress for the uploaded file
                 setUploadProgress((prevProgress) => {
                     const { [image.name]: _, ...rest } = prevProgress;
@@ -72,14 +80,17 @@ export function PostingPage() {
                 console.error('Upload failed:', error);
             }
         }
+        return uploadedImageUrls;
     };
+
+    // Send chapter to backend
     const sendChapter = async () => {
-        setIsLoading(true); // Show loading
-        const imageUrl = await uploadImages();
-        console.log('Image URL:', imageUrl);
+        setIsLoading(true);
+        const imageUrls = await uploadImages();
         const chapter = {
             name: chapterName,
-            number: parseInt(chapterNumber)
+            number: parseInt(chapterNumber),
+            images: imageUrls // Pass the image URLs to the backend
         };
         try {
             await posterService.createChapter(chapter, manga.id);
@@ -91,9 +102,9 @@ export function PostingPage() {
         } catch (error) {
             console.error('Error creating manga:', error);
         } finally {
-            setIsLoading(false); // Hide loading
+            setIsLoading(false);
         }
-    }
+    };
 
     return (
         <div>
@@ -129,14 +140,15 @@ export function PostingPage() {
                     </div>
                 </div>
                 <div className="border-b-2 pb-2">
-                    <PageUpload onImageUpload={handleImageUpload}/>
+                    <PageUpload onImageUpload={handleImageUpload} /> {/* Pass handleImageUpload as prop */}
                 </div>
                 <button
                     className="font-saira my-8 bg-[#ED741B] hover:border-2 hover:border-[#b8382f] self-end h-16 text-lg font-bold"
                     type="submit"
                     onClick={sendChapter}
+                    disabled={isLoading}
                 >
-                    ĐĂNG TRUYỆN
+                    {isLoading ? 'Đang tải...' : 'ĐĂNG TRUYỆN'}
                 </button>
             </div>
         </div>
