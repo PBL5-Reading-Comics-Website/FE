@@ -12,6 +12,10 @@ import { userService } from "../../src/service/userService";
 import { Input } from './input';
 let isLoggedIn = false;
 
+interface HeaderProps {
+    onOpenRequestDialog: () => void;
+  }
+
 interface User {
     id: number;
     username: string;
@@ -30,10 +34,11 @@ interface User {
     authorities: Array<{ authority: string }>;
 }
 
-export function Header() {
+export function Header(props: HeaderProps) {
     const [dropdownVisible, setDropdownVisible] = useState(false);
     const [user, setUser] = useState<User>();
     const [searchQuery, setSearchQuery] = useState('');
+    const [isRequestDialogOpen, setIsRequestDialogOpen] = useState(false); // Local state
     const navigate = useNavigate();
     const toggleDropdown = () => {
         const token = Cookies.get('token');
@@ -68,14 +73,22 @@ export function Header() {
 
         getUser();
     }, []);
-    
+
     const handleSearch = (query: string) => {
         setSearchQuery(query);
-        
+
     }
     const handleSearchSubmit = (event: React.FormEvent) => {
         event.preventDefault();
         navigate(`/search/${searchQuery}/null`);
+    };
+    const handleOpenRequestDialog = () => {
+        props.onOpenRequestDialog(); 
+      };
+    
+
+    const handleCloseRequestDialog = () => {
+        setIsRequestDialogOpen(false);
     };
     return (
         <div className="w-full top-0 z-50 absolute">
@@ -90,23 +103,23 @@ export function Header() {
                 </div>
                 <div className="h-16 flex items-center justify-center p-5">
                     <Link to="/search">
-                    <h1 className="text-center font-saira font-bold text-xl text-white">
-                        TRUYỆN MỚI
-                    </h1>
+                        <h1 className="text-center font-saira font-bold text-xl text-white">
+                            TRUYỆN MỚI
+                        </h1>
                     </Link>
                 </div>
                 <div className="h-16 flex items-center justify-center p-5">
                     <Link to="/search">
-                    <h1 className="text-center font-saira font-bold text-xl text-white">
-                        DANH SÁCH TRUYỆN
-                    </h1>
+                        <h1 className="text-center font-saira font-bold text-xl text-white">
+                            DANH SÁCH TRUYỆN
+                        </h1>
                     </Link>
                 </div>
                 <div className="h-16 flex items-center justify-center p-5">
                     <Link to="/search/viewNumber">
-                    <h1 className="text-center font-saira font-bold text-xl text-white">
-                        TRUYỆN HOT
-                    </h1>
+                        <h1 className="text-center font-saira font-bold text-xl text-white">
+                            TRUYỆN HOT
+                        </h1>
                     </Link>
                 </div>
                 <div className="flex items-center w-fit relative">
@@ -114,12 +127,12 @@ export function Header() {
                         <div className="h-7 w-60 m-5 bg-gray-700  rounded-md flex">
                             <Input type="text" className="bg-gray-700 w-full h-full rounded-md" onChange={
                                 (e) => handleSearch(e.target.value)
-                            } 
-                             suffixIcon = {
-                                <Link to = {`/search/${searchQuery}/${null}`}>
-                             <IconSearch className="text-white h-4 w-4 z-10 cursor-pointer"/>
-                             </Link>
-                             } >
+                            }
+                                suffixIcon={
+                                    <Link to={`/search/${searchQuery}/${null}`}>
+                                        <IconSearch className="text-white h-4 w-4 z-10 cursor-pointer" />
+                                    </Link>
+                                } >
                             </Input>
                         </div>
                     </form>
@@ -149,6 +162,14 @@ export function Header() {
                                                 <Link to="/new-manga" className="p-4">
                                                     <h1 className="text-white text-base">Đăng truyện</h1>
                                                 </Link>
+                                                <div className="bg-gradient-to-r from-transparent via-white dark:via-white to-transparent h-[1px] w-full" />
+                                            </>
+                                        )}
+                                        {user?.role === "USER" && (
+                                            <>
+                                                <div className="p-4" onClick={handleOpenRequestDialog}>
+                                                    <h1 className="text-white text-lg text-bold">Xin lên làm người đăng truyện</h1>
+                                                </div>
                                                 <div className="bg-gradient-to-r from-transparent via-white dark:via-white to-transparent h-[1px] w-full" />
                                             </>
                                         )}

@@ -9,6 +9,7 @@ import { authService } from '../../../src/service/authService';
 import { cn } from "../../../utils/cn";
 import { Input } from "../../util/input.tsx";
 import { Label } from "../../util/label.tsx";
+import { jwtDecode } from "jwt-decode";
 export function Login() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -45,7 +46,15 @@ export function Login() {
         try {
             const response = await authService.login(username, password);
             if (response.token) {
-                navigate('/');
+                const decodedToken: any = jwtDecode(response.token);
+                console.log(decodedToken.roles[0]);
+                if (decodedToken.roles[0] == "ADMIN") {
+                    navigate('/admin-page');
+                }
+                else {
+                    console.log("error");
+                    navigate('/');
+                }
             } else {
                 setUsernameError('Tên đăng nhập hoặc mật khẩu không đúng');
             }

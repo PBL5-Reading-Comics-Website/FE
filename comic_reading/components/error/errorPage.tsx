@@ -3,7 +3,6 @@ import Headers from '../util/header.tsx';
 const ErrorPage: React.FC = () => {
     return (
         <div>
-            <Headers />
             <div className='mt-20'>
             <h1>Oops! Something went wrong.</h1>
             <p>We apologize for the inconvenience.</p>

@@ -101,7 +101,6 @@ export function MangaSearchPage() {
 
     return (
         <div>
-            <Header />
             <div className='px-8 space-y-4 mt-24'>
                 <div className='h-fit'>
                     <Input

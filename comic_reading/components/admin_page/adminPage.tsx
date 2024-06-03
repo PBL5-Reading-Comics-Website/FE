@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AdminMangaTable, AdminUserTable } from './table/table';
+import { AdminMangaTable, AdminUserTable, WaitingListTable } from './table/table';
 
 function AdminPage() {
   const [selectedTable, setSelectedTable] = useState('user');
@@ -18,6 +18,7 @@ function AdminPage() {
         <select className="bg-gray-900 border-2 text-center border-orange-500 rounded-full mt-2 p-1" onChange={handleSelectionChange}>
           <option value="user">Bảng người dùng</option>
           <option value="manga">Bảng truyện</option>
+          <option value="waiting">Bảng chờ</option>
         </select>
         <button className='text-2xl font-semibold bg-gray-900  text-center text-orange-500 p-1'>
           Logout
@@ -27,6 +28,7 @@ function AdminPage() {
       </div>
       {selectedTable === 'user' && <AdminUserTable />}
       {selectedTable === 'manga' && <AdminMangaTable />}
+      {selectedTable === 'waiting' && <WaitingListTable />}
     </div>
   );
 }

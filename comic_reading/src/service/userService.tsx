@@ -173,7 +173,7 @@ export const userService = {
             throw error;
         }
     },
-    following: async ({ userId, mangaId }: { userId: number, mangaId: number}) => {
+    following: async ({ userId, mangaId }: { userId: number, mangaId: number }) => {
         try {
             const response = await axiosInstance.post(`user/following/?mangaId=${mangaId}&userId=${userId}`);
             return response.data;
@@ -185,7 +185,21 @@ export const userService = {
     updateUserImage: async (id: number, imageUrl: string) => {
         try {
             const response = await axiosInstance.put(`user/update-image/${id}`, {
-                imageUrl: imageUrl // Send imageUrl in the request body
+                imageUrl: imageUrl
+            });
+            return response.data;
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
+    },
+    toPoster: async (id: number) => {
+        try {
+            const response = await axiosInstance.post(`user/waiting`, {
+            }, {
+                params: {
+                    userId: id
+                }
             });
             return response.data;
         } catch (error) {

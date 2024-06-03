@@ -109,7 +109,7 @@ export function PostingPage() {
     return (
         <div>
             <div className="w-full h-full">
-                <Header />
+                {/* <Header /> */}
             </div>
             <div className='mt-24 w-full p-5'>
                 <div className='flex w-full pb-4 border-b'>

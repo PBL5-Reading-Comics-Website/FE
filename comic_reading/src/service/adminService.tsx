@@ -141,5 +141,42 @@ export const adminService = {
             console.error(error);
             throw error;
         }
-    }
+    },
+    getWaitingList: async () => {
+        try {
+            const response = await axiosInstance.get('/waitings');
+            return response.data;
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
+    },
+    acceptWaiting: async (id: number) => {
+        try {
+            const response = await axiosInstance.put(`/waiting/accept`, null, {
+                params: {
+                    id
+                }
+            });
+            return response.data;
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
+    },
+
+    // Reject waiting user
+    rejectWaiting: async (id: number) => {
+        try {
+            const response = await axiosInstance.put(`/waiting/reject`, null, {
+                params: {
+                    id
+                }
+            });
+            return response.data;
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
+    },
 }

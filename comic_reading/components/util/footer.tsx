@@ -28,14 +28,30 @@ export function Footer() {
                     </div>
                 </div>
                 <div className="h-fit w-1/4 flex flex-wrap items-start p-5">
-                    <Tag text="Trinh thám" />
-                    <Tag text="Tình cảm" />
-                    <Tag text="Hành động" />
-                    <Tag text="Khoa học viễn tưởng" />
-                    <Tag text="Truyện nước ngoài" />
-                    <Tag text="Harem" />
-                    <Tag text="Shoujo" />
-                    <Tag text="Truyện Việt Nam" />
+                    <Tag text="Trinh thám" onClick={function (): void {
+                    throw new Error("Function not implemented.");
+                } } />
+                    <Tag text="Tình cảm" onClick={function (): void {
+                    throw new Error("Function not implemented.");
+                } } />
+                    <Tag text="Hành động" onClick={function (): void {
+                    throw new Error("Function not implemented.");
+                } } />
+                    <Tag text="Khoa học viễn tưởng" onClick={function (): void {
+                    throw new Error("Function not implemented.");
+                } } />
+                    <Tag text="Truyện nước ngoài" onClick={function (): void {
+                    throw new Error("Function not implemented.");
+                } } />
+                    <Tag text="Harem" onClick={function (): void {
+                    throw new Error("Function not implemented.");
+                } } />
+                    <Tag text="Shoujo" onClick={function (): void {
+                    throw new Error("Function not implemented.");
+                } } />
+                    <Tag text="Truyện Việt Nam" onClick={function (): void {
+                    throw new Error("Function not implemented.");
+                } } />
                 </div>
             </div>
         

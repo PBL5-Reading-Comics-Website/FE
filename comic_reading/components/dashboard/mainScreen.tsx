@@ -101,7 +101,7 @@ export function MainScreen() {
     }
     return (
         <div className="w-full h-full">
-            <Header />
+            {/* <Header /> */}
             <div className="w-full h-full px-4 mt-16 flex flex-col">
                 <div className="new_update">
                     <div className="flex items-center">
