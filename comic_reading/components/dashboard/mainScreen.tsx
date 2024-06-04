@@ -53,6 +53,7 @@ export function MainScreen() {
         const fetchSeasonalMangas = async () => {
             try {
                 const month = new Date().getMonth() + 1;
+                console.log(month)
                 let data;
                 if (month <= 3) {
                     data = await mangaService.getMangaPublishedInFirstQuarter();
@@ -63,7 +64,7 @@ export function MainScreen() {
                 } else {
                     data = await mangaService.getMangaPublishedInFourthQuarter();
                 }
-                console.log(data.data);
+                console.log("seasonal mangas: ", data.data);
                 setSeasonalMangas(data.data);
             } catch (error) {
                 console.error(error);

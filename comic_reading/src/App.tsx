@@ -60,16 +60,16 @@ export default function App() {
     return (
         <BrowserRouter>
             <div style={{ height: '100%', width: '100%' }}>
+                {location.pathname !== '/login' && location.pathname !== '/register' && (
+                    <Header onOpenRequestDialog={handleOpenRequestDialog} />
+                )}
                 <Routes>
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
                     <Route
                         path="/"
                         element={
-                            <>
-                                <Header onOpenRequestDialog={handleOpenRequestDialog} />
-                                <MainScreen />
-                            </>
+                            <MainScreen />
                         }
                     />
                     <Route path="/manga-info/:id" element={<MangaInfoScreen />} />
