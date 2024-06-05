@@ -405,3 +405,157 @@ interface WaitingListItem {
 }
 
 export { WaitingListTable };
+
+interface ReportItem {
+    id: number;
+    content: string;
+    status: string;
+    manga: {
+      id: number;
+      name: string;
+      author: string;
+      artist: string;
+      coverImage: string;
+      status: string; 
+      viewNumber: number;
+      favouriteNumber: number;
+      commentNumber: number;
+      publishAt: string;
+      updateAt: string;
+      updateUser: number; 
+    };
+    comment: {
+      id: number;
+      content: string;
+      createAt: string;
+      updateAt: string;
+      replyId: number | null;
+      user: {
+        id: number;
+        username: string;
+        name: string;
+        email: string;
+        registrationDate: string;
+        role: string;
+      };
+    };
+  }
+  
+  function AdminReportTable() {
+    const [reportData, setReportData] = useState<ReportItem[]>([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(0);
+  
+    const fetchReportData = async () => {
+      try {
+        const response = await adminService.getAllReports(); // Assuming your API supports pagination
+        setReportData(response.data);
+        setCurrentPage(response.meta.currentPage); // Assuming your API has pagination metadata
+        setTotalPages(response.meta.totalPage);
+      } catch (error) {
+        console.error('Error fetching report data:', error);
+      }
+    };
+  
+    useEffect(() => {
+      fetchReportData();
+    }, [currentPage]);
+  
+    const handleApprove = async (reportId: number) => {
+    //   try {
+    //     const response = await adminService.approveReport(reportId);
+    //     if (response.status === 'success') {
+    //       alert('Report approved!');
+    //       fetchReportData(); // Refresh the data after approval
+    //     } else {
+    //       console.error('Error approving report:', response.data);
+    //       alert('Error approving report. Please try again.');
+    //     }
+    //   } catch (error) {
+    //     console.error('Error approving report:', error);
+    //     alert('An error occurred. Please try again.');
+    //   }
+    };
+  
+    const handleReject = async (reportId: number) => {
+    //   try {
+    //     const response = await adminService.rejectReport(reportId);
+    //     if (response.status === 'success') {
+    //       alert('Report rejected!');
+    //       fetchReportData(); // Refresh the data after rejection
+    //     } else {
+    //       console.error('Error rejecting report:', response.data);
+    //       alert('Error rejecting report. Please try again.');
+    //     }
+    //   } catch (error) {
+    //     console.error('Error rejecting report:', error);
+    //     alert('An error occurred. Please try again.');
+    //   }
+    };
+  
+    return (
+      <div className="bg-gray-900 text-white overflow-auto h-full w-full">
+        <table className="divide-y divide-orange-500 mx-auto my-8">
+          <thead>
+            <tr>
+              <th className="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase tracking-wider">ID</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase tracking-wider">Content</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase tracking-wider">Status</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase tracking-wider">Manga Name</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase tracking-wider">Author</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase tracking-wider">Comment User</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase tracking-wider">Comment Date</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase tracking-wider">Approve</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase tracking-wider">Reject</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-orange-500">
+            {reportData.map((item) => (
+              <tr key={item.id}>
+                <td className="px-6 py-4 whitespace-nowrap">{item.id}</td>
+                <td className="px-6 py-4 whitespace-nowrap">{item.content}</td>
+                <td className="px-6 py-4 whitespace-nowrap">{item.status}</td>
+                <td className="px-6 py-4 whitespace-nowrap">{item.manga.name}</td>
+                <td className="px-6 py-4 whitespace-nowrap">{item.manga.author}</td>
+                <td className="px-6 py-4 whitespace-nowrap">{item.comment.user.username}</td>
+                <td className="px-6 py-4 whitespace-nowrap">{item.comment.createAt}</td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <button 
+                    onClick={() => handleApprove(item.id)} 
+                    className="mx-1 px-4 py-2 rounded-md text-white bg-green-500"
+                  >
+                    Approve
+                  </button>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <button 
+                    onClick={() => handleReject(item.id)} 
+                    className="mx-1 px-4 py-2 rounded-md text-white bg-red-500"
+                  >
+                    Reject
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+  
+        {/* Pagination */}
+        <div className="flex justify-center items-center m-4">
+          {Array.from({ length: totalPages }, (_, i) => (
+            <button
+              key={i}
+              onClick={() => setCurrentPage(i + 1)}
+              className={`mx-1 px-4 py-2 rounded-md text-white ${
+                currentPage === i + 1 ? 'bg-orange-500' : 'bg-gray-700'
+              }`}
+            >
+              {i + 1}
+            </button>
+          ))}
+        </div>
+      </div>
+    );
+  }
+  
+  export { AdminReportTable };

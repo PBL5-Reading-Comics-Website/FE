@@ -143,6 +143,21 @@ export const userService = {
             throw error;
         }
     },
+
+    reportComment: async (mangaId: number, commentId: number, content: string) => {
+        try {
+            const response = await axiosInstance.post(`user/report`, {
+                content,
+                mangaId,
+                commentId
+            });
+            return response.data;
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
+    },
+
     getReadingHistoriesByUserId: async ({ userId, sortField = 'id', sortOrder = 'asc', page = 1, size = 10 }: { userId: number, sortField?: string, sortOrder?: string, page?: number, size?: number }) => {
         try {
             const response = await axiosInstance.get(`user/reading-histories/${userId}`, {

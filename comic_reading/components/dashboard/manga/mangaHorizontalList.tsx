@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
-import './mangaHorizontalList.css'; // Import your CSS file for styling
+import './mangaHorizontalList.css';
 import MangaHorizontalListItem from './mangaHorizontalListItem';
 
 interface Manga {
     id: number;
     name: string;
     score: string;
-    imageUrl: string;
+    image_url: string;
 }
 
 interface MangaHorizontalListRecommedProps {
@@ -21,10 +21,15 @@ function MangaHorizontalListRecommend({ className = '', userId }: MangaHorizonta
 
     useEffect(() => {
         const fetchRecommendations = async () => {
-            if (userId) { // Only fetch if userId is not null
+            console.log("userId: " + userId);
+            if (userId) {
                 try {
+
                     const response = await fetch(`http://localhost:5000/recommendations?userId=${userId}`);
+
+
                     const data = await response.json();
+                    console.log("recommend: " + data.recommendations);
                     setRecommendations(data.recommendations);
                 } catch (error) {
                     console.error('Error fetching recommendations:', error);
@@ -56,30 +61,30 @@ function MangaHorizontalListRecommend({ className = '', userId }: MangaHorizonta
 
     return (
         <div className={`gd-carousel-wrapper ${className}`}>
-          <Carousel 
-            className="gd-carousel"
-            swipeable
-            draggable
-            responsive={responsive}
-            ssr 
-            infinite
-            containerClass="carousel-container"
-            removeArrowOnDeviceType={['tablet', 'mobile']}
-            itemClass="carousel-item-padding-40-px"
-            arrows={true}
-          >
-            {recommendations.map((manga) => (
-              <MangaHorizontalListItem 
-                key={manga.id}
-                id={manga.id.toString()} // Pass id as string
-                imageUrl={manga.imageUrl} 
-                mangaName={manga.name} 
-              />
-            ))}
-          </Carousel>
+            <Carousel
+                className="gd-carousel"
+                swipeable
+                draggable
+                responsive={responsive}
+                ssr
+                infinite
+                containerClass="carousel-container"
+                removeArrowOnDeviceType={['tablet', 'mobile']}
+                itemClass="carousel-item-padding-40-px"
+                arrows={true}
+            >
+                {recommendations.map((manga) => (
+                    <MangaHorizontalListItem
+                        key={manga.id}
+                        id={manga.id.toString()}
+                        imageUrl={manga.image_url}
+                        mangaName={manga.name}
+                    />
+                ))}
+            </Carousel>
         </div>
-      );
-    }
+    );
+}
 
 export { MangaHorizontalListRecommend };
 

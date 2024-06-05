@@ -1,9 +1,14 @@
+import React from 'react';
+import { IconFlag } from '@tabler/icons-react';
 
 interface CommentProps {
     imgAvatar: string;
     name: string;
     time: string;
     content: string;
+    mangaId: number;
+    commentId: number;
+    handleOpenReportDialog: (mangaId: number, commentId: number) => void;
 }
 
 export function Comment({
@@ -11,6 +16,9 @@ export function Comment({
     name,
     time,
     content,
+    mangaId,
+    commentId,
+    handleOpenReportDialog,
 }: CommentProps) {
     return (
         <div className="w-full flex h-fit mt-3">
@@ -20,11 +28,13 @@ export function Comment({
             <div className="p-3 m-3 mt-0 bg-[#515151] text-white hover:bg rounded-xl w-full h-fit flex flex-col">
                 <div className="w-full flex justify-between border-b border-[#FCA565] pb-1">
                     <h1 className="text-base font-semibold">{name}</h1>
-                    <h1 className="text-base font-light">{time}</h1>
+                    <div className="flex items-center">
+                        <h1 className="mr-4 text-base font-light">{time}</h1>
+                        <IconFlag onClick={() => handleOpenReportDialog(mangaId, commentId)} size={20} className="text-gray-400 hover:text-red-600 cursor-pointer" />
+                    </div>
                 </div>
                 <div className=" flex flex-col items-start">
                     <h1 className="text-base font-normal">{content}</h1>
-
                 </div>
             </div>
         </div>

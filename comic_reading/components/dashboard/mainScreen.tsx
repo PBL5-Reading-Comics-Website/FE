@@ -163,7 +163,7 @@ export function MainScreen() {
                     </MangaHorizontalList>
                 </div>
                 <div className="monthly">
-                    <h2 className="text-bold text-xl my-4">Theo tháng</h2>
+                    <h2 className="text-bold text-xl my-4">Đề xuất cho bạn</h2>
                     {userID !== null && (
                         <MangaHorizontalListRecommend userId={userID} className="mt-2" />
                     )}

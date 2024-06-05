@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom'
 import AdminMangaPage from '../components/admin_page/adminMangaPage.tsx'
 import AdminPage from '../components/admin_page/adminPage.tsx'
@@ -19,13 +20,17 @@ import { createPortal } from 'react-dom';
 import RequestToPosterDialog from '../components/util/requestToPosterDialog.tsx';
 import { userService } from './service/userService.tsx';
 import './App.css'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import Cookies from 'js-cookie'
 import { jwtDecode } from 'jwt-decode'
-
+import ReportDialog from '../components/util/reportDialog';
 
 export default function App() {
     const [isRequestDialogOpen, setIsRequestDialogOpen] = useState(false);
+    const [isReportDialogOpen, setIsReportDialogOpen] = useState(false);
+    const [mangaId, setMangaId] = useState(0);
+    const [commentId, setCommentId] = useState(0);
+
     const handleOpenRequestDialog = () => {
         setIsRequestDialogOpen(true);
     };
@@ -57,10 +62,28 @@ export default function App() {
         }
     };
 
+    // Function to open the ReportDialog
+    const handleOpenReportDialog = (mangaId: number, commentId: number) => {
+        setMangaId(mangaId);
+        setCommentId(commentId);
+        setIsReportDialogOpen(true);
+    };
+
+    // Function to close the ReportDialog
+    const handleCloseReportDialog = () => {
+        setIsReportDialogOpen(false);
+    };
+
+    const handleReport = (mangaId: number, commentId: number, reason: string) => {
+        // Handle reporting logic here (e.g., make an API call)
+        console.log('Reporting manga:', mangaId, 'comment:', commentId, 'with reason:', reason);
+        handleCloseReportDialog(); // Close the dialog after reporting
+    };
+
     return (
         <BrowserRouter>
             <div style={{ height: '100%', width: '100%' }}>
-                {location.pathname !== '/login' && location.pathname !== '/register' && (
+                {location.pathname !== '/login' && location.pathname !== '/register' && location.pathname !== '/admin-page' && (
                     <Header onOpenRequestDialog={handleOpenRequestDialog} />
                 )}
                 <Routes>
@@ -92,12 +115,22 @@ export default function App() {
                     <Route path="/test-manga" element={<ImageUploader />} />
                 </Routes>
 
+                {/* Render the RequestToPosterDialog */}
                 {isRequestDialogOpen && createPortal(
                     <RequestToPosterDialog
                         isOpen={isRequestDialogOpen}
                         onClose={handleCloseRequestDialog}
                         onAccept={handleAcceptRequest}
                     />,
+                    document.body
+                )}
+
+                {/* Render the ReportDialog */}
+                {isReportDialogOpen && createPortal(
+                    <ReportDialog
+                        isOpen={isReportDialogOpen}
+                        onClose={handleCloseReportDialog}
+                        onReport={handleReport} mangaId={0} commentId={0} />,
                     document.body
                 )}
             </div>

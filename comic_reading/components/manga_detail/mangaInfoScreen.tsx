@@ -123,7 +123,6 @@ export function MangaInfoScreen() {
   return (
     <div className="relative">
       <div className="w-full h-full">
-        <Header />
       </div>
       <div className="h-72 w-full bg-center bg-cover relative z-10" style={{ backgroundImage: `url(${manga?.coverImage})` }}>
         <div className="absolute inset-0 backdrop-blur-sm"></div>

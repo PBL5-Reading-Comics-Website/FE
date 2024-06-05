@@ -4,6 +4,8 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { mangaService } from "../../src/service/mangaService";
 import { userService } from "../../src/service/userService";
 import Comment from "./comment";
+import { createPortal } from "react-dom";
+import ReportDialog from "../util/reportDialog";
 
 interface User {
     id: number;
@@ -57,6 +59,10 @@ function CommentList(
     const [text, setText] = useState("");
     const [comments, setComments] = useState<Comment[]>([]);
     const [commentAdded, setCommentAdded] = useState(false);
+    const [isReportDialogOpen, setIsReportDialogOpen] = useState(false); // State for the ReportDialog
+    const [reportMangaId, setReportMangaId] = useState(0); // State for the mangaId to report
+    const [reportCommentId, setReportCommentId] = useState(0); // State for the commentId to report
+
     useEffect(() => {
         const fetchComments = async () => {
             try {
@@ -87,6 +93,33 @@ function CommentList(
             console.error(error);
         }
     };
+
+    const handleOpenReportDialog = (mangaId: number, commentId: number) => {
+        setReportMangaId(mangaId);
+        setReportCommentId(commentId);
+        setIsReportDialogOpen(true);
+    };
+
+    const handleCloseReportDialog = () => {
+        setIsReportDialogOpen(false);
+    };
+
+    const handleReport = async (mangaId: number, commentId: number, reason: string) => {
+        try {
+            const response = await userService.reportComment(mangaId, commentId, reason);
+            console.log(response.data)
+            if (response.status == "success") {
+                alert("Báo cáo thành công");
+            }
+            else if (response.status == "fail") {
+                alert("Báo cáo thất bại, bình luận này đang trong quá trình xử lý");
+            }
+        } catch (error) {
+            console.error(error);
+        }
+        handleCloseReportDialog();
+    };
+
     return (
         <div className="w-full p-3 pt-0 border-2 flex flex-col rounded-lg">
             <InfiniteScroll
@@ -107,6 +140,9 @@ function CommentList(
                         name={comment.user.username}
                         time={comment.updateAt}
                         content={comment.content}
+                        mangaId={mangaId}
+                        commentId={comment.id}
+                        handleOpenReportDialog={handleOpenReportDialog}
                     />
                 ))}
             </InfiniteScroll>
@@ -121,6 +157,18 @@ function CommentList(
                     <IconSend2 className="z-50 flex items-center mx-2 pointer-events-non hover:cursor-pointer" />
                 </button>
             </form>
+
+            {/* Render the ReportDialog */}
+            {isReportDialogOpen && createPortal(
+                <ReportDialog
+                    isOpen={isReportDialogOpen}
+                    onClose={handleCloseReportDialog}
+                    onReport={handleReport}
+                    mangaId={reportMangaId}
+                    commentId={reportCommentId}
+                />,
+                document.body
+            )}
         </div>
     );
 }
