@@ -31,15 +31,16 @@ export function PostingPage() {
     useEffect(() => {
         const getManga = async () => {
             try {
-                const data = await mangaService.getMangaById(14);
-                console.log(data);
-                setManga(data.data);
+                const data = await posterService.getMangaByName(mangaName);
+                if (!data) return;
+                console.log(data.data.content[0]);
+                setManga(data.data.content[0]);
             } catch (error) {
                 console.error(error);
             }
         };
         getManga();
-    }, []);
+    }, [mangaName]);
 
     // Upload images to Cloudinary
     const uploadImages = async () => {

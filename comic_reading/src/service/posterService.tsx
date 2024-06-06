@@ -1,12 +1,11 @@
 import axios from 'axios';
 import Cookies from "js-cookie";
-import image from "../../components/chapter/image.tsx";
 
 const API_URL = 'http://localhost:8080/api/poster';
 
 const axiosInstance = axios.create({
     baseURL: API_URL,
-    timeout: 10000,
+    timeout: 60000,
     withCredentials: false,
 });
 axiosInstance.interceptors.request.use(
@@ -29,6 +28,15 @@ export const posterService = {
             return response.data;
         } catch (error) {
             console.error(error);
+            throw error;
+        }
+    },
+    getMangaByName: async (mangaName: string) => {
+        try {
+            const response = await axiosInstance.get(`/manga/${mangaName}`);
+            return response.data;
+        } catch (error) {
+            console.error("Error fetching manga by name: ", error);
             throw error;
         }
     },
@@ -56,11 +64,15 @@ export const posterService = {
             throw error;
         }
     },
-    // In your posterService.ts (frontend)
-    createChapter: async ({ name, number, images }: { name?: string, number?: number, images?: string[] }, mangaId: number) => {
+    // In your posterService.tsx (frontend)
+    createChapter: async ({name, number, images}: {
+        name?: string,
+        number?: number,
+        images?: string[]
+    }, mangaId: number) => {
         try {
-            const response = await axiosInstance.post('/chapter', { name: name, number: number, images: images }, {
-                params: { mangaId }
+            const response = await axiosInstance.post('/chapter', {name, number, images}, {
+                params: {mangaId}
             });
             console.log(response)
             return response.data;
