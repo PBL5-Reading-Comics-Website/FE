@@ -1,12 +1,19 @@
 import React, { useState } from 'react';
 import { AdminMangaTable, AdminUserTable, WaitingListTable, AdminReportTable } from './table/table';
+import { authService } from '../../src/service/authService';
+import { useNavigate } from 'react-router-dom';
 
 function AdminPage() {
   const [selectedTable, setSelectedTable] = useState('user');
-
+  const navigate = useNavigate();
   const handleSelectionChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedTable(event.target.value);
   };
+
+  const logoutHandle = async () => {
+    const response = await authService.logout();
+    navigate('/');
+};
 
   return (
     <div className="flex flex-col justify-center items-center bg-gray-100 h-full">
@@ -21,7 +28,7 @@ function AdminPage() {
           <option value="waiting">Bảng chờ</option>
           <option value="report">Bảng báo cáo</option>
         </select>
-        <button className='text-2xl font-semibold bg-gray-900  text-center text-orange-500 p-1'>
+        <button onClick={logoutHandle} className='text-2xl font-semibold bg-gray-900  text-center text-orange-500 p-1'>
           Logout
         </button>
       </div>

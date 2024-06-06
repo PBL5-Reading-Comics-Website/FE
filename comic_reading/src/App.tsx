@@ -83,39 +83,113 @@ export default function App() {
     return (
         <BrowserRouter>
             <div style={{ height: '100%', width: '100%' }}>
-                {location.pathname !== '/login' && location.pathname !== '/register' && location.pathname !== '/admin-page' && (
-                    <Header onOpenRequestDialog={handleOpenRequestDialog} />
-                )}
                 <Routes>
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
+                    <Route path="/admin-page" element={<AdminPage />} />
                     <Route
                         path="/"
                         element={
-                            <MainScreen />
+                            <>
+                                <Header onOpenRequestDialog={handleOpenRequestDialog} />
+                                <MainScreen />
+                            </>
                         }
                     />
-                    <Route path="/manga-info/:id" element={<MangaInfoScreen />} />
-                    <Route path="/user-info" element={<UserInfoScreen />} />
-                    <Route path="/read-manga/:id" element={<ChapterScreen />} />
                     <Route
-                        path="/admin-page"
+                        path="/manga-info/:id"
                         element={
-                            <ProtectedRoute role="ADMIN">
-                                <AdminPage />
-                            </ProtectedRoute>
+                            <>
+                                <Header onOpenRequestDialog={handleOpenRequestDialog} />
+                                <MangaInfoScreen />
+                            </>
                         }
                     />
-                    <Route path="/admin-manga-page/:id" element={<AdminMangaPage />} />
-                    <Route path="/other-user" element={<OtherUserInfo />} />
-                    <Route path="/posting" element={<PostingPage />} />
-                    <Route path="/search/:search/:tag" element={<MangaSearchPage />} />
-                    <Route path="/search" element={<MangaSearchPage />} />
-                    <Route path="/new-manga" element={<NewManga />} />
-                    <Route path="/test-manga" element={<ImageUploader />} />
+                    <Route
+                        path="/user-info"
+                        element={
+                            <>
+                                <Header onOpenRequestDialog={handleOpenRequestDialog} />
+                                <UserInfoScreen />
+                            </>
+                        }
+                    />
+                    <Route
+                        path="/read-manga/:id"
+                        element={
+                            <>
+                                <Header onOpenRequestDialog={handleOpenRequestDialog} />
+                                <ChapterScreen />
+                            </>
+                        }
+                    />
+                    <Route
+                        path="/admin-manga-page/:id"
+                        element={
+                            <>
+                                <Header onOpenRequestDialog={handleOpenRequestDialog} />
+                                <ProtectedRoute role="ADMIN">
+                                    <AdminMangaPage />
+                                </ProtectedRoute>
+                            </>
+                        }
+                    />
+                    <Route
+                        path="/other-user"
+                        element={
+                            <>
+                                <Header onOpenRequestDialog={handleOpenRequestDialog} />
+                                <OtherUserInfo />
+                            </>
+                        }
+                    />
+                    <Route
+                        path="/posting/:mangaNameParam"
+                        element={
+                            <>
+                                <Header onOpenRequestDialog={handleOpenRequestDialog} />
+                                <PostingPage />
+                            </>
+                        }
+                    />
+                    <Route
+                        path="/search/:search/:tag"
+                        element={
+                            <>
+                                <Header onOpenRequestDialog={handleOpenRequestDialog} />
+                                <MangaSearchPage />
+                            </>
+                        }
+                    />
+                    <Route
+                        path="/search"
+                        element={
+                            <>
+                                <Header onOpenRequestDialog={handleOpenRequestDialog} />
+                                <MangaSearchPage />
+                            </>
+                        }
+                    />
+                    <Route
+                        path="/new-manga"
+                        element={
+                            <>
+                                <Header onOpenRequestDialog={handleOpenRequestDialog} />
+                                <NewManga />
+                            </>
+                        }
+                    />
+                    <Route
+                        path="/test-manga"
+                        element={
+                            <>
+                                <Header onOpenRequestDialog={handleOpenRequestDialog} />
+                                <ImageUploader />
+                            </>
+                        }
+                    />
                 </Routes>
 
-                {/* Render the RequestToPosterDialog */}
                 {isRequestDialogOpen && createPortal(
                     <RequestToPosterDialog
                         isOpen={isRequestDialogOpen}
@@ -124,8 +198,6 @@ export default function App() {
                     />,
                     document.body
                 )}
-
-                {/* Render the ReportDialog */}
                 {isReportDialogOpen && createPortal(
                     <ReportDialog
                         isOpen={isReportDialogOpen}

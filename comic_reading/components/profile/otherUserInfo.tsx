@@ -23,7 +23,6 @@ export function OtherUserInfo({
   return (
     <div className="relative">
       <div className="w-full h-full">
-        <Header />
       </div>
       <div className="h-72 w-full bg-center bg-cover relative z-10" style={{ backgroundImage: `url(${imageUrl})` }}>
         <div className="absolute inset-0 backdrop-blur-sm"></div>
@@ -41,13 +40,9 @@ export function OtherUserInfo({
             <h2 className="text-2xl font-semibold my-8">Lịch sử đăng truyện</h2>
             </div>
             <div className="">
-                <UploadHistoryTab>
-                    <UploadHistoryItem />
-                    <UploadHistoryItem />
-                    <UploadHistoryItem />
-                    <UploadHistoryItem />
-                    <UploadHistoryItem />
-                </UploadHistoryTab>
+                {/* <UploadHistoryTab>
+
+                </UploadHistoryTab> */}
             </div>
           </div>
         </div>

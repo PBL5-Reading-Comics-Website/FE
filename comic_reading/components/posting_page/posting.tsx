@@ -3,27 +3,28 @@ import Header from "../util/header";
 import { Input } from '../util/input.tsx';
 import PageUpload from "./pageUpload.tsx";
 import axios from "axios";
-import React, {useEffect, useState} from "react";
-import {posterService} from "../../src/service/posterService.tsx";
-import {useNavigate} from "react-router-dom";
-import {mangaService} from "../../src/service/mangaService.tsx";
+import React, { useEffect, useState } from "react";
+import { posterService } from "../../src/service/posterService.tsx";
+import { useNavigate, useParams } from "react-router-dom";
+import { mangaService } from "../../src/service/mangaService.tsx";
 
 interface UploadProgress {
     [filename: string]: number;
 }
 
 export function PostingPage() {
+    const { mangaNameParam } = useParams();
     const [images, setImages] = useState<File[]>([]);
     const [uploadProgress, setUploadProgress] = useState<UploadProgress>({});
-    const [mangaName, setMangaName] = useState('');
+    const [mangaName, setMangaName] = useState(mangaNameParam);
     const [chapterName, setChapterName] = useState('');
     const [chapterNumber, setChapterNumber] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [showAlert, setShowAlert] = useState(false);
     const [manga, setManga] = useState<any>();
+    const [chapterOptions, setChapterOptions] = useState<number[]>([]);
     const navigate = useNavigate();
 
-    // Update handleImageUpload to set the images state
     const handleImageUpload = (newImages: File[]) => {
         setImages(newImages);
     };
@@ -31,10 +32,20 @@ export function PostingPage() {
     useEffect(() => {
         const getManga = async () => {
             try {
-                const data = await posterService.getMangaByName(mangaName);
+                const data = await posterService.getMangaByName(mangaName!);
                 if (!data) return;
                 console.log(data.data.content[0]);
                 setManga(data.data.content[0]);
+
+                const chaptersResponse = await mangaService.getChaptersByMangaId({ id: data.data.content[0].id, sortField: '', sortOrder: '', page: 0, size: 100 });
+                const chapters = chaptersResponse.data;
+                const existingChapterNumbers = chapters.map((chapter: any) => chapter.number);
+                const latestChapterNumber = existingChapterNumbers.length > 0 ? Math.max(...existingChapterNumbers) : 0;
+                
+                const options = Array.from({ length: latestChapterNumber + 20 }, (_, i) => i + 1)
+                    .filter(number => !existingChapterNumbers.includes(number));
+                
+                setChapterOptions(options);
             } catch (error) {
                 console.error(error);
             }
@@ -42,7 +53,6 @@ export function PostingPage() {
         getManga();
     }, [mangaName]);
 
-    // Upload images to Cloudinary
     const uploadImages = async () => {
         if (!images) return;
 
@@ -72,7 +82,6 @@ export function PostingPage() {
                 console.log('Upload successful:', response.data);
                 uploadedImageUrls.push(response.data.secure_url);
 
-                // Clear progress for the uploaded file
                 setUploadProgress((prevProgress) => {
                     const { [image.name]: _, ...rest } = prevProgress;
                     return rest;
@@ -84,7 +93,6 @@ export function PostingPage() {
         return uploadedImageUrls;
     };
 
-    // Send chapter to backend
     const sendChapter = async () => {
         setIsLoading(true);
         const imageUrls = await uploadImages();
@@ -110,7 +118,6 @@ export function PostingPage() {
     return (
         <div>
             <div className="w-full h-full">
-                {/* <Header /> */}
             </div>
             <div className='mt-24 w-full p-5'>
                 <div className='flex w-full pb-4 border-b'>
@@ -119,19 +126,31 @@ export function PostingPage() {
                         <div className="flex items-center">
                             <div className="w-7/12">
                                 <div className="mb-2">
-                                    <label className="block  text-sm font-bold mb-1" htmlFor="name">
+                                    <label className="block text-sm font-bold mb-1" htmlFor="name">
                                         Tên truyện
                                     </label>
-                                    <Input id="name" type="text" className="h-10" value={mangaName} onChange={e => setMangaName(e.target.value)}/>
+                                    <Input disabled id="name" type="text" className="h-10" value={mangaName} onChange={e => setMangaName(e.target.value)} />
                                 </div>
                                 <div className="mb-2">
-                                    <label className="block  text-sm font-bold mb-1" htmlFor="number">
+                                    <label className="block text-sm font-bold mb-1" htmlFor="number">
                                         Chương
                                     </label>
-                                    <Input id="number" type="text" className="h-10" value={chapterNumber} onChange={e => setChapterNumber(e.target.value)} />
+                                    <select
+                                        id="number"
+                                        className="h-10"
+                                        value={chapterNumber}
+                                        onChange={e => setChapterNumber(e.target.value)}
+                                    >
+                                        <option value="">Chọn chương</option>
+                                        {chapterOptions.map(option => (
+                                            <option key={option} value={option}>
+                                                {option}
+                                            </option>
+                                        ))}
+                                    </select>
                                 </div>
                                 <div className="mb-2">
-                                    <label className="block  text-sm font-bold mb-1" htmlFor="chapter_name">
+                                    <label className="block text-sm font-bold mb-1" htmlFor="chapter_name">
                                         Tên chương
                                     </label>
                                     <Input id="chapter_name" type="text" className="h-10" value={chapterName} onChange={e => setChapterName(e.target.value)} />

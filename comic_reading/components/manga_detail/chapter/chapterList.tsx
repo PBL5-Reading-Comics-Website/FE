@@ -41,6 +41,10 @@ interface ChapterListProps {
 }
 
 const ChapterList: React.FC<ChapterListProps> = ({ chapters }) => {
+    const formattedPostTime = (postTime: string) => {
+        const date = new Date(postTime);
+        return `${date.getDate().toString().padStart(2, '0')}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getFullYear()}`;
+    }
   return (
     <div className="w-full p-3 pt-0 border-2 flex flex-col rounded-lg">
         <InfiniteScroll
@@ -61,7 +65,7 @@ const ChapterList: React.FC<ChapterListProps> = ({ chapters }) => {
                 chapter={(index + 1).toString()}
                 chapterId={chapter.id.toString()}
                 chapterName={chapter.name}
-                time={chapter.publishAt}
+                time={formattedPostTime(chapter.publishAt)}
                 poster={`Người đăng: ${chapter.manga.author}`}
             />
             ))}

@@ -8,7 +8,7 @@ import { FollowHistoryTab } from "./followHistoryTab.tsx";
 import { ReadHistoryTab } from "./readHistoryTab.tsx";
 import UpdateUserInfoTab from "./updateUserInfoTab.tsx";
 import UserOptionsList from "./userOptionsList";
-import PostingHistoryTab from "./postingHistoryTab.tsx";
+import UploadHistoryTab from "./uploadHistoryTab.tsx";
 interface UserInfoScreenProps {
   imageUrl?: string;
   userName?: string;
@@ -67,7 +67,6 @@ export function UserInfoScreen({
   return (
     <div className="relative">
       <div className="w-full h-full">
-        <Header />
       </div>
       <div className="h-72 w-full bg-center bg-cover relative z-10 bg-[#ED741B]" >
         <div className="absolute inset-0 backdrop-blur-sm"></div>
@@ -89,10 +88,9 @@ export function UserInfoScreen({
             <div className="mt-4">
               {selectedOption === "Thông tin cá nhân" && <UpdateUserInfoTab avatarPath={imageUrl} user={user} />}
               {selectedOption === "Lịch sử đọc truyện" && <ReadHistoryTab id={user?.id} />}
-              {selectedOption === "Thông tin theo dõi" && <FollowHistoryTab id={user?.id}>
-              </FollowHistoryTab>}
-              {selectedOption === "Lịch sử đăng truyện" && <PostingHistoryTab id={user?.id} />}
+              {selectedOption === "Thông tin theo dõi" && <FollowHistoryTab id={user?.id}></FollowHistoryTab>}
               {selectedOption === "Đổi mật khẩu" && <ChangePasswordTab />}
+              {selectedOption === "Lịch sử đăng truyện" && <UploadHistoryTab />}
             </div>
           </div>
         </div>

@@ -105,7 +105,7 @@ export function NewManga() {
     } catch (error) {
       console.error('Error creating manga:', error);
     } finally {
-      setIsLoading(false); // Hide loading
+      setIsLoading(false);
     }
   };
 
@@ -116,7 +116,6 @@ export function NewManga() {
   return (
     <div>
       <div className="w-full h-full">
-        <Header />
       </div>
       <div className='top-20 mt-28 w-full p-5'>
         <div className='flex w-full'>

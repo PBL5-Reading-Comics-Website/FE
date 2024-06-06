@@ -7,88 +7,76 @@ import Header from "../util/header";
 
 const ChapterImage = lazy(() => import("../util/chapterImage.tsx"));
 
-interface Image {
-  id: number;
-  name: string;
-  imageUrl: string;
-  imageId: string;
-  chapter: {
-    id: number;
-    name: string;
-    number: number;
-    data: null;
-    commentNumber: number;
-    publishAt: string;
-    updateAt: string;
-    manga: {
-      id: number;
-      name: string;
-      publishingCompany: string;
-      author: string;
-      artist: string;
-      coverImage: string;
-      status: string;
-      readingStatus: string;
-      viewNumber: number;
-      favouriteNumber: number;
-      commentNumber: number;
-      publishAt: string;
-      updateAt: string;
-      updateUser: null;
-      tags: any[];
-    };
-  };
-}
-
 function ChapterScreen() {
-  const chapterId = useParams();
+  const { id: chapterIdParam } = useParams();
   const navigate = useNavigate();
-  const [chapterImages, setChapterImages] = useState<string[]>([]);
+
   const [mangaName, setMangaName] = useState("");
   const [chapterName, setChapterName] = useState("");
-  const [chapterNumber, setChapterNumber] = useState(0);
-  const [numberOfChapter, setNumberOfChapter] = useState(0);
   const [mangaId, setMangaId] = useState(0);
+  const [chapterNumber, setChapterNumber] = useState(0);
+  const [chapters, setChapters] = useState<any[]>([]);
+  const [chapterImages, setChapterImages] = useState<string[]>([]);
   const [commentChange, setCommentChange] = useState(false);
 
   useEffect(() => {
-    const fetchChapter = async () => {
+    const fetchChapterData = async () => {
       try {
-        let id = chapterId.id;
-        const response = await mangaService.getChapterById(id ?? '1');
-        setMangaName(response.data.chapter.manga.name);
-        setChapterName(response.data.chapter.name);
-        setChapterNumber(response.data.chapter.number);
-        const imageUrls = response.data.images.map((image: Image) => image.name);
-        setChapterImages(imageUrls);
-        const numberOfChapter = await mangaService.getMangaById(response.data.chapter.manga.id);
-        setNumberOfChapter(numberOfChapter.data.chapters.length);
-        setMangaId(response.data.chapter.manga.id);
-        setCommentChange(!commentChange); 
+        const chapterId = chapterIdParam ?? '1';
+        const chapterResponse = await mangaService.getChapterById(chapterId);
+
+        // Update chapter details and images
+        setMangaName(chapterResponse.data.chapter.manga.name);
+        setChapterName(chapterResponse.data.chapter.name);
+        setChapterNumber(chapterResponse.data.chapter.number);
+        setChapterImages(chapterResponse.data.images.map((image: { name: any; }) => image.name));
+        setMangaId(chapterResponse.data.chapter.manga.id);
+
+        // Fetch and sort all chapters
+        const chaptersResponse = await mangaService.getChaptersByMangaId({
+          id: chapterResponse.data.chapter.manga.id,
+          sortField: 'number',
+          sortOrder: 'ASC',
+          page: 0,
+          size: 100
+        });
+        setChapters(chaptersResponse.data);
+        setCommentChange(!commentChange);
       } catch (error) {
-        console.error('Failed to fetch chapter:', error);
+        console.error('Failed to fetch chapter data:', error);
       }
     };
-    fetchChapter();
-  }, [chapterId]);
+    fetchChapterData();
+  }, [chapterIdParam]);
 
   const handleChapterChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedChapterIndex = event.target.selectedIndex;
-    const newChapterId = Number(chapterId.id ?? '') + selectedChapterIndex - (chapterNumber - 1); 
-    navigate(`/read-manga/${newChapterId}`);
+    const newChapterNumber = parseInt(event.target.value, 10);
+    const selectedChapter = chapters.find(chapter => chapter.number === newChapterNumber);
+
+    if (selectedChapter) {
+      navigate(`/read-manga/${selectedChapter.id}`);
+      setChapterNumber(newChapterNumber);
+      setChapterName(selectedChapter.name);
+    }
   };
 
   const handlePreviousChapter = () => {
-    if (chapterNumber > 1) {
-      let id = Number(chapterId.id ?? '');
-      navigate(`/read-manga/${id - 1}`);
+    const currentChapterIndex = chapters.findIndex(chapter => chapter.number === chapterNumber);
+    if (currentChapterIndex > 0) {
+      const previousChapter = chapters[currentChapterIndex - 1];
+      navigate(`/read-manga/${previousChapter.id}`);
+      setChapterNumber(previousChapter.number);
+      setChapterName(previousChapter.name);
     }
   };
 
   const handleNextChapter = () => {
-    if (chapterNumber < numberOfChapter) {
-      let id = Number(chapterId.id ?? '');
-      navigate(`/read-manga/${id + 1}`);
+    const currentChapterIndex = chapters.findIndex(chapter => chapter.number === chapterNumber);
+    if (currentChapterIndex < chapters.length - 1) {
+      const nextChapter = chapters[currentChapterIndex + 1];
+      navigate(`/read-manga/${nextChapter.id}`);
+      setChapterNumber(nextChapter.number);
+      setChapterName(nextChapter.name);
     }
   };
 
@@ -108,16 +96,16 @@ function ChapterScreen() {
           <select
             onChange={handleChapterChange}
             className="border-2 border-neutral-700 bg-white text-black rounded-full px-3 py-2 mr-2"
-            value={chapterNumber}
+            value={chapterNumber.toString()}
           >
-            {Array.from({ length: numberOfChapter }, (_, i) => i + 1).map(chapter => (
-              <option key={chapter} value={chapter}>Chương {chapter}</option>
+            {chapters.map(chapter => (
+              <option key={chapter.id} value={chapter.number.toString()}>Chương {chapter.number}</option>
             ))}
           </select>
           <button
             onClick={handleNextChapter}
             className="px-4 py-2 bg-orange-500 hover:border-red-500 rounded-full text-white w-34"
-            hidden={chapterNumber === numberOfChapter}
+            hidden={chapters.length > 0 && chapterNumber === chapters[chapters.length - 1].number}
           >
             Chương sau
           </button>
@@ -132,35 +120,10 @@ function ChapterScreen() {
             })}
           </Suspense>
         </div>
-        <div className="flex items-center justify-center my-4">
-          <button
-            onClick={handlePreviousChapter}
-            className="px-4 py-2 bg-orange-500 hover:border-red-500 rounded-full text-white mr-2 w-34"
-            hidden={chapterNumber === 1}
-          >
-            Chương trước
-          </button>
-          <select
-            onChange={handleChapterChange}
-            className="border-2 border-neutral-700 bg-white text-black rounded-full px-3 py-2 mr-2"
-            value={chapterNumber}
-          >
-            {Array.from({ length: numberOfChapter }, (_, i) => i + 1).map(chapter => (
-              <option key={chapter} value={chapter}>Chương {chapter}</option>
-            ))}
-          </select>
-          <button
-            onClick={handleNextChapter}
-            className="px-4 py-2 bg-orange-500 hover:border-red-500 rounded-full text-white w-34"
-            hidden={chapterNumber === numberOfChapter}
-          >
-            Chương sau
-          </button>
-        </div>
       </div>
       <div className="w-3/5 bg-[#5F5F5F] flex flex-col items-center justify-start rounded-lg p-3">
         <h2 className='text-bold text-4xl m-2'>Bình luận</h2>
-        <CommentList mangaId={mangaId} chapterChange={commentChange} /> {/* Pass mangaId to CommentList */}
+        <CommentList mangaId={mangaId} chapterChange={commentChange} />
       </div>
     </div>
   );

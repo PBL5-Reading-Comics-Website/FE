@@ -192,12 +192,12 @@ export const mangaService = {
         size: number
     }) => {
         const response = await axios.get(`${API_URL}/manga/${id}/chapters`, {
-            params: {
-                sortField,
-                sortOrder,
-                page,
-                size
-            }
+            // params: {
+            //     sortField,
+            //     sortOrder,
+            //     page,
+            //     size
+            // }
         });
         return response.data;
     },

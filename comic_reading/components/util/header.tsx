@@ -14,7 +14,7 @@ let isLoggedIn = false;
 
 interface HeaderProps {
     onOpenRequestDialog: () => void;
-  }
+}
 
 interface User {
     id: number;
@@ -38,7 +38,7 @@ export function Header(props: HeaderProps) {
     const [dropdownVisible, setDropdownVisible] = useState(false);
     const [user, setUser] = useState<User>();
     const [searchQuery, setSearchQuery] = useState('');
-    const [isRequestDialogOpen, setIsRequestDialogOpen] = useState(false); // Local state
+    const [isRequestDialogOpen, setIsRequestDialogOpen] = useState(false);
     const navigate = useNavigate();
     const toggleDropdown = () => {
         const token = Cookies.get('token');
@@ -83,9 +83,9 @@ export function Header(props: HeaderProps) {
         navigate(`/search/${searchQuery}/null`);
     };
     const handleOpenRequestDialog = () => {
-        props.onOpenRequestDialog(); 
-      };
-    
+        props.onOpenRequestDialog();
+    };
+
 
     const handleCloseRequestDialog = () => {
         setIsRequestDialogOpen(false);

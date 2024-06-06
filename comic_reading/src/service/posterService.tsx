@@ -40,7 +40,7 @@ export const posterService = {
             throw error;
         }
     },
-    createManga: async ({name, publishingCompany, artist, author, description, coverImage, tags}: {
+    createManga: async ({ name, publishingCompany, artist, author, description, coverImage, tags }: {
         name: string,
         publishingCompany?: string,
         artist?: string,
@@ -52,9 +52,9 @@ export const posterService = {
         try {
             const response = await axiosInstance.post(
                 '/manga',
-                {name, publishingCompany, artist, author, description, coverImage, tags},
+                { name, publishingCompany, artist, author, description, coverImage, tags },
                 {
-                    params: {userId: user.id}
+                    params: { userId: user.id }
                 }
             );
             console.log(response);
@@ -65,14 +65,14 @@ export const posterService = {
         }
     },
     // In your posterService.tsx (frontend)
-    createChapter: async ({name, number, images}: {
+    createChapter: async ({ name, number, images }: {
         name?: string,
         number?: number,
         images?: string[]
     }, mangaId: number) => {
         try {
-            const response = await axiosInstance.post('/chapter', {name, number, images}, {
-                params: {mangaId}
+            const response = await axiosInstance.post('/chapter', { name, number, images }, {
+                params: { mangaId }
             });
             console.log(response)
             return response.data;
@@ -80,5 +80,20 @@ export const posterService = {
             console.error(error);
             throw error;
         }
-    }
+    },
+    getUploadHistories: async (userId: number) => {
+        try {
+            console.log(userId);
+            
+            const response = await axiosInstance.get(`/manga`, {
+                params: {
+                    userId: userId
+                }
+            });
+            return response.data;
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
+    },
 };
