@@ -19,14 +19,14 @@ export function NewManga() {
   const navigate = useNavigate();
   const [user, setUser] = useState<any>();
   const [image, setImage] = useState<File | null>(null);
-    const [tags, setTags] = useState<string[]>([]);
+  const [tags, setTags] = useState<string[]>([]);
   const [mangaName, setMangaName] = useState('');
   const [author, setAuthor] = useState('');
   const [artist, setArtist] = useState('');
   const [description, setDescription] = useState('');
   const [publishingCompany, setPublishingCompany] = useState('');
   const [uploadProgress, setUploadProgress] = useState<UploadProgress>({});
-  const [isLoading, setIsLoading] = useState(false); 
+  const [isLoading, setIsLoading] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
 
   useEffect(() => {
@@ -52,7 +52,7 @@ export function NewManga() {
     const formData = new FormData();
     formData.append('file', image);
     formData.append('upload_preset', 'team_upload');
-    formData.append('folder', 'van_chuong_viet/' + mangaName); 
+    formData.append('folder', 'van_chuong_viet/' + mangaName);
 
     try {
       console.log('Uploading:', image.name);
@@ -62,7 +62,7 @@ export function NewManga() {
         formData,
         {
           onUploadProgress: (progressEvent) => {
-            if (progressEvent.total) { 
+            if (progressEvent.total) {
               const progress = (progressEvent.loaded / progressEvent.total) * 100;
               setUploadProgress((prevProgress) => ({
                 ...prevProgress,
@@ -73,8 +73,8 @@ export function NewManga() {
         }
       );
       console.log('Upload successful:', response);
-      setUploadProgress((prevProgress) => { 
-        const {[image.name]: _, ...rest} = prevProgress; 
+      setUploadProgress((prevProgress) => {
+        const { [image.name]: _, ...rest } = prevProgress;
         return rest;
       });
       return response.data.url;
@@ -84,7 +84,7 @@ export function NewManga() {
   };
 
   const sendManga = async () => {
-    setIsLoading(true); // Show loading
+    setIsLoading(true);
     const imageUrl = await uploadImage();
     console.log('Image URL:', imageUrl);
     const manga = {
@@ -101,7 +101,7 @@ export function NewManga() {
       setTimeout(() => {
         setShowAlert(false);
         navigate('/');
-      }, 2000); 
+      }, 2000);
     } catch (error) {
       console.error('Error creating manga:', error);
     } finally {
@@ -109,9 +109,11 @@ export function NewManga() {
     }
   };
 
-    const handleTagsSelected = (tags: string[] | null) => {
-        setTags(tags ?? []);
-    };
+  const handleTagsSelected = (tags: string[] | null) => {
+    setTags(tags ?? []);
+    console.log(tags);
+
+  };
 
   return (
     <div>

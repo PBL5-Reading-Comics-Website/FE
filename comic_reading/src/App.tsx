@@ -127,7 +127,6 @@ export default function App() {
                         path="/admin-manga-page/:id"
                         element={
                             <>
-                                <Header onOpenRequestDialog={handleOpenRequestDialog} />
                                 <ProtectedRoute role="ADMIN">
                                     <AdminMangaPage />
                                 </ProtectedRoute>

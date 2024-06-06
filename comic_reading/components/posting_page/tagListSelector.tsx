@@ -47,8 +47,8 @@ const TagListSelector = ({onTagsSelected}: { onTagsSelected: (tags: string[] | n
                 <IconArrowNarrowRight
                     size={24} className='pt-1'/>
             </button>
-            {selectedTags.map(tag => (
-                <Tag key={tag} text={tag} onClick={() => handleTagRemove(tag)}/>
+            {selectedTags.map((tag, index) => (
+                <Tag key={index} text={tag} onClick={() => handleTagRemove(tag)}/>
             ))}
             {isOpen &&
                 <div className="h-full fixed backdrop-blur-sm inset-x-0 top-0 w-full flex items-center justify-center"

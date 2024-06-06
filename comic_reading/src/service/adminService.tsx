@@ -97,9 +97,22 @@ export const adminService = {
             throw error;
         }
     },
-    getAllReports: async () => {
+    getAllReports: async ({sortField, sortOrder, page, size}: {
+        sortField?: string,
+        sortOrder?: string,
+        page?: number,
+        size?: number
+    } = {}) => {
         try {
-            const response = await axiosInstance.get('/reports');
+            const response = await axiosInstance.get('/reports', {
+                params: {
+                    sortField,
+                    sortOrder,
+                    page,
+                    size
+                }
+            
+            } );
             return response.data;
         } catch (error) {
             console.error(error);
@@ -179,4 +192,32 @@ export const adminService = {
             throw error;
         }
     },
+
+  approveReport: async (id: number) => {
+    try {
+      const response = await axiosInstance.put('/report/accept', null, {
+        params: {
+          id,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  },
+
+  rejectReport: async (id: number) => {
+    try {
+      const response = await axiosInstance.put('/report/reject', null, {
+        params: {
+          id,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  },
 }

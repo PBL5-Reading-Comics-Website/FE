@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { AdminChapterTable } from './table/table';
 
 function AdminMangaPage() {
@@ -10,19 +10,31 @@ function AdminMangaPage() {
     };
 
     return (
-        <div className="flex flex-col justify-center items-center bg-gray-100 h-full">
+        <div className="flex flex-col justify-center items-center bg-gray-900 h-full">
+            {/* Header */}
             <div className='absolute flex top-0 items-center justify-between w-full'>
+                 <Link to="/admin-page" className=''>
                 <div className='ml-2 flex'>
-                    <h1 className="text-4xl font-bold text-center">Admin</h1>
+                    
+                    <h1 className="text-4xl font-bold text-center text-white">Admin</h1>
                     <h1 className="text-4xl font-bold text-center text-orange-500 ">Page</h1>
+                    
                 </div>
+                </Link>
                 <button className='text-2xl font-semibold bg-gray-900  text-center text-orange-500 p-1'>
                     Logout
                 </button>
             </div>
-            <div className='h-10 w-full bg-gray-900'>
+
+            {/* Full-height background element */}
+            <div className="absolute bg-gray-900 text-white h-full w-full top-16 z-0" /> 
+
+            {/* Main content area with flexbox for full height */}
+            <div className="flex flex-col  h-full w-full mt-16 p-4 z-10"> {/* Main content area */}
+                <div className="flex-grow"> {/* Make the table container fill remaining height */}
+                    <AdminChapterTable mangaId={ parseInt(id!)} /> 
+                </div>
             </div>
-            <AdminChapterTable mangaId={ parseInt(id!)} />
         </div>
     );
 }
