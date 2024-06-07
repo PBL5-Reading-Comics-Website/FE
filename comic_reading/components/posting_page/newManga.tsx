@@ -93,7 +93,8 @@ export function NewManga() {
       artist: artist,
       author: author,
       description: description,
-      coverImage: imageUrl
+      coverImage: imageUrl,
+      tags: tags
     };
     try {
       await posterService.createManga(manga, user);
