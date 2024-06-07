@@ -553,10 +553,10 @@ function WaitingListTable() {
               <td className="px-6 py-4 whitespace-nowrap">{item.user.email}</td>
               <td className="px-6 py-4 whitespace-nowrap">{item.user.registrationDate}</td>
               <td className="px-6 py-4 whitespace-nowrap">
-                <button onClick={() => handleAcceptUser(item.user.id)} className="mx-1 px-4 py-2 rounded-md text-white bg-green-500">Chấp nhận</button>
+                <button onClick={() => handleAcceptUser(item.id)} className="mx-1 px-4 py-2 rounded-md text-white bg-green-500">Chấp nhận</button>
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
-                <button onClick={() => handleRejectUser(item.user.id)} className="mx-1 px-4 py-2 rounded-md text-white bg-red-500">Từ chối</button>
+                <button onClick={() => handleRejectUser(item.id)} className="mx-1 px-4 py-2 rounded-md text-white bg-red-500">Từ chối</button>
               </td>
             </tr>
           ))}
