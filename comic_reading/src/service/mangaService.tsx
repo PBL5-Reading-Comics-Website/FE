@@ -8,7 +8,7 @@ const axiosInstance = axios.create({
     withCredentials: false,
 });
 export const mangaService = {
-    getAllMangas: async ({sortField, sortOrder, page, size}: {
+    getAllMangas: async ({ sortField, sortOrder, page, size }: {
         sortField?: string,
         sortOrder?: string,
         page?: number,
@@ -63,7 +63,7 @@ export const mangaService = {
         }
     },
 
-    getMangaPublishedInFirstQuarter: async ({sortField, sortOrder, page, size}: {
+    getMangaPublishedInFirstQuarter: async ({ sortField, sortOrder, page, size }: {
         sortField?: string,
         sortOrder?: string,
         page?: number,
@@ -88,7 +88,7 @@ export const mangaService = {
         }
     },
 
-    getMangaPublishedInSecondQuarter: async ({sortField, sortOrder, page, size}: {
+    getMangaPublishedInSecondQuarter: async ({ sortField, sortOrder, page, size }: {
         sortField?: string,
         sortOrder?: string,
         page?: number,
@@ -113,7 +113,7 @@ export const mangaService = {
         }
     },
 
-    getMangaPublishedInThirdQuarter: async ({sortField, sortOrder, page, size}: {
+    getMangaPublishedInThirdQuarter: async ({ sortField, sortOrder, page, size }: {
         sortField?: string,
         sortOrder?: string,
         page?: number,
@@ -138,7 +138,7 @@ export const mangaService = {
         }
     },
 
-    getMangaPublishedInFourthQuarter: async ({sortField, sortOrder, page, size}: {
+    getMangaPublishedInFourthQuarter: async ({ sortField, sortOrder, page, size }: {
         sortField?: string,
         sortOrder?: string,
         page?: number,
@@ -162,7 +162,7 @@ export const mangaService = {
             throw error;
         }
     },
-    getAllChapters: async ({sortField, sortOrder, page, size}: {
+    getAllChapters: async ({ sortField, sortOrder, page, size }: {
         sortField: string,
         sortOrder: string,
         page: number,
@@ -184,7 +184,7 @@ export const mangaService = {
         return response.data;
     },
 
-    getChaptersByMangaId: async ({id, sortField, sortOrder, page, size}: {
+    getChaptersByMangaId: async ({ id, sortField, sortOrder, page, size }: {
         id: string,
         sortField: string,
         sortOrder: string,
@@ -211,11 +211,11 @@ export const mangaService = {
             throw error;
         }
     },
-    getMangaByTagAndName: async ({tag, name, sortField, sortOrder, page = 1, size = 10}: {
-        tag: string | null,
+    getMangaByTagAndName: async ({ tag, name, sortField, sortOrder, page = 1, size = 10 }: {
+        tag?: string | null,
         name?: string | null,
-        sortField?: string,
-        sortOrder?: string,
+        sortField?: string | null,
+        sortOrder?: string | null,
         page?: number,
         size?: number
     }) => {

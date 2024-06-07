@@ -192,7 +192,7 @@ function AdminMangaTable() {
     } catch (error) {
       console.error('Error deleting manga:', error);
     }
-    finally{
+    finally {
       setIsConfirmDeleteMangaOpen(false);
     }
   };

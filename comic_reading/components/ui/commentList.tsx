@@ -6,7 +6,9 @@ import { userService } from "../../src/service/userService";
 import Comment from "./comment";
 import { createPortal } from "react-dom";
 import ReportDialog from "../util/reportDialog";
-
+import Cookies from "js-cookie";
+import { jwtDecode } from "jwt-decode";
+import { useNavigate } from "react-router-dom";
 interface User {
     id: number;
     username: string;
@@ -62,6 +64,7 @@ function CommentList(
     const [isReportDialogOpen, setIsReportDialogOpen] = useState(false); // State for the ReportDialog
     const [reportMangaId, setReportMangaId] = useState(0); // State for the mangaId to report
     const [reportCommentId, setReportCommentId] = useState(0); // State for the commentId to report
+    const navigate = useNavigate()
 
     useEffect(() => {
         const fetchComments = async () => {
@@ -80,7 +83,13 @@ function CommentList(
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         try {
-            const userId = 1;
+            const token = Cookies.get('token');
+            if (!token) {
+                console.log('No token found');
+                return;
+            }
+            const decodedToken: any = jwtDecode(token);
+            const userId: number = decodedToken.userId
             const response = await userService.postComment({ userId, mangaId, content: text });
             console.log(response.data)
             if (response.status == "success") {
@@ -103,6 +112,24 @@ function CommentList(
     const handleCloseReportDialog = () => {
         setIsReportDialogOpen(false);
     };
+
+    const handleToUserProfile = (userId: number) => {
+        let currentUserId = 0
+        const token = Cookies.get('token');
+        if (!token) {
+            currentUserId = 0
+        } else {
+            const decodedToken: any = jwtDecode(token);
+            currentUserId = decodedToken.userId;
+        }
+        if (currentUserId == userId) {
+            navigate('/user-info')
+        }
+        else {
+            navigate(`/other-user/${userId}`)
+        }
+
+    }
 
     const handleReport = async (mangaId: number, commentId: number, reason: string) => {
         try {
@@ -136,6 +163,7 @@ function CommentList(
                 {comments.length > 0 && comments.map((comment, index) => (
                     <Comment
                         imgAvatar={comment.user.avatar}
+                        userId={comment.user.id}
                         key={index}
                         name={comment.user.username}
                         time={comment.updateAt}
@@ -143,6 +171,7 @@ function CommentList(
                         mangaId={mangaId}
                         commentId={comment.id}
                         handleOpenReportDialog={handleOpenReportDialog}
+                        handleToUserProfile={handleToUserProfile}
                     />
                 ))}
             </InfiniteScroll>

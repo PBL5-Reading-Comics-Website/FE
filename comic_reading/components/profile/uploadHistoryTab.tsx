@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
 
 import { posterService } from '../../src/service/posterService';
@@ -32,6 +32,12 @@ interface UploadHistoryItemProps {
   id?: number;
 }
 
+interface ReadHistoryProps {
+  className?: string;
+  id?: number;
+  children?: ReactNode;
+}
+
 export function UploadHistoryItem({ imageUrl, mangaName, id, postTime }: UploadHistoryItemProps) {
   const date = new Date(postTime!);
   const formattedDate = `${date.getDate().toString().padStart(2, '0')}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getFullYear()}`;
@@ -57,19 +63,13 @@ export function UploadHistoryItem({ imageUrl, mangaName, id, postTime }: UploadH
   );
 }
 
-export function UploadHistoryTab() {
+export function UploadHistoryTab({ className = '', children, id }: ReadHistoryProps) {
   const [uploadHistories, setUploadHistories] = useState<ReadingHistory[]>([]);
 
   useEffect(() => {
     const fetchReadingHistories = async () => {
       try {
-        const token = Cookies.get('token');
-        if (!token) {
-          console.log('No token found');
-          return;
-        }
-        const decodedToken: any = jwtDecode(token);
-        const data = await posterService.getUploadHistories(decodedToken.userId);
+        const data = await posterService.getUploadHistories(id!);
         setUploadHistories(data.data);
         console.log(data.data);
       } catch (error) {
@@ -81,9 +81,10 @@ export function UploadHistoryTab() {
   }, []);
 
   return (
-    <div className='bg-[#6A6A6A] rounded-xl p-4 mb-10 w-4/6'>
+    <div>
+      <h2 className='text-bold my-4'>LỊCH SỬ ĐĂNG TRUYỆN</h2>
       {uploadHistories.map((manga, index) => (
-        <div key={index} className='bg-[#444444] rounded-xl p-4 pr-12 mb-4 last:mb-0'>
+        <div key={index} className={`bg-[#444444] rounded-xl p-4 pr-12 mb-4 last:mb-0 ${className}`}>
           <UploadHistoryItem
             imageUrl={manga.coverImage}
             mangaName={manga.name}

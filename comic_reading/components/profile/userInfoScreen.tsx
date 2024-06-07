@@ -7,7 +7,7 @@ import ChangePasswordTab from "./changePasswordTab.tsx";
 import { FollowHistoryTab } from "./followHistoryTab.tsx";
 import { ReadHistoryTab } from "./readHistoryTab.tsx";
 import UpdateUserInfoTab from "./updateUserInfoTab.tsx";
-import UserOptionsList from "./userOptionsList";
+import {UserOptionsList} from "./userOptionsList";
 import UploadHistoryTab from "./uploadHistoryTab.tsx";
 interface UserInfoScreenProps {
   imageUrl?: string;
@@ -90,7 +90,7 @@ export function UserInfoScreen({
               {selectedOption === "Lịch sử đọc truyện" && <ReadHistoryTab id={user?.id} />}
               {selectedOption === "Thông tin theo dõi" && <FollowHistoryTab id={user?.id}></FollowHistoryTab>}
               {selectedOption === "Đổi mật khẩu" && <ChangePasswordTab />}
-              {selectedOption === "Lịch sử đăng truyện" && <UploadHistoryTab />}
+              {selectedOption === "Lịch sử đăng truyện" && <UploadHistoryTab id={user?.id}/>}
             </div>
           </div>
         </div>

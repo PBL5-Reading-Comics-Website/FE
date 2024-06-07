@@ -120,6 +120,31 @@ function ChapterScreen() {
             })}
           </Suspense>
         </div>
+        <div className="flex items-center justify-center my-4">
+          <button
+            onClick={handlePreviousChapter}
+            className="px-4 py-2 bg-orange-500 hover:border-red-500 rounded-full text-white mr-2 w-34"
+            hidden={chapterNumber === 1}
+          >
+            Chương trước
+          </button>
+          <select
+            onChange={handleChapterChange}
+            className="border-2 border-neutral-700 bg-white text-black rounded-full px-3 py-2 mr-2"
+            value={chapterNumber.toString()}
+          >
+            {chapters.map(chapter => (
+              <option key={chapter.id} value={chapter.number.toString()}>Chương {chapter.number}</option>
+            ))}
+          </select>
+          <button
+            onClick={handleNextChapter}
+            className="px-4 py-2 bg-orange-500 hover:border-red-500 rounded-full text-white w-34"
+            hidden={chapters.length > 0 && chapterNumber === chapters[chapters.length - 1].number}
+          >
+            Chương sau
+          </button>
+        </div>
       </div>
       <div className="w-3/5 bg-[#5F5F5F] flex flex-col items-center justify-start rounded-lg p-3">
         <h2 className='text-bold text-4xl m-2'>Bình luận</h2>

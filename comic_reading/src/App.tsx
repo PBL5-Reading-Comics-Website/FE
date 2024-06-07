@@ -12,7 +12,7 @@ import MangaInfoScreen from '../components/manga_detail/mangaInfoScreen.tsx'
 import { MangaSearchPage } from '../components/manga_search_page/mangaSearchPage.tsx'
 import NewManga from '../components/posting_page/newManga.tsx'
 import PostingPage from '../components/posting_page/posting.tsx'
-import OtherUserInfo from '../components/profile/otherUserInfo.tsx'
+import OtherUserInfo, { OtherUserInfoScreen } from '../components/profile/otherUserInfo.tsx'
 import UserInfoScreen from '../components/profile/userInfoScreen.tsx'
 import ImageUploader from '../components/test_page/testPage.tsx'
 import Header from '../components/util/header.tsx';
@@ -134,11 +134,11 @@ export default function App() {
                         }
                     />
                     <Route
-                        path="/other-user"
+                        path="/other-user/:id"
                         element={
                             <>
                                 <Header onOpenRequestDialog={handleOpenRequestDialog} />
-                                <OtherUserInfo />
+                                <OtherUserInfoScreen />
                             </>
                         }
                     />
@@ -152,16 +152,7 @@ export default function App() {
                         }
                     />
                     <Route
-                        path="/search/:search/:tag"
-                        element={
-                            <>
-                                <Header onOpenRequestDialog={handleOpenRequestDialog} />
-                                <MangaSearchPage />
-                            </>
-                        }
-                    />
-                    <Route
-                        path="/search"
+                        path="/search/:search/:type/:order/:tag"
                         element={
                             <>
                                 <Header onOpenRequestDialog={handleOpenRequestDialog} />

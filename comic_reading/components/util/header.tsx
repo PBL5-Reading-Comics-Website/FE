@@ -80,12 +80,11 @@ export function Header(props: HeaderProps) {
     }
     const handleSearchSubmit = (event: React.FormEvent) => {
         event.preventDefault();
-        navigate(`/search/${searchQuery}/null`);
+        navigate(`/search/${searchQuery}/null/null/null`);
     };
     const handleOpenRequestDialog = () => {
         props.onOpenRequestDialog();
     };
-
 
     const handleCloseRequestDialog = () => {
         setIsRequestDialogOpen(false);
@@ -102,21 +101,21 @@ export function Header(props: HeaderProps) {
                     </Link>
                 </div>
                 <div className="h-16 flex items-center justify-center p-5">
-                    <Link to="/search">
+                    <Link to="/search/null/updateAt/null/null">
                         <h1 className="text-center font-saira font-bold text-xl text-white">
                             TRUYỆN MỚI
                         </h1>
                     </Link>
                 </div>
                 <div className="h-16 flex items-center justify-center p-5">
-                    <Link to="/search">
+                    <Link to="/search/null/null/null/null">
                         <h1 className="text-center font-saira font-bold text-xl text-white">
                             DANH SÁCH TRUYỆN
                         </h1>
                     </Link>
                 </div>
                 <div className="h-16 flex items-center justify-center p-5">
-                    <Link to="/search/viewNumber">
+                    <Link to="/search/null/viewNumber/desc/null">
                         <h1 className="text-center font-saira font-bold text-xl text-white">
                             TRUYỆN HOT
                         </h1>
@@ -149,18 +148,18 @@ export function Header(props: HeaderProps) {
                             <div className="flex flex-col p-1 w-[200%] h-fit mt-1 justify-center items-center top-full bg-neutral-800 border-2 border-white absolute rounded-md">
                                 {isLoggedIn === false ? (
                                     <Link to="/login" className="p-4">
-                                        <h1 className="text-white text-base text-center">Đăng nhập</h1>
+                                        <h1 onClick={toggleDropdown} className="text-white text-base text-center">Đăng nhập</h1>
                                     </Link>
                                 ) : (
                                     <>
                                         <Link to="/user-info" className="p-4">
-                                            <h1 className="text-white text-base text-center">Thông tin cá nhân</h1>
+                                            <h1 onClick={toggleDropdown} className="text-white text-base text-center">Thông tin cá nhân</h1>
                                         </Link>
                                         <div className="bg-gradient-to-r from-transparent via-white dark:via-white to-transparent h-[1px] w-full" />
                                         {user?.role === "POSTER" && (
                                             <>
                                                 <Link to="/new-manga" className="p-4">
-                                                    <h1 className="text-white text-base">Đăng truyện</h1>
+                                                    <h1 onClick={toggleDropdown} className="text-white text-base">Đăng truyện</h1>
                                                 </Link>
                                                 <div className="bg-gradient-to-r from-transparent via-white dark:via-white to-transparent h-[1px] w-full" />
                                             </>
@@ -168,13 +167,13 @@ export function Header(props: HeaderProps) {
                                         {user?.role === "USER" && (
                                             <>
                                                 <div className="p-4" onClick={handleOpenRequestDialog}>
-                                                    <h1 className="text-white text-lg text-bold">Xin lên làm người đăng truyện</h1>
+                                                    <h1 onClick={toggleDropdown} className="text-white text-lg text-bold">Xin lên làm người đăng truyện</h1>
                                                 </div>
                                                 <div className="bg-gradient-to-r from-transparent via-white dark:via-white to-transparent h-[1px] w-full" />
                                             </>
                                         )}
                                         <Link to="/login" className="p-4" onClick={authService.logout}>
-                                            <h1 className="text-white text-base">Đăng xuất</h1>
+                                            <h1 onClick={toggleDropdown} className="text-white text-base">Đăng xuất</h1>
                                         </Link>
                                     </>
                                 )}

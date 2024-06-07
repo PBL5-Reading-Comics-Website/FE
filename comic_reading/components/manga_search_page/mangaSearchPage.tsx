@@ -2,7 +2,7 @@ import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IconFaceMask, IconSearch } from '@tabler/icons-react';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { mangaService } from '../../src/service/mangaService';
 import Header from '../util/header';
 import { Input } from '../util/input';
@@ -28,31 +28,24 @@ interface Manga {
 }
 
 export function MangaSearchPage() {
-    const { search, searchTag } = useParams();
+    const { search, type, order, tag } = useParams();
     const [mangas, setMangas] = useState<Manga[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
-    const [searchQuery, setSearchQuery] = useState(search ?? null);
-    const [selectedTag, setSelectedTag] = useState(searchTag ?? null);
-    const [sortField, setSortField] = useState('name');
-    const [sortOrder, setSortOrder] = useState('asc');
+    const [searchQuery, setSearchQuery] = useState(search == "null" ? null : search);
+    const [selectedTag, setSelectedTag] = useState(tag == "null" ? null : tag);
+    const [sortField, setSortField] = useState(type == "null" ? null : type);
+    const [sortOrder, setSortOrder] = useState(order == "null" ? 'asc' : order);
+    const [currentLocation, setCurrentLocation] = useState(useLocation().pathname)
 
-    useEffect(() => {
-        if (search) {
-            setSearchQuery(search);
-        }
-        if (searchTag) {
-            setSelectedTag(searchTag);
-        }
-    }, [])
+    const location = useLocation();
 
+    // This effect will trigger whenever the params change
     useEffect(() => {
         const fetchMangas = async () => {
-            IconFaceMask;
             try {
-                const tag = selectedTag;
                 const response = await mangaService.getMangaByTagAndName({
-                    tag: tag,
+                    tag: selectedTag,
                     name: searchQuery,
                     page: currentPage,
                     sortOrder: sortOrder,
@@ -66,6 +59,14 @@ export function MangaSearchPage() {
         };
         fetchMangas();
     }, [currentPage, selectedTag, searchQuery, sortField, sortOrder]);
+
+    useEffect(() => {
+        if (location.pathname != currentLocation) {
+            setCurrentLocation(location.pathname)
+            window.location.reload()
+        }
+        
+    }, [location.pathname]);
 
     const handleTagChange = (tag: string | null) => {
         setSelectedTag(tag || '');
@@ -113,15 +114,16 @@ export function MangaSearchPage() {
                 </div>
                 <CustomSelector onTagChange={handleTagChange} />
                 <div className="flex space-x-4">
-                    <select value={sortField} onChange={handleSortFieldChange} className="bg-gray-700 text-white rounded-md p-2">
-                        <option value="name">Name</option>
-                        <option value="viewNumber">Views</option>
-                        <option value="favouriteNumber">Favorites</option>
-                        <option value="publishAt">Published Date</option>
+                    <select value={sortField!} onChange={handleSortFieldChange} className="bg-[#ED741B] text-black rounded-md p-2">
+                        <option value="name">Tên</option>
+                        <option value="viewNumber">Lượt xem</option>
+                        <option value="favouriteNumber">Lượt theo dõi</option>
+                        <option value="updateAt">Mới cập nhật</option>
+                        <option value="publishAt">Thời điểm Đăng</option>
                     </select>
-                    <select value={sortOrder} onChange={handleSortOrderChange} className="bg-gray-700 text-white rounded-md p-2">
-                        <option value="asc">Ascending</option>
-                        <option value="desc">Descending</option>
+                    <select value={sortOrder!} onChange={handleSortOrderChange} className="bg-[#ED741B] text-black rounded-md p-2">
+                        <option value="asc">Dưới lên</option>
+                        <option value="desc">Trên xuống</option>
                     </select>
                 </div>
                 <div className='flex justify-between'>
