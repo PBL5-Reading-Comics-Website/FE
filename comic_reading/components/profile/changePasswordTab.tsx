@@ -44,7 +44,7 @@ export function ChangePasswordTab() {
       };
 
     return (
-        <div>
+        <div className='pb-5'>
             <h2 className='text-bold my-4'>ĐỔI MẬT KHẨU</h2>
             <div className='w-7/12'>
                 <div className="mb-2">
@@ -70,7 +70,7 @@ export function ChangePasswordTab() {
                     {confirmPassword && newPassword !== confirmPassword && isConfirmPasswordTouched && <p className="text-red-500">Mật khẩu không trùng khớp</p>}
                 </div>
                 <div className='m-8'></div>
-                <button className="bg-[#ED741B] text-white font-bold py-2 px-4 rounded mt-4 w-full" onClick={handleChangePassword}>
+                <button className="bg-[#ED741B] text-white font-bold py-2 px-4 rounded mt-4 w-full hover:bg-[#fa854f] transition duration-300 ease-in-out  hover:outline-none hover:border-orange-400 hover:ring-2 hover:ring-offset-2 hover:ring-[#f38e4b] shadow-md text-shadow" onClick={handleChangePassword}>
                     CẬP NHẬT MẬT KHẨU
                 </button>
             </div>

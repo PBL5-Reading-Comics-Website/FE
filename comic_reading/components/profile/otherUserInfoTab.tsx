@@ -44,7 +44,7 @@ export function OtherUserInfoTab({ avatarPath, user }: UpdateUserInfoTabProps) {
         console.log(gender);
     }, [user]);
     return (
-        <div>
+        <div className='pb-5'>
             <h2 className='text-bold my-4'>CẬP NHẬT THÔNG TIN CÁ NHÂN</h2>
             <div className="flex items-center">
                 <div className="w-7/12">

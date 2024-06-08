@@ -102,32 +102,18 @@ export function Register() {
                         <Input id="password_confirm" placeholder="Nhập mật khẩu lại mật khẩu" type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
                     </LabelInputContainer>
                     <button
-                        className="font-saira my-4 bg-[#ED741B] hover:border-2 hover:border-[#b8382f] w-full h-16 text-lg font-bold"
+                        className="font-saira my-4 bg-[#ED741B] hover:border-2 w-full h-16 text-lg font-bold hover:bg-[#fa854f] transition duration-300 ease-in-out text-white py-2 px-4 rounded mt-4 hover:outline-none hover:border-orange-400 hover:ring-2 hover:ring-offset-2 hover:ring-[#f38e4b] shadow-md text-shadow"
                         type="submit"
                     >
                         ĐĂNG KÝ
                         <BottomGradient />
                     </button>
-                    <div className="bg-gradient-to-r from-transparent via-white dark:via-white to-transparent my-4 h-[1px] w-full" />
-
-                    <div className="flex flex-col space-y-4">
-                        <button
-                            className="h-16 relative group/btn flex space-x-2 items-center justify-center w-full text-black rounded-md h-10 font-medium shadow-input bg-gray-50 dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_var(--neutral-800)]"
-                            type="submit"
-                        >
-                            <IconBrandGoogle className="h-6 w-6 text-neutral-800 dark:text-neutral-300" />
-                            <span className="text-neutral-700 dark:text-neutral-300 text-lg">
-                                Đăng nhập bằng google
-                            </span>
-                            <BottomGradient />
-                        </button>
-                    </div>
                 </form>
             </div>
             <div className="mx-auto p-4 md:p-8 shadow-input bg-white dark:bg-[#6A6969]">
                 <span className="block text-center text-[#CBCBCB] font-saira font-bold text-base">
                     Đã có tài khoản?
-                    <Link to="/" className="text-[#ED741B] pl-5">Đăng nhập</Link>
+                    <Link to="/login" className="text-[#ED741B] pl-5 hover:text-[#ff5845]">Đăng nhập</Link>
                 </span>
             </div>
         </div>

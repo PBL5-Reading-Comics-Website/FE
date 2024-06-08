@@ -1,6 +1,6 @@
 "use client";
 import {
-    IconBrandGoogle,
+    IconArrowLeft,
 } from "@tabler/icons-react";
 import Cookies from 'js-cookie';
 import React, { useEffect, useState } from "react";
@@ -72,37 +72,31 @@ export function Login() {
                 <h2 className="font-saira font-bold text-2xl text-neutral-800 dark:text-neutral-200 text-center">
                     ĐĂNG NHẬP VÀO TÀI KHOẢN
                 </h2>
-                <form className="my-8" onSubmit={handleSubmit}>
+                <form className="my-8 mb-0" onSubmit={handleSubmit}>
                     <LabelInputContainer className="mb-4" error={usernameError}>
                         <Label htmlFor="email" className="px-2">Email hoặc tên đăng nhập</Label>
                         <Input id="email" placeholder="Nhập tài khoản hoặc Gmail" value={username} onChange={e => setUsername(e.target.value)} />
                     </LabelInputContainer>
-                    <LabelInputContainer className="mb-4" error={passwordError}>
+                    <LabelInputContainer className="mb-2" error={passwordError}>
                         <Label htmlFor="password" className="px-2">Mật khẩu</Label>
                         <Input id="password" placeholder="Nhập mật khẩu" type="password" value={password} onChange={e => setPassword(e.target.value)} />
                     </LabelInputContainer>
+                    <div className="flex items-center justify-end space-x-2">
+                        <Link to="/" className="text-[#ED741B] pr-5 hover:text-[#ff5845] flex items-center"><IconArrowLeft className="size-5"></IconArrowLeft>Trở về trang chủ</Link>
+                    </div>
                     <button
-                        className="font-saira my-8 bg-[#ED741B] hover:border-2 hover:border-[#b8382f] w-full h-16 text-lg font-bold"
+                        className="font-saira my-8 bg-[#ED741B] hover:border-2 w-full h-16 text-lg font-bold hover:bg-[#fa854f] transition duration-300 ease-in-out text-white py-2 px-4 rounded mt-2 hover:outline-none hover:border-orange-400 hover:ring-2 hover:ring-offset-2 hover:ring-[#f38e4b] shadow-md text-shadow"
                         type="submit"
                     >
                         ĐĂNG NHẬP
                         <BottomGradient />
                     </button>
-                    <div className="flex justify-between items-center">
-                        <label className="flex items-center">
-                        </label>
-                        <Link to="/forgot-password" className="text-[#ED741B]">Quên mật khẩu?</Link>
-                    </div>
-                    <div className="bg-gradient-to-r from-transparent via-white dark:via-white to-transparent my-8 h-[1px] w-full" />
-
-                    <div className="flex flex-col space-y-4">
-                    </div>
                 </form>
             </div>
             <div className="mx-auto p-4 md:p-8 shadow-input bg-white dark:bg-[#6A6969]">
                 <span className="block text-center text-[#CBCBCB] font-saira font-bold text-base">
                     Người dùng mới?
-                    <Link to="/register" className="text-[#ED741B] pl-5">Đăng ký</Link>
+                    
                 </span>
             </div>
         </div>

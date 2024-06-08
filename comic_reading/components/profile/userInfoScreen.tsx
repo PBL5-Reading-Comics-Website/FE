@@ -65,7 +65,7 @@ export function UserInfoScreen({
   }, []);
 
   return (
-    <div className="relative">
+    <div className="relative pb-5">
       <div className="w-full h-full">
       </div>
       <div className="h-72 w-full bg-center bg-cover relative z-10 bg-[#ED741B]" >

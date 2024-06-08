@@ -37,7 +37,7 @@ export function ReadHistoryTab(
   }, []);
 
   return (
-    <div>
+    <div className='pb-5'>
       <h2 className='text-bold my-4'>LỊCH SỬ ĐỌC TRUYỆN</h2>
       {readingHistories.map((history, index) => (
         <div key={index} className={`bg-[#444444] rounded-xl p-4 pr-12 mb-4 last:mb-0 ${className}`}>

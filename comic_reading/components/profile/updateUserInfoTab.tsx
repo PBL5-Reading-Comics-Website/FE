@@ -98,7 +98,7 @@ export function UpdateUserInfoTab({ avatarPath, user }: UpdateUserInfoTabProps) 
         }
     };
     return (
-        <div>
+        <div className='pb-5'>
             <h2 className='text-bold my-4'>CẬP NHẬT THÔNG TIN CÁ NHÂN</h2>
             <div className="flex items-center">
                 <div className="w-7/12">
@@ -138,14 +138,14 @@ export function UpdateUserInfoTab({ avatarPath, user }: UpdateUserInfoTabProps) 
                             ]} />
                         </div>
                     </div>
-                    <button className="bg-[#ED741B] text-white font-bold py-2 px-4 rounded mt-4 " onClick={handleUpdate}>
+                    <button className="bg-[#ED741B] text-white font-bold py-2 px-4 rounded mt-4 hover:bg-[#fa854f] transition duration-300 ease-in-out hover:outline-none hover:border-orange-400 hover:ring-2 hover:ring-offset-2 hover:ring-[#f38e4b] shadow-md text-shadow" onClick={handleUpdate}>
                         CẬP NHẬT
                     </button>
                 </div>
                 <div className="ml-4 flex flex-col items-center">
                     {imageUrl != '' && <img className="w-24 h-24 rounded-full mb-4" src={imageUrl} alt="User Avatar" />}
                     <input type="text" value={imageUrl} onChange={handleImageUrlChange} className="bg-[#929292] text-white font-bold py-2 px-4 rounded cursor-pointer" placeholder="Nhập URL hình ảnh" />
-                    <button className="bg-[#ED741B] text-white font-bold py-2 px-4 rounded mt-4 " onClick={handleUpload}>
+                    <button className="bg-[#ED741B] text-white font-bold py-2 px-4 rounded mt-4 hover:bg-[#fa854f] transition duration-300 ease-in-out hover:outline-none hover:border-orange-400 hover:ring-2 hover:ring-offset-2 hover:ring-[#f38e4b] shadow-md text-shadow" onClick={handleUpload}>
                         Thay đổi ảnh đại diện
                     </button>
                 </div>

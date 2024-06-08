@@ -141,9 +141,9 @@ export function PostingPage() {
                                         value={chapterNumber}
                                         onChange={e => setChapterNumber(e.target.value)}
                                     >
-                                        <option value="">Chọn chương</option>
+                                        <option value="" hidden>Chọn chương</option>
                                         {chapterOptions.map(option => (
-                                            <option key={option} value={option}>
+                                            <option key={option} value={option} className="text-center">
                                                 {option}
                                             </option>
                                         ))}
@@ -163,7 +163,7 @@ export function PostingPage() {
                     <PageUpload onImageUpload={handleImageUpload} /> {/* Pass handleImageUpload as prop */}
                 </div>
                 <button
-                    className="font-saira my-8 bg-[#ED741B] hover:border-2 hover:border-[#b8382f] self-end h-16 text-lg font-bold"
+                    className="font-saira my-8 bg-[#ED741B] hover:border-2 self-end h-16 text-lg font-bold  hover:bg-[#fa854f] transition duration-300 ease-in-out text-white py-2 px-4 rounded mt-4 hover:outline-none hover:border-orange-400 hover:ring-2 hover:ring-offset-2 hover:ring-[#f38e4b] shadow-md text-shadow"
                     type="submit"
                     onClick={sendChapter}
                     disabled={isLoading}

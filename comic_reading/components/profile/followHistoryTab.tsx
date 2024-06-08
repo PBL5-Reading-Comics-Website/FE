@@ -86,7 +86,7 @@ export function FollowHistoryItem(
     chapter = 'Chapter 1',
     deleteFollowing }: FollowHistoryItemProps) {
   return (
-    <div className="w-full h-18 flex items-center pb-2">
+    <div className="w-full h-18 flex items-center">
       <img src={imageUrl} alt="Manga" className="w-20 h-24 mr-4" />
       <div className="flex flex-col justify-between mr-4">
         <Link to={`/manga-info/${id}`}>
@@ -98,7 +98,7 @@ export function FollowHistoryItem(
         <span>{chapter}</span>
       </div>
       <div className="flex items-center">
-        <button className="bg-[#ED741B] text-white font-bold py-2 px-4 rounded mt-4" onClick={() => deleteFollowing && deleteFollowing()}>
+        <button className="bg-[#ED741B] text-white font-bold py-2 px-4 rounded mt-4 hover:bg-[#fa854f] transition duration-300 ease-in-out hover:outline-none hover:border-orange-400 hover:ring-2 hover:ring-offset-2 hover:ring-[#f38e4b] shadow-md text-shadow" onClick={() => deleteFollowing && deleteFollowing()}>
           Bỏ theo dõi
         </button>
       </div>

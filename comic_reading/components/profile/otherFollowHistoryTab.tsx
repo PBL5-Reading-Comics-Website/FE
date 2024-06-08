@@ -45,10 +45,10 @@ export function OtherFollowHistoryTab(
         }
     };
     return (
-        <div>
+        <div className=''>
             <h2 className='text-bold my-4'>LỊCH SỬ THEO DÕI</h2>
             {followHistories.map((history, index) => (
-                <div className={`bg-[#444444] rounded-xl p-4 pr-12 mb-4 last:mb-0 ${className} w-3/4`}>
+                <div className={`bg-[#444444] rounded-xl p-4 pr-12 ${className} w-3/4`}>
                     <FollowHistoryItem
                         key={index}
                         id={history.manga.id}
@@ -59,9 +59,7 @@ export function OtherFollowHistoryTab(
                     />
                 </div>
             ))}
-
         </div>
-
     );
 }
 

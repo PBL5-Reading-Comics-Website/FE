@@ -36,13 +36,13 @@ interface User {
 }
 
 export function Header(props: HeaderProps) {
-  const [dropdownVisible, setDropdownVisible] = useState(false);
+  const [dropdownVisible, setDropdownVisible] = useState(true);
   const [user, setUser] = useState<User>();
   const [searchQuery, setSearchQuery] = useState('');
   const [isRequestDialogOpen, setIsRequestDialogOpen] = useState(false);
   const navigate = useNavigate();
   const [isSmall, setIsSmall] = useState(false);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const toggleDropdown = () => {
     const token = Cookies.get('token');
     if (token) {
@@ -118,7 +118,7 @@ export function Header(props: HeaderProps) {
             </Link>
           </div>
           <div className="h-16 flex items-center justify-center p-5">
-            <Link to="/search/null/updateAt/null/null">
+            <Link to="/search/null/publishAt/null/null">
               <h1 className="text-center font-saira font-bold text-xl text-white">
                 TRUYỆN MỚI
               </h1>
@@ -199,7 +199,7 @@ export function Header(props: HeaderProps) {
       )}
 
       {isSmall && (
-        <div className="w-full ">
+        <div className="w-full">
           <div className="flex justify-between">
             <div className="p-5 h-16 items-end justify-center flex flex-col top-0 relative">
                   <div onClick={toggleDropdown} className="flex items-center justify-center">
@@ -276,10 +276,10 @@ export function Header(props: HeaderProps) {
               <IconMenuDeep className="text-white h-8 w-8" />
             </div>
             <div
-              className={`fixed -top-full right-0 w-1/3 h-full flex flex-col justify-between z-40 transition-transform duration-300 ease-in-out ${isSidebarOpen ? "translate-y-0" : "translate-y-full"
+              className={`fixed -top-full right-0 w-fit h-full flex flex-col justify-between z-40 transition-transform duration-300 ease-in-out ${isSidebarOpen ? "translate-y-0" : "translate-y-full"
                 }`} 
             >
-              <div className="flex flex-col p-5 w-full bg-black  ">
+              <div className="flex flex-col p-5 py-0 w-full bg-black  ">
                 <div className="h-16 flex items-center justify-center p-5">
                   <Link to="/">
                     <h1 className="text-center font-saira font-bold text-xl text-white">
@@ -288,22 +288,25 @@ export function Header(props: HeaderProps) {
                     </h1>
                   </Link>
                 </div>
+                <div className="bg-gradient-to-r from-transparent via-white dark:via-white to-transparent h-[1px] w-full" />
                 <div className="h-16 flex items-center justify-center p-5">
-                  <Link to="/search">
+                  <Link to="/search/null/publishAt/null/null">
                     <h1 className="text-center font-saira font-bold text-xl text-white">
                       TRUYỆN MỚI
                     </h1>
                   </Link>
                 </div>
+                <div className="bg-gradient-to-r from-transparent via-white dark:via-white to-transparent h-[1px] w-full" />
                 <div className="h-16 flex items-center justify-center p-5">
-                  <Link to="/search">
+                  <Link to="/search/null/null/null/null">
                     <h1 className="text-center font-saira font-bold text-xl text-white">
                       DANH SÁCH TRUYỆN
                     </h1>
                   </Link>
                 </div>
+                <div className="bg-gradient-to-r from-transparent via-white dark:via-white to-transparent h-[1px] w-full" />
                 <div className="h-16 flex items-center justify-center p-5">
-                  <Link to="/search/viewNumber">
+                  <Link to="/search/null/viewNumber/null/null">
                     <h1 className="text-center font-saira font-bold text-xl text-white">
                       TRUYỆN HOT
                     </h1>

@@ -5,7 +5,7 @@ import { OtherFollowHistoryTab } from "./otherFollowHistoryTab.tsx";
 import { ReadHistoryTab } from "./readHistoryTab.tsx";
 import { OtherUserInfoTab } from "./otherUserInfoTab.tsx";
 import { OtherUserOptionsList } from "./userOptionsList.tsx";
-import UploadHistoryTab from "./uploadHistoryTab.tsx";
+import  OtherUserUploadHistoryTab  from "./otherUserUploadHistoryTab.tsx";
 import { useParams } from "react-router-dom";
 interface UserInfoScreenProps {
   imageUrl?: string;
@@ -58,7 +58,7 @@ export function OtherUserInfoScreen({
   }, []);
 
   return (
-    <div className="relative">
+    <div className="relative pb-5">
       <div className="w-full h-full">
       </div>
       <div className="h-72 w-full bg-center bg-cover relative z-10 bg-[#ED741B]" >
@@ -82,7 +82,7 @@ export function OtherUserInfoScreen({
               {selectedOption === "Thông tin cá nhân" && <OtherUserInfoTab avatarPath={imageUrl} user={user} />}
               {selectedOption === "Lịch sử đọc truyện" && <ReadHistoryTab id={user?.id} />}
               {selectedOption === "Thông tin theo dõi" && <OtherFollowHistoryTab id={user?.id}></OtherFollowHistoryTab>}
-              {selectedOption === "Lịch sử đăng truyện" && <UploadHistoryTab id={user?.id} />}
+              {selectedOption === "Lịch sử đăng truyện" && <OtherUserUploadHistoryTab id={user?.id} />}
             </div>
           </div>
         </div>
