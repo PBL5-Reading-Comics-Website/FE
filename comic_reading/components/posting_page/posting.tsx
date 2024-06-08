@@ -41,10 +41,10 @@ export function PostingPage() {
                 const chapters = chaptersResponse.data;
                 const existingChapterNumbers = chapters.map((chapter: any) => chapter.number);
                 const latestChapterNumber = existingChapterNumbers.length > 0 ? Math.max(...existingChapterNumbers) : 0;
-                
+
                 const options = Array.from({ length: latestChapterNumber + 20 }, (_, i) => i + 1)
                     .filter(number => !existingChapterNumbers.includes(number));
-                
+
                 setChapterOptions(options);
             } catch (error) {
                 console.error(error);
@@ -131,19 +131,19 @@ export function PostingPage() {
                                     </label>
                                     <Input disabled id="name" type="text" className="h-10" value={mangaName} onChange={e => setMangaName(e.target.value)} />
                                 </div>
-                                <div className="mb-2">
-                                    <label className="block text-sm font-bold mb-1" htmlFor="number">
-                                        Chương
+                                <div className="mb-2 flex items-center">
+                                    <label className="block text-sm font-bold mr-3  " htmlFor="number">
+                                        Chương:
                                     </label>
                                     <select
                                         id="number"
-                                        className="h-10"
+                                        className="h-10 px-1 py-2 rounded-md border border-orange-300 focus:outline-none focus:ring-2 focus:ring-orange-500 text-center font-medium appearance-none"
                                         value={chapterNumber}
                                         onChange={e => setChapterNumber(e.target.value)}
                                     >
                                         <option value="" hidden>Chọn chương</option>
                                         {chapterOptions.map(option => (
-                                            <option key={option} value={option} className="text-center">
+                                            <option key={option} value={option} className="text-center hover:bg-orange-100">
                                                 {option}
                                             </option>
                                         ))}

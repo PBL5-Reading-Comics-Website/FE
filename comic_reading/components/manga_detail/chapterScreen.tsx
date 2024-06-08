@@ -88,7 +88,7 @@ function ChapterScreen() {
         <div className="flex items-center justify-center my-4">
           <button
             onClick={handlePreviousChapter}
-            className="px-4 py-2 bg-orange-500 hover:border-red-500 rounded-full text-white mr-2 w-34"
+            className="px-4 py-2 bg-orange-500 rounded-full text-white mr-2 w-34 hover:bg-[#fa854f] transition duration-300 ease-in-out hover:outline-none hover:border-orange-400 hover:ring-2 hover:ring-offset-2 hover:ring-[#f38e4b] shadow-md text-shadow"
             hidden={chapterNumber === 1}
           >
             Chương trước
@@ -104,7 +104,7 @@ function ChapterScreen() {
           </select>
           <button
             onClick={handleNextChapter}
-            className="px-4 py-2 bg-orange-500 hover:border-red-500 rounded-full text-white w-34"
+            className="px-4 py-2 bg-orange-500 rounded-full text-white w-34 hover:bg-[#fa854f] transition duration-300 ease-in-out hover:outline-none hover:border-orange-400 hover:ring-2 hover:ring-offset-2 hover:ring-[#f38e4b] shadow-md text-shadow"
             hidden={chapters.length > 0 && chapterNumber === chapters[chapters.length - 1].number}
           >
             Chương sau
@@ -123,7 +123,7 @@ function ChapterScreen() {
         <div className="flex items-center justify-center my-4">
           <button
             onClick={handlePreviousChapter}
-            className="px-4 py-2 bg-orange-500 hover:border-red-500 rounded-full text-white mr-2 w-34"
+            className="px-4 py-2 bg-orange-500 rounded-full text-white mr-2 w-34 hover:bg-[#fa854f] transition duration-300 ease-in-out hover:outline-none hover:border-orange-400 hover:ring-2 hover:ring-offset-2 hover:ring-[#f38e4b] shadow-md text-shadow"
             hidden={chapterNumber === 1}
           >
             Chương trước
@@ -139,7 +139,7 @@ function ChapterScreen() {
           </select>
           <button
             onClick={handleNextChapter}
-            className="px-4 py-2 bg-orange-500 hover:border-red-500 rounded-full text-white w-34"
+            className="px-4 py-2 bg-orange-500 rounded-full text-white w-34 hover:bg-[#fa854f] transition duration-300 ease-in-out hover:outline-none hover:border-orange-400 hover:ring-2 hover:ring-offset-2 hover:ring-[#f38e4b] shadow-md text-shadow"
             hidden={chapters.length > 0 && chapterNumber === chapters[chapters.length - 1].number}
           >
             Chương sau
