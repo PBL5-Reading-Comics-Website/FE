@@ -8,6 +8,7 @@ import { authService } from '../../../src/service/authService';
 import { cn } from "../../../utils/cn";
 import { Input } from "../../util/input.tsx";
 import { Label } from "../../util/label.tsx";
+import AlertDialog from "../../util/alertDialog.tsx";
 export function Register() {
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
@@ -17,6 +18,14 @@ export function Register() {
     const [emailError, setEmailError] = useState("");
     const [passwordError, setPasswordError] = useState("");
     const [confirmPasswordError, setConfirmPasswordError] = useState("");
+    const [showAlert, setShowAlert] = useState(false);
+    const [alertMessage, setAlertMessage] = useState<{
+        type: "SUCCESS" | "FAILED";
+        message: string;
+    }>({
+        type: 'FAILED',
+        message: '',
+    });
     const navigate = useNavigate();
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -66,12 +75,20 @@ export function Register() {
         try {
             const response = await authService.register(username, email ,password);
             if (response) {
-                alert("Đăng ký thành công");
+                setAlertMessage({
+                    type: 'SUCCESS',
+                    message: 'Đăng nhập thành công',
+                });
+                setShowAlert(true);
                 navigate("/login");
             }
         } catch (error) {
             console.log(error);
-            alert("Đăng ký thất bại");
+            setAlertMessage({
+                type: 'FAILED',
+                message: 'Đã xảy ra lỗi',
+            });
+            setShowAlert(true);
         }
     };
     return (
@@ -116,6 +133,13 @@ export function Register() {
                     <Link to="/login" className="text-[#ED741B] pl-5 hover:text-[#ff5845]">Đăng nhập</Link>
                 </span>
             </div>
+            {showAlert && (
+                <AlertDialog
+                    type={alertMessage.type}
+                    message={alertMessage.message}
+                    onClose={() => setShowAlert(false)}
+                />
+            )}
         </div>
     );
 }

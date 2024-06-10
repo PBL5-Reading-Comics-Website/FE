@@ -9,7 +9,8 @@ import { userService } from "../../src/service/userService.tsx";
 import Header from "../util/header";
 import { Input } from '../util/input.tsx';
 import ImgUpload from "./imgUpload.tsx";
-import TagListSelector from "./tagListSelector.tsx";
+import TagListSelector from "./tagListSelector";
+import LoadingScreen from '../util/circleLoading.tsx'; 
 
 interface UploadProgress {
   [filename: string]: number;
@@ -28,6 +29,7 @@ export function NewManga() {
   const [uploadProgress, setUploadProgress] = useState<UploadProgress>({});
   const [isLoading, setIsLoading] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
+  const [showCoverError, setShowCoverError] = useState(false); // New state for cover error
 
   useEffect(() => {
     const getUser = async () => {
@@ -85,6 +87,11 @@ export function NewManga() {
 
   const sendManga = async () => {
     setIsLoading(true);
+    if (!image) {
+      setShowCoverError(true);
+      setIsLoading(false); 
+      return; // Stop execution if no cover image is selected
+    }
     const imageUrl = await uploadImage();
     console.log('Image URL:', imageUrl);
     const manga = {
@@ -113,11 +120,11 @@ export function NewManga() {
   const handleTagsSelected = (tags: string[] | null) => {
     setTags(tags ?? []);
     console.log(tags);
-
   };
 
   return (
     <div>
+      {isLoading && <LoadingScreen />} {/* Display the loading screen */}
       <div className="w-full h-full">
       </div>
       <div className='top-20 mt-28 w-full p-5'>
@@ -177,6 +184,9 @@ export function NewManga() {
                 {filename}: {progress}%
               </div>
             ))}
+            {showCoverError && (
+              <div className="text-red-500 mt-2">Vui lòng chọn ảnh bìa cho truyện.</div>
+            )}
           </div>
         </div>
         <div className="mb-2 z-10 w-full border-b pb-4">
@@ -189,7 +199,6 @@ export function NewManga() {
           {isLoading ? 'Đang tạo...' : 'Tạo truyện'}
         </button>
 
-        {/* Alert for successful creation */}
         {showAlert && (
           <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-green-500 text-white px-4 py-2 rounded-md">
             Truyện đã được tạo thành công!

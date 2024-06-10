@@ -484,6 +484,7 @@ function WaitingListTable() {
   const [userIdToAccept, setUserIdToAccept] = useState(0);
   const [isConfirmRejectUserOpen, setIsConfirmRejectUserOpen] = useState(false);
   const [userIdToReject, setUserIdToReject] = useState(0);
+  const [isChanged, setIsChanged] = useState(false);
 
   useEffect(() => {
     const fetchWaitingList = async () => {
@@ -498,7 +499,7 @@ function WaitingListTable() {
     };
 
     fetchWaitingList();
-  }, [currentPage]);
+  }, [currentPage, isChanged]);
 
   const handleAcceptUser = (id: number) => {
     setUserIdToAccept(id);
@@ -510,6 +511,7 @@ function WaitingListTable() {
       await adminService.acceptWaiting(userIdToAccept);
       setWaitingList(waitingList.filter(item => item.user.id !== userIdToAccept));
       setIsConfirmAcceptUserOpen(false);
+      setIsChanged(!isChanged);
     } catch (error) {
       console.error('Error accepting user:', error);
     }
@@ -525,6 +527,7 @@ function WaitingListTable() {
       await adminService.rejectWaiting(userIdToReject);
       setWaitingList(waitingList.filter(item => item.user.id !== userIdToReject));
       setIsConfirmRejectUserOpen(false);
+      setIsChanged(!isChanged);
     } catch (error) {
       console.error('Error rejecting user:', error);
     }
