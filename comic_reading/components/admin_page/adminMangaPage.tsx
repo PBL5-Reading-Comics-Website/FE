@@ -11,7 +11,6 @@ function AdminMangaPage() {
 
     return (
         <div className="flex flex-col justify-center items-center bg-gray-900 h-full">
-            {/* Header */}
             <div className='absolute flex top-0 items-center justify-between w-full'>
                  <Link to="/admin-page" className=''>
                 <div className='ml-2 flex'>
@@ -26,12 +25,10 @@ function AdminMangaPage() {
                 </button>
             </div>
 
-            {/* Full-height background element */}
             <div className="absolute bg-gray-900 text-white h-full w-full top-16 z-0" /> 
 
-            {/* Main content area with flexbox for full height */}
-            <div className="flex flex-col  h-full w-full mt-16 p-4 z-10"> {/* Main content area */}
-                <div className="flex-grow"> {/* Make the table container fill remaining height */}
+            <div className="flex flex-col  h-full w-full mt-16 p-4 z-10"> 
+                <div className="flex-grow">
                     <AdminChapterTable mangaId={ parseInt(id!)} /> 
                 </div>
             </div>
