@@ -134,9 +134,43 @@ export const userService = {
         }
     },
 
-    likeManga: async (id: number) => {
+    likeManga: async (mangaId: number, userId: number) => {
         try {
-            const response = await axiosInstance.put(`user/like-manga/${id}`);
+            const response = await axiosInstance.put(`user/like-manga/${mangaId}`, {}, {
+                params: {
+                    userId: userId
+                }
+            });
+            return response.data;
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
+    },
+
+    isLikedManga: async (userId: number, mangaId: number) => {
+        try {
+            const response = await axiosInstance.get(`user/is-liked-manga`, {
+                params: {
+                    userId,
+                    mangaId
+                }
+            });
+            return response.data;
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
+    },
+
+    isFollowManga: async (userId: number, mangaId: number) => {
+        try {
+            const response = await axiosInstance.get(`user/is-following-manga`, {
+                params: {
+                    userId,
+                    mangaId
+                }
+            });
             return response.data;
         } catch (error) {
             console.error(error);

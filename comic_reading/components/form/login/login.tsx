@@ -10,11 +10,21 @@ import { cn } from "../../../utils/cn";
 import { Input } from "../../util/input.tsx";
 import { Label } from "../../util/label.tsx";
 import { jwtDecode } from "jwt-decode";
+import AlertDialog from '../../util/alertDialog.tsx';
+
 export function Login() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [usernameError, setUsernameError] = useState('');
     const [passwordError, setPasswordError] = useState('');
+    const [showAlert, setShowAlert] = useState(false);
+    const [alertMessage, setAlertMessage] = useState<{
+        type: "SUCCESS" | "FAILED";
+        message: string;
+    }>({
+        type: 'FAILED',
+        message: '',
+    });
     const navigate = useNavigate();
     useEffect(() => {
         const token = Cookies.get('token');
@@ -49,6 +59,11 @@ export function Login() {
                 const decodedToken: any = jwtDecode(response.token);
                 console.log(decodedToken.roles[0]);
                 if (decodedToken.roles[0] == "ADMIN") {
+                    setAlertMessage({
+                        type: 'SUCCESS',
+                        message: 'Đăng nhập thành công',
+                    });
+                    setShowAlert(true);
                     navigate('/admin-page');
                 }
                 else {
@@ -56,10 +71,18 @@ export function Login() {
                     navigate('/');
                 }
             } else {
-                setUsernameError('Tên đăng nhập hoặc mật khẩu không đúng');
+                setAlertMessage({
+                    type: 'FAILED',
+                    message: 'Tên đăng nhập hoặc mật khẩu không đúng',
+                });
+                setShowAlert(true);
             }
         } catch (error) {
-            alert(error);
+            setAlertMessage({
+                type: 'FAILED',
+                message: 'Đã xảy ra lỗi',
+            });
+            setShowAlert(true);
         }
     };
     return (
@@ -93,12 +116,18 @@ export function Login() {
                     </button>
                 </form>
             </div>
-            <div className="mx-auto p-4 md:p-8 shadow-input bg-white dark:bg-[#6A6969]">
-                <span className="block text-center text-[#CBCBCB] font-saira font-bold text-base">
-                    Người dùng mới?
-                    
+            <div className="mx-auto p-4 md:p-8 shadow-input bg-white dark:bg-[#6A6969] flex justify-center">
+                <span className="text-center text-[#CBCBCB] font-saira font-bold text-base">
+                    Người dùng mới? <Link to="/register" className="text-[#ED741B] hover:text-[#ff5845]">Tạo tài khoản mới</Link>
                 </span>
             </div>
+            {showAlert && (
+                <AlertDialog
+                    type={alertMessage.type}
+                    message={alertMessage.message}
+                    onClose={() => setShowAlert(false)}
+                />
+            )}
         </div>
     );
 }
@@ -131,4 +160,4 @@ const LabelInputContainer: React.FC<LabelInputContainerProps> = ({
     );
 };
 
-export default Login
+export default Login;

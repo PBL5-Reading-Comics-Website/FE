@@ -7,6 +7,7 @@ import React, { useEffect, useState } from "react";
 import { posterService } from "../../src/service/posterService.tsx";
 import { useNavigate, useParams } from "react-router-dom";
 import { mangaService } from "../../src/service/mangaService.tsx";
+import LoadingScreen from '../util/circleLoading.tsx'; 
 
 interface UploadProgress {
     [filename: string]: number;
@@ -23,6 +24,10 @@ export function PostingPage() {
     const [showAlert, setShowAlert] = useState(false);
     const [manga, setManga] = useState<any>();
     const [chapterOptions, setChapterOptions] = useState<number[]>([]);
+    const [errorMessages, setErrorMessages] = useState({
+        chapterNumber: '',
+        images: ''
+    });
     const navigate = useNavigate();
 
     const handleImageUpload = (newImages: File[]) => {
@@ -94,6 +99,26 @@ export function PostingPage() {
     };
 
     const sendChapter = async () => {
+        let isValid = true;
+        let newErrorMessages = { ...errorMessages };
+        if (!chapterNumber) {
+            newErrorMessages.chapterNumber = 'Vui lòng chọn chương';
+            isValid = false;
+        } else {
+            newErrorMessages.chapterNumber = '';
+        }
+        if (images.length === 0) {
+            newErrorMessages.images = 'Vui lòng chọn ảnh';
+            isValid = false;
+        } else {
+            newErrorMessages.images = '';
+        }
+        setErrorMessages(newErrorMessages);
+
+        if (!isValid) {
+            return;
+        }
+
         setIsLoading(true);
         const imageUrls = await uploadImages();
         const chapter = {
@@ -117,6 +142,7 @@ export function PostingPage() {
 
     return (
         <div>
+            {isLoading && <LoadingScreen />} {/* Display the loading screen */}
             <div className="w-full h-full">
             </div>
             <div className='mt-24 w-full p-5'>
@@ -148,6 +174,7 @@ export function PostingPage() {
                                             </option>
                                         ))}
                                     </select>
+                                    {errorMessages.chapterNumber && <span className="text-red-500 ml-2">{errorMessages.chapterNumber}</span>}
                                 </div>
                                 <div className="mb-2">
                                     <label className="block text-sm font-bold mb-1" htmlFor="chapter_name">
@@ -161,6 +188,7 @@ export function PostingPage() {
                 </div>
                 <div className="border-b-2 pb-2">
                     <PageUpload onImageUpload={handleImageUpload} /> {/* Pass handleImageUpload as prop */}
+                    {errorMessages.images && <span className="text-red-500 ml-2">{errorMessages.images}</span>}
                 </div>
                 <button
                     className="font-saira my-8 bg-[#ED741B] hover:border-2 self-end h-16 text-lg font-bold  hover:bg-[#fa854f] transition duration-300 ease-in-out text-white py-2 px-4 rounded mt-4 hover:outline-none hover:border-orange-400 hover:ring-2 hover:ring-offset-2 hover:ring-[#f38e4b] shadow-md text-shadow"

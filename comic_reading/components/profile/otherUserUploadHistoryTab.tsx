@@ -4,6 +4,7 @@ import Cookies from 'js-cookie';
 import { posterService } from '../../src/service/posterService';
 import { jwtDecode } from 'jwt-decode';
 import { Link } from 'react-router-dom';
+import { userService } from '../../src/service/userService';
 
 interface ReadingHistory {
   id: number;
@@ -64,7 +65,7 @@ export function UploadHistoryTab({ className = '', children, id }: ReadHistoryPr
   useEffect(() => {
     const fetchReadingHistories = async () => {
       try {
-        const data = await posterService.getUploadHistories(id!);
+        const data = await userService.getReadingHistoriesByUserId({userId: id!});
         setUploadHistories(data.data);
         console.log(data.data);
       } catch (error) {

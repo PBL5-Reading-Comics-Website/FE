@@ -3,7 +3,7 @@ import {
   IconBookmarkFilled,
   IconEye,
   IconHeart, IconHeartFilled,
-  IconMessageCircle
+  IconMessageCircle, IconX
 } from "@tabler/icons-react";
 import Cookies from 'js-cookie';
 import { jwtDecode } from "jwt-decode";
@@ -78,7 +78,8 @@ interface MangaInfoScreenProps {
 export function MangaInfoScreen() {
   const { id } = useParams();
   const [userId, setUserId] = useState(0);
-
+  const [isLikedManga, setIsLikedManga] = useState(false);
+  const [isFollowManga, setIsFollowManga] = useState(false);
   const [manga, setManga] = useState<MangaData | null>(null);
   const [error, setError] = useState(false);
   let isLoggedIn = false;
@@ -96,7 +97,6 @@ export function MangaInfoScreen() {
     if (!id || parseInt(id) === 0) {
       return;
     }
-
     const fetchManga = async () => {
       try {
         const data = await mangaService.getMangaById(parseInt(id));
@@ -114,6 +114,30 @@ export function MangaInfoScreen() {
 
     fetchManga();
   }, [id]);
+
+  useEffect(() => {
+    const fetchIsLiked = async () => {
+      let currentUserId = 0
+      const token = Cookies.get('token');
+      if (token) {
+        const decodedToken: any = jwtDecode(token);
+        currentUserId = decodedToken.userId;
+      }
+      try {
+        const response = await userService.isLikedManga(currentUserId, parseInt(id!));
+        setIsLikedManga(response.data);
+        const response2 = await userService.isFollowManga(currentUserId, parseInt(id!));
+        setIsFollowManga(response2.data);
+        console.log(response.data, response2.data);
+      } catch (error) {
+        console.error(error);
+      }
+
+    }
+    fetchIsLiked();
+  }
+    , [isFollowManga, isLikedManga]);
+
   const publishDate = manga?.publishAt ? new Date(manga.publishAt) : null;
   const formattedDate = publishDate ? `${publishDate.getDate()}-${publishDate.getMonth() + 1}-${publishDate.getFullYear()}` : '';
   if (error) {
@@ -133,10 +157,9 @@ export function MangaInfoScreen() {
           <button className="font-saira mt-3 mr-0 flex items-center justify-center pl-16 ml-auto hover:border-[#b8382f] hover:border-2 bg-[#ED741B] text-[#2E2E2E] w-5/6 h-16 text-lg font-bold" type="submit" disabled={isLoggedIn} onClick={async () => {
             if (manga?.id) {
               try {
-                const response = await userService.likeManga(manga.id);
+                const response = await userService.likeManga(manga.id, userId);
                 if (response.status == "success") {
                   alert("Thích truyện thành công");
-                  window.location.reload();
                 }
               } catch (error) {
                 console.error(error);
@@ -146,21 +169,21 @@ export function MangaInfoScreen() {
             <h3 className="w-2/3 text-center" >THÍCH TRUYỆN</h3>
             <IconHeartFilled size={30} className="mr-10 ml-auto" />
           </button>
-          <button className="font-saira mt-3 mr-0 flex items-center justify-center pl-16 ml-auto bg-[#1BBBED] hover:border-2 text-[#2E2E2E] w-5/6 h-16 text-lg font-bold" disabled={isLoggedIn} type="submit" onClick={async () => {
+          <button className={`font-saira mt-3 mr-0 flex items-center justify-center pl-16 ml-auto ${isFollowManga ? 'bg-red-500' : 'bg-[#1BBBED]'} hover:border-2 text-[#2E2E2E] w-5/6 h-16 text-lg font-bold`} disabled={isLoggedIn} type="submit" onClick={async () => {
             if (manga?.id) {
               try {
                 const response = await userService.following({ userId: userId, mangaId: manga.id });
                 if (response.status == "success") {
                   alert("Theo dõi thành công");
-                  window.location.reload();
+                  setIsFollowManga(!isFollowManga);
                 }
               } catch (error) {
                 console.error(error);
               }
             }
           }}>
-            <h3 className="w-2/3 text-center">THEO DÕI</h3>
-            <IconBookmarkFilled size={30} className="mr-10 ml-auto" />
+            <h3 className="w-2/3 text-center">{isFollowManga ? 'BỎ THEO DÕI' : 'THEO DÕI'}</h3>
+            {isFollowManga ? <IconX size={30} className="mr-10 ml-auto" /> : <IconBookmarkFilled size={30} className="mr-10 ml-auto" />}
           </button>
           <div className="flex h-fit w-5/6 text-lg justify-between ml-auto mr-0 mt-3">
             <table className="w-full">
@@ -208,7 +231,7 @@ export function MangaInfoScreen() {
             <div className="w-full border-t pt-2 border-white">
               <TagList tags={manga?.tags.map(tag => tag) ?? []} onTagClick={function (text: string): void {
                 throw new Error("Function not implemented.");
-              } } />
+              }} />
             </div>
             <h3 className="pt-3 mb-10">{manga?.description}</h3>
             <div className="w-full h-full bg-[#5F5F5F] flex flex-col items-center justify-start rounded-lg p-3">
