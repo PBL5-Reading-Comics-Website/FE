@@ -627,9 +627,10 @@ function AdminReportTable() {
     try {
       await adminService.approveReport(reportIdToApprove);
       setReportData(reportData.filter(item => item.id !== reportIdToApprove));
-      setIsConfirmApproveReportOpen(false);
     } catch (error) {
       console.error('Error approving report:', error);
+    } finally {
+      setIsConfirmApproveReportOpen(false);
     }
   };
 
@@ -642,9 +643,10 @@ function AdminReportTable() {
     try {
       await adminService.rejectReport(reportIdToReject);
       setReportData(reportData.filter(item => item.id !== reportIdToReject));
-      setIsConfirmRejectReportOpen(false);
     } catch (error) {
       console.error('Error rejecting report:', error);
+    } finally {
+      setIsConfirmRejectReportOpen(false);
     }
   };
 
