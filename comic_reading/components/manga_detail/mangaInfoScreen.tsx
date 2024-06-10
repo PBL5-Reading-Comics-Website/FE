@@ -154,7 +154,7 @@ export function MangaInfoScreen() {
       <div className="absolute flex top-0 w-full z-20">
         <div className="w-1/3 h-fit flex flex-col justify-center items-center">
           <img src={manga?.coverImage} className="w-5/6 mt-24 mr-0 ml-auto" alt="" />
-          <button className={`font-saira mt-3 mr-0 flex items-center justify-center pl-16 ml-auto ${isLikedManga ? 'bg-red-500' : 'bg-[#1BBBED]'} hover:border-2 text-[#2E2E2E] w-5/6 h-16 text-lg font-bold`} disabled={isLoggedIn} type="submit" onClick={async () => {
+          <button className={`font-saira mt-3 mr-0 flex items-center justify-center pl-16 ml-auto transition duration-300 ease-in-out hover:border-white text-white font-bold py-2 px-4 rounded hover:outline-none hover:ring-2 hover:ring-offset-2 hover:ring-[#ffffff] shadow-md text-shadow ${isLikedManga ? 'bg-[#ed3dd5]' : 'bg-[#ED741B]'} hover:border-2 text-[#2E2E2E] w-5/6 h-16 text-lg font-bold`} disabled={isLoggedIn} type="submit" onClick={async () => {
             if (manga?.id) {
               try {
                 const response = await userService.likeManga(manga.id, userId);
@@ -168,9 +168,9 @@ export function MangaInfoScreen() {
             }
           }}>
             <h3 className="w-2/3 text-center">{isLikedManga ? 'BỎ THÍCH' : 'THÍCH TRUYỆN'}</h3>
-            {isLikedManga ? <IconX size={30} className="mr-10 ml-auto" /> : <IconHeartFilled size={30} className="mr-10 ml-auto" />}
+            <IconHeartFilled size={30} className="ml-2 mr-auto" />
           </button>
-          <button className={`font-saira mt-3 mr-0 flex items-center justify-center pl-16 ml-auto ${isFollowManga ? 'bg-red-500' : 'bg-[#1BBBED]'} hover:border-2 text-[#2E2E2E] w-5/6 h-16 text-lg font-bold`} disabled={isLoggedIn} type="submit" onClick={async () => {
+          <button className={`font-saira mt-3 mr-0 flex items-center justify-center pl-16 ml-auto transition duration-300 ease-in-out hover:border-white text-white font-bold py-2 px-4 rounded hover:outline-none hover:ring-2 hover:ring-offset-2 hover:ring-[#ffffff] shadow-md text-shadow ${isFollowManga ? 'bg-red-500' : 'bg-[#1BBBED]'} hover:border-2 text-[#2E2E2E] w-5/6 h-16 text-lg font-bold`} disabled={isLoggedIn} type="submit" onClick={async () => {
             if (manga?.id) {
               try {
                 const response = await userService.following({ userId: userId, mangaId: manga.id });
@@ -184,7 +184,7 @@ export function MangaInfoScreen() {
             }
           }}>
             <h3 className="w-2/3 text-center">{isFollowManga ? 'BỎ THEO DÕI' : 'THEO DÕI'}</h3>
-            {isFollowManga ? <IconX size={30} className="mr-10 ml-auto" /> : <IconBookmarkFilled size={30} className="mr-10 ml-auto" />}
+            {isFollowManga ? <IconX size={30} className="ml-2 mr-auto" /> : <IconBookmarkFilled size={30} className="ml-2 mr-auto" />}
           </button>
           <div className="flex h-fit w-5/6 text-lg justify-between ml-auto mr-0 mt-3">
             <table className="w-full">

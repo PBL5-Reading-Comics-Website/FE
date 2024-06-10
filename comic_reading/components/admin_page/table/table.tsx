@@ -231,7 +231,7 @@ function AdminMangaTable() {
               <td className="px-6 py-4 whitespace-nowrap">{manga.publishAt}</td>
               <td className="px-6 py-4 whitespace-nowrap">{manga.updateAt}</td>
               <td className="px-6 py-4 whitespace-nowrap">
-                <button onClick={() => handleDeleteManga(manga.id)} className="mx-1 px-4 py-2 rounded-md text-white bg-red-500">Delete</button>
+                <button onClick={() => handleDeleteManga(manga.id)} className="mx-1 px-4 py-2 rounded-md text-white bg-[#ff3232] hover:bg-[#ff5050] transition duration-300 ease-in-out font-bold hover:outline-none hover:border-[#ff5050] hover:ring-2 hover:ring-offset-2 hover:ring-[#ff5050] shadow-md text-shadow">Delete</button>
               </td>
             </tr>
           ))}
@@ -350,13 +350,13 @@ function AdminUserTable() {
               <td className="px-6 py-4 whitespace-nowrap">
                 <button
                   onClick={() => handleUpdateUser(user.id)}
-                  className="mx-1 px-4 py-2 rounded-md text-white bg-blue-500"
+                  className="mx-1 px-4 py-2 rounded-md text-white bg-blue-500 hover:bg-blue-400 transition duration-300 ease-in-out font-bold hover:outline-none hover:border-blue-400 hover:ring-2 hover:ring-offset-2 hover:ring-blue-400 shadow-md text-shadow"
                 >
                   Update
                 </button>
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
-                <button onClick={() => handleDeleteUser(user.id)} className="mx-1 px-4 py-2 rounded-md text-white bg-red-500">Delete</button>
+                <button onClick={() => handleDeleteUser(user.id)} className="mx-1 px-4 py-2 rounded-md text-white bg-[#ff3232] hover:bg-[#ff5050] transition duration-300 ease-in-out font-bold hover:outline-none hover:border-[#ff5050] hover:ring-2 hover:ring-offset-2 hover:ring-[#ff5050] shadow-md text-shadow">Delete</button>
               </td>
             </tr>
           ))}
@@ -452,7 +452,7 @@ function AdminChapterTable({ mangaId }: AdminChapterTableProps) {
               <td className="px-6 py-4 whitespace-nowrap">{chapter.publishAt}</td>
               <td className="px-6 py-4 whitespace-nowrap">{chapter.updateAt}</td>
               <td className="px-6 py-4 whitespace-nowrap">
-                <button onClick={() => handleDeleteChapter(chapter.id)} className="mx-1 px-4 py-2 rounded-md text-white bg-red-500">Delete</button>
+                <button onClick={() => handleDeleteChapter(chapter.id)} className="mx-1 px-4 py-2 rounded-md text-white bg-[#ff3232] hover:bg-[#ff5050] transition duration-300 ease-in-out font-bold hover:outline-none hover:border-[#ff5050] hover:ring-2 hover:ring-offset-2 hover:ring-[#ff5050] shadow-md text-shadow">Delete</button>
               </td>
             </tr>
           ))}
@@ -552,10 +552,10 @@ function WaitingListTable() {
               <td className="px-6 py-4 whitespace-nowrap">{item.user.email}</td>
               <td className="px-6 py-4 whitespace-nowrap">{item.user.registrationDate}</td>
               <td className="px-6 py-4 whitespace-nowrap">
-                <button onClick={() => handleAcceptUser(item.id)} className="mx-1 px-4 py-2 rounded-md text-white bg-green-500">Chấp nhận</button>
+                <button onClick={() => handleAcceptUser(item.id)} className="mx-1 px-4 py-2 rounded-md text-white bg-green-500 hover:bg-green-400 transition duration-300 ease-in-out font-bold hover:outline-none hover:border-green-400 hover:ring-2 hover:ring-offset-2 hover:ring-green-400 shadow-md text-shadow">Chấp nhận</button>
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
-                <button onClick={() => handleRejectUser(item.id)} className="mx-1 px-4 py-2 rounded-md text-white bg-red-500">Từ chối</button>
+                <button onClick={() => handleRejectUser(item.id)} className="mx-1 px-4 py-2 rounded-md text-white bg-[#ff3232] hover:bg-[#ff5050] transition duration-300 ease-in-out font-bold hover:outline-none hover:border-[#ff5050] hover:ring-2 hover:ring-offset-2 hover:ring-[#ff5050] shadow-md text-shadow">Từ chối</button>
               </td>
             </tr>
           ))}
@@ -680,7 +680,7 @@ function AdminReportTable() {
                 <button onClick={() => handleApproveReport(item.id)} className="mx-1 px-4 py-2 rounded-md text-white bg-green-500">Approve</button>
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
-                <button onClick={() => handleRejectReport(item.id)} className="mx-1 px-4 py-2 rounded-md text-white bg-red-500">Reject</button>
+                <button onClick={() => handleRejectReport(item.id)} className="mx-1 px-4 py-2 rounded-md text-white bg-[#ff3232] hover:bg-[#ff5050] transition duration-300 ease-in-out font-bold hover:outline-none hover:border-[#ff5050] hover:ring-2 hover:ring-offset-2 hover:ring-[#ff5050] shadow-md text-shadow">Reject</button>
               </td>
             </tr>
           ))}

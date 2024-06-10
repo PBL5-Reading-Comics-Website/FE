@@ -2,15 +2,15 @@
 import {
   IconBell,
   IconMenuDeep,
-  IconSearch
+  IconSearch,
 } from "@tabler/icons-react";
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
-import { useEffect, useState } from "react";
-import { Link, useNavigate } from 'react-router-dom';
+import { useEffect, useState, useLayoutEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { authService } from "../../src/service/authService";
 import { userService } from "../../src/service/userService";
-import { Input } from './input';
+import { Input } from "./input";
 let isLoggedIn = false;
 
 interface HeaderProps {
@@ -38,13 +38,14 @@ interface User {
 export function Header(props: HeaderProps) {
   const [dropdownVisible, setDropdownVisible] = useState(true);
   const [user, setUser] = useState<User>();
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [isRequestDialogOpen, setIsRequestDialogOpen] = useState(false);
   const navigate = useNavigate();
   const [isSmall, setIsSmall] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+
   const toggleDropdown = () => {
-    const token = Cookies.get('token');
+    const token = Cookies.get("token");
     if (token) {
       isLoggedIn = true;
     } else {
@@ -52,18 +53,20 @@ export function Header(props: HeaderProps) {
     }
     setDropdownVisible(!dropdownVisible);
   };
+
   useEffect(() => {
-    const token = Cookies.get('token');
+    const token = Cookies.get("token");
     if (token) {
       isLoggedIn = true;
     }
   });
+
   useEffect(() => {
     const getUser = async () => {
       try {
-        const token = Cookies.get('token');
+        const token = Cookies.get("token");
         if (!token) {
-          console.log('No token found');
+          console.log("No token found");
           return;
         }
         const decodedToken: any = jwtDecode(token);
@@ -79,12 +82,13 @@ export function Header(props: HeaderProps) {
 
   const handleSearch = (query: string) => {
     setSearchQuery(query);
+  };
 
-  }
   const handleSearchSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     navigate(`/search/${searchQuery}/null/null/null`);
   };
+
   const handleOpenRequestDialog = () => {
     props.onOpenRequestDialog();
   };
@@ -92,9 +96,15 @@ export function Header(props: HeaderProps) {
   const handleCloseRequestDialog = () => {
     setIsRequestDialogOpen(false);
   };
+
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
+
+  useLayoutEffect(() => {
+    setDropdownVisible(false); 
+  }, [navigate]); // Close dropdown on every navigation
+
   useEffect(() => {
     const handleResize = () => {
       setIsSmall(window.innerWidth < 1100);
@@ -105,6 +115,7 @@ export function Header(props: HeaderProps) {
 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
   return (
     <div className="w-full top-0 z-50 absolute">
       {!isSmall && (
@@ -182,7 +193,7 @@ export function Header(props: HeaderProps) {
                     {user?.role === "USER" && (
                       <>
                         <div className="p-4" onClick={handleOpenRequestDialog}>
-                          <h1 onClick={toggleDropdown} className="text-white text-lg text-bold">Xin lên làm người đăng truyện</h1>
+                          <h1 onClick={toggleDropdown} className="text-white text-base font-semibold hover:cursor-pointer">Xin lên người đăng truyện</h1>
                         </div>
                         <div className="bg-gradient-to-r from-transparent via-white dark:via-white to-transparent h-[1px] w-full" />
                       </>
@@ -210,7 +221,7 @@ export function Header(props: HeaderProps) {
                     <h1 className="text-white text-xl mx-3">{user?.username || ""}</h1>
                   </div>
                   
-                    <div className={`flex flex-col left-0 p-1 w-[200%] h-fit mt-1 justify-center items-center top-full bg-neutral-800 border-2 border-white absolute rounded-md transition-transform ${dropdownVisible ? "-translate-x-full" : "translate-x-5"}`}>
+                    <div className={`flex flex-col left-0 p-1 w-[200%] h-fit mt-1 justify-center items-center top-full bg-neutral-800 border-2 border-white absolute rounded-md transition-transform ${dropdownVisible ? "translate-x-5" : "-translate-x-full"}`}>
                       {isLoggedIn === false ? (
                         <Link to="/login" className="p-4">
                           <h1 className="text-white text-base text-center">Đăng nhập</h1>
@@ -234,7 +245,7 @@ export function Header(props: HeaderProps) {
                           {user?.role === "USER" && (
                             <>
                               <div className="p-4" onClick={handleOpenRequestDialog}>
-                                <h1 className="text-white text-lg text-bold">
+                                <h1 className="text-white text-base font-semibold cursor-pointer">
                                   Xin lên làm người đăng truyện
                                 </h1>
                               </div>

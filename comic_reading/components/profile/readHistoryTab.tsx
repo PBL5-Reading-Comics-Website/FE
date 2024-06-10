@@ -82,9 +82,9 @@ export function ReadHistoryItem(
   return (
     <div className="w-full h-18 flex items-center pb-2">
       <img src={imageUrl} alt="Manga" className="w-20 h-24 mr-4" />
-      <div className="flex flex-col justify-between mr-4">
+      <div className="flex flex-col justify-between mr-4 h-full w-1/3 text-wrap">
         <Link to={`/manga-info/${id}`}>
-          <span className="text-bold text-xl" style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{mangaName}</span>
+          <span className="text-bold text-xl line-clamp-1 h-full text-wrap" style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{mangaName}</span>
         </Link>
         <span>{posterName}</span>
       </div>
