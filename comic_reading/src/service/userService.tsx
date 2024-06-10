@@ -6,7 +6,7 @@ const API_URL = 'http://localhost:8080/api/';
 const axiosInstance = axios.create({
     baseURL: API_URL,
     headers: {
-        'Content-Type': 'text/plain',
+        'Content-Type': 'application/json',
     },
 });
 
@@ -65,7 +65,7 @@ export const userService = {
         }
     },
 
-    getFollowingById: async ({userId, sortField = 'id', sortOrder = 'asc', page = 1, size = 10}: { userId: number, sortField?: string, sortOrder?: string, page?: number, size?: number }) => {
+    getFollowingById: async ({ userId, sortField = 'id', sortOrder = 'asc', page = 1, size = 10 }: { userId: number, sortField?: string, sortOrder?: string, page?: number, size?: number }) => {
         try {
             const response = await axiosInstance.get(`user/followings/${userId}`);
             return response.data;
@@ -193,7 +193,7 @@ export const userService = {
         }
     },
 
-    getReadingHistoriesByUserId: async ({userId, sortField = 'id', sortOrder = 'asc', page = 1, size = 10}: { userId: number, sortField?: string, sortOrder?: string, page?: number, size?: number }) => {
+    getReadingHistoriesByUserId: async ({ userId, sortField = 'id', sortOrder = 'asc', page = 1, size = 10 }: { userId: number, sortField?: string, sortOrder?: string, page?: number, size?: number }) => {
         try {
             const response = await axiosInstance.get(`user/reading-histories/${userId}`, {
                 // params: {
@@ -209,9 +209,9 @@ export const userService = {
             throw error;
         }
     },
-    postComment: async ({userId, mangaId, content}: { userId: number, mangaId: number, content?: string }) => {
+    postComment: async ({ userId, mangaId, content }: { userId: number, mangaId: number, content?: string }) => {
         try {
-            const response = await axiosInstance.post('user/comment', {content: '123'}, {
+            const response = await axiosInstance.post('user/comment', { content }, {
                 params: {
                     mangaId,
                     userId
@@ -223,7 +223,7 @@ export const userService = {
             throw error;
         }
     },
-    following: async ({userId, mangaId}: { userId: number, mangaId: number }) => {
+    following: async ({ userId, mangaId }: { userId: number, mangaId: number }) => {
         try {
             const response = await axiosInstance.post(`user/following/?mangaId=${mangaId}&userId=${userId}`);
             return response.data;
