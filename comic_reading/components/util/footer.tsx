@@ -5,9 +5,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import {Tag} from '../tag/tag.tsx';
 
 export function Footer() {
-    const onClick = () => {
-
-    }
 
     return (
             <div className="w-full h-fit flex bg-black mt-6 bottom-0 items-center">

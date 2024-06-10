@@ -1,5 +1,5 @@
 import React from 'react';
-import { IconFlag } from '@tabler/icons-react';
+import { IconFlag, IconTrash } from '@tabler/icons-react';
 
 interface CommentProps {
     imgAvatar: string;
@@ -9,8 +9,10 @@ interface CommentProps {
     content: string;
     mangaId: number;
     commentId: number;
+    commentUserId: number;
     handleOpenReportDialog: (mangaId: number, commentId: number) => void;
     handleToUserProfile: (userId: number) => void
+    handleDeleteComment: (commentId: number) => void;
 }
 
 export function Comment({
@@ -21,13 +23,15 @@ export function Comment({
     content,
     mangaId,
     commentId,
+    commentUserId,
     handleOpenReportDialog,
     handleToUserProfile,
+    handleDeleteComment
 }: CommentProps) {
     const formatDate = (timeString: string) => {
         const date = new Date(timeString);
         const day = date.getDate().toString().padStart(2, '0');
-        const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are 0-based
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
         const year = date.getFullYear();
         return `${day}-${month}-${year}`;
     };
@@ -40,6 +44,7 @@ export function Comment({
                     <div className="flex items-center">
                         <h1 className="mr-4 text-base font-light">{formatDate(time)}</h1>
                         <IconFlag onClick={() => handleOpenReportDialog(mangaId, commentId)} size={20} className="text-gray-400 hover:text-red-600 cursor-pointer" />
+                        {userId === commentUserId && <IconTrash onClick={() => handleDeleteComment(commentId)} size={20} className="text-gray-400 hover:text-red-600 cursor-pointer ml-4" />}
                     </div>
                 </div>
                 <div className=" flex flex-col items-start">

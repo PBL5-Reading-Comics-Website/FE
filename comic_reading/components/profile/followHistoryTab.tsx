@@ -18,6 +18,7 @@ export function FollowHistoryTab(
   { className = '', children, id }: FollowHistoryProps
 ) {
   const [followHistories, setFollowHistories] = useState<FollowHistory[]>([]);
+  const [isChanged, setIsChanged] = useState(false);
 
   useEffect(() => {
     const fetchFollowgHistories = async () => {
@@ -32,32 +33,30 @@ export function FollowHistoryTab(
     };
 
     fetchFollowgHistories();
-  }, []);
-    const deleteFollowing = async (id: number) => {
-      try {
-        const data = await userService.deleteFollowingById(id);
-        console.log(data);
-        const newFollowHistories = followHistories.filter(history => history.id !== id);
-        setFollowHistories(newFollowHistories);
-      } catch (error) {
-        console.error(error);
-      }
-    };
+  }, [isChanged]);
+  const deleteFollowing = async (userId: number, mangaId: number) => {
+    try {
+      const response = await userService.following({ userId: userId, mangaId: mangaId });
+      setIsChanged(!isChanged);
+    } catch (error) {
+      console.error(error);
+    }
+  };
   return (
     <div>
       <h2 className='text-bold my-4'>LỊCH SỬ THEO DÕI</h2>
-        {followHistories.map((history, index) => (
-          <div className={`bg-[#444444] rounded-xl p-4 pr-12 mb-4 last:mb-0 ${className} w-3/4`}>
+      {followHistories.map((history, index) => (
+        <div key={index} className={`bg-[#444444] rounded-xl p-4 pr-12 mb-4 last:mb-0 ${className} w-3/4`}>
           <FollowHistoryItem
             key={index}
             id={history.manga.id}
             imageUrl={history.manga.coverImage}
             mangaName={history.manga.name}
             posterName={history.user.author}
-            deleteFollowing={() => deleteFollowing(followHistories[index].id)}
+            deleteFollowing={() => deleteFollowing(followHistories[index].user.id, followHistories[index].manga.id)}
           />
-                </div>
-        ))}
+        </div>
+      ))}
 
     </div>
 

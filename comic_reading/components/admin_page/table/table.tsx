@@ -422,9 +422,9 @@ function AdminChapterTable({ mangaId }: AdminChapterTableProps) {
 
   const confirmDeleteChapter = async () => {
     try {
-      // await mangaService.deleteChapter(chapterToDeleteId);
-      // setChapters(chapters.filter(chapter => chapter.id !== chapterToDeleteId));
-      // setIsConfirmDeleteChapterOpen(false);
+      await adminService.deleteChapterById(chapterToDeleteId);
+      setChapters(chapters.filter(chapter => chapter.id !== chapterToDeleteId));
+      setIsConfirmDeleteChapterOpen(false);
     } catch (error) {
       console.error('Error deleting chapter:', error);
     }
@@ -440,7 +440,6 @@ function AdminChapterTable({ mangaId }: AdminChapterTableProps) {
             <th className="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase tracking-wider">Lượt bình luận</th>
             <th className="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase tracking-wider">Đăng ngày</th>
             <th className="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase tracking-wider">Cập nhật ngày</th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase tracking-wider">Cập nhật</th>
             <th className="px-6 py-3 text-left text-xs font-medium text-orange-500 uppercase tracking-wider">Xóa</th>
           </tr>
         </thead>
@@ -452,9 +451,6 @@ function AdminChapterTable({ mangaId }: AdminChapterTableProps) {
               <td className="px-6 py-4 whitespace-nowrap">{chapter.commentNumber}</td>
               <td className="px-6 py-4 whitespace-nowrap">{chapter.publishAt}</td>
               <td className="px-6 py-4 whitespace-nowrap">{chapter.updateAt}</td>
-              <td className="px-6 py-4 whitespace-nowrap">
-                <button onClick={() => { }} className="mx-1 px-4 py-2 rounded-md text-white bg-blue-500">Update</button>
-              </td>
               <td className="px-6 py-4 whitespace-nowrap">
                 <button onClick={() => handleDeleteChapter(chapter.id)} className="mx-1 px-4 py-2 rounded-md text-white bg-red-500">Delete</button>
               </td>

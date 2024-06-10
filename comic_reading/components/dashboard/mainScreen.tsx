@@ -21,7 +21,7 @@ interface Manga {
 export function MainScreen() {
     const [mangas, setMangas] = useState<Manga[]>([]);
     const [seasonalMangas, setSeasonalMangas] = useState<Manga[]>([]);
-    const [userID, setUserId] = useState<number | null>(null); // Initialize as null
+    const [userID, setUserId] = useState<number | null>(null);
 
     useEffect(() => {
         const fetchUserId = async () => {
@@ -102,7 +102,6 @@ export function MainScreen() {
     }
     return (
         <div className="w-full h-full">
-            {/* <Header /> */}
             <div className="w-full h-full px-4 mt-16 flex flex-col">
                 <div className="new_update">
                     <div className="flex items-center">
@@ -163,7 +162,10 @@ export function MainScreen() {
                     </MangaHorizontalList>
                 </div>
                 <div className="monthly">
-                    <h2 className="text-bold text-xl my-4">Đề xuất cho bạn</h2>
+                
+                {userID !== null && (
+                        <h2 className="text-bold text-xl my-4">Đề xuất cho bạn</h2>
+                    )}
                     {userID !== null && (
                         <MangaHorizontalListRecommend userId={userID} className="mt-2" />
                     )}

@@ -256,4 +256,20 @@ export const userService = {
             throw error;
         }
     },
+    addReadingHistory: async ({ userId, mangaId, chapterId }: { userId: number, mangaId: number, chapterId: number | null }) => {
+        try {
+            const response = await axiosInstance.post(`user/reading-history`, {}, {
+                params: {
+                    userId,
+                    mangaId,
+                    chapterId
+                }
+            });
+            console.log(response.data);
+            return response.data;
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
+    },
 }

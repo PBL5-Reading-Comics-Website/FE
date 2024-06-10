@@ -103,7 +103,7 @@ export function MangaInfoScreen() {
         console.log(data.data)
         if (data && data.data.tags) {
           const tags = data.data.tags.map((tag: { name: string; }) => tag.name);
-          const chapters = data.data.chapters;
+          const chapters = data.data.chapters.sort((a: any, b: any) => a.number - b.number);
           setManga({ ...data.data.manga, tags, chapters });
         }
       } catch (error) {
@@ -154,27 +154,28 @@ export function MangaInfoScreen() {
       <div className="absolute flex top-0 w-full z-20">
         <div className="w-1/3 h-fit flex flex-col justify-center items-center">
           <img src={manga?.coverImage} className="w-5/6 mt-24 mr-0 ml-auto" alt="" />
-          <button className="font-saira mt-3 mr-0 flex items-center justify-center pl-16 ml-auto hover:border-[#b8382f] hover:border-2 bg-[#ED741B] text-[#2E2E2E] w-5/6 h-16 text-lg font-bold" type="submit" disabled={isLoggedIn} onClick={async () => {
+          <button className={`font-saira mt-3 mr-0 flex items-center justify-center pl-16 ml-auto ${isLikedManga ? 'bg-red-500' : 'bg-[#1BBBED]'} hover:border-2 text-[#2E2E2E] w-5/6 h-16 text-lg font-bold`} disabled={isLoggedIn} type="submit" onClick={async () => {
             if (manga?.id) {
               try {
                 const response = await userService.likeManga(manga.id, userId);
                 if (response.status == "success") {
-                  alert("Thích truyện thành công");
+                  console.log(response);
+                  setIsLikedManga(!isLikedManga);
                 }
               } catch (error) {
                 console.error(error);
               }
             }
           }}>
-            <h3 className="w-2/3 text-center" >THÍCH TRUYỆN</h3>
-            <IconHeartFilled size={30} className="mr-10 ml-auto" />
+            <h3 className="w-2/3 text-center">{isLikedManga ? 'BỎ THÍCH' : 'THÍCH TRUYỆN'}</h3>
+            {isLikedManga ? <IconX size={30} className="mr-10 ml-auto" /> : <IconHeartFilled size={30} className="mr-10 ml-auto" />}
           </button>
           <button className={`font-saira mt-3 mr-0 flex items-center justify-center pl-16 ml-auto ${isFollowManga ? 'bg-red-500' : 'bg-[#1BBBED]'} hover:border-2 text-[#2E2E2E] w-5/6 h-16 text-lg font-bold`} disabled={isLoggedIn} type="submit" onClick={async () => {
             if (manga?.id) {
               try {
                 const response = await userService.following({ userId: userId, mangaId: manga.id });
                 if (response.status == "success") {
-                  alert("Theo dõi thành công");
+                  console.log(response);
                   setIsFollowManga(!isFollowManga);
                 }
               } catch (error) {

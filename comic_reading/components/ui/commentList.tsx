@@ -9,6 +9,7 @@ import ReportDialog from "../util/reportDialog";
 import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
+import ConfirmationDialog from "../util/requestToPosterDialog";
 interface User {
     id: number;
     username: string;
@@ -61,9 +62,12 @@ function CommentList(
     const [text, setText] = useState("");
     const [comments, setComments] = useState<Comment[]>([]);
     const [commentAdded, setCommentAdded] = useState(false);
-    const [isReportDialogOpen, setIsReportDialogOpen] = useState(false); // State for the ReportDialog
-    const [reportMangaId, setReportMangaId] = useState(0); // State for the mangaId to report
-    const [reportCommentId, setReportCommentId] = useState(0); // State for the commentId to report
+    const [isReportDialogOpen, setIsReportDialogOpen] = useState(false);
+    const [reportMangaId, setReportMangaId] = useState(0);
+    const [reportCommentId, setReportCommentId] = useState(0);
+    const [currentUserId, setCurrentUserId] = useState(0);
+    const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+    const [deleteCommentId, setDeleteCommentId] = useState<number | null>(null);
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -79,7 +83,15 @@ function CommentList(
 
         fetchComments();
     }, [mangaId, chapterChange, commentAdded]);
-
+    useEffect(() => {
+        const token = Cookies.get('token');
+        if (!token) {
+            setCurrentUserId(0)
+        } else {
+            const decodedToken: any = jwtDecode(token);
+            setCurrentUserId(decodedToken.userId);
+        }
+    }, []);
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         try {
@@ -147,6 +159,28 @@ function CommentList(
         handleCloseReportDialog();
     };
 
+    const handleDeleteComment = (commentId: number) => {
+        setIsDeleteDialogOpen(true);
+        setDeleteCommentId(commentId);
+    };
+
+    const handleConfirmDelete = async () => {
+        if (deleteCommentId !== null) {
+            try {
+                const response = await userService.deleteCommentById(deleteCommentId);
+                if (response.status === "success") {
+                    alert("Xoá bình luận này thành công");
+                    setCommentAdded(!commentAdded);
+                } else {
+                    alert("Xoá bình luận thất bại");
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        }
+        setIsDeleteDialogOpen(false);
+    };
+
     return (
         <div className="w-full p-3 pt-0 border-2 flex flex-col rounded-lg">
             <InfiniteScroll
@@ -163,7 +197,8 @@ function CommentList(
                 {comments.length > 0 && comments.map((comment, index) => (
                     <Comment
                         imgAvatar={comment.user.avatar}
-                        userId={comment.user.id}
+                        commentUserId={comment.user.id}
+                        userId={currentUserId}
                         key={index}
                         name={comment.user.username}
                         time={comment.updateAt}
@@ -171,8 +206,7 @@ function CommentList(
                         mangaId={mangaId}
                         commentId={comment.id}
                         handleOpenReportDialog={handleOpenReportDialog}
-                        handleToUserProfile={handleToUserProfile}
-                    />
+                        handleToUserProfile={handleToUserProfile} handleDeleteComment={handleDeleteComment} />
                 ))}
             </InfiniteScroll>
             <form onSubmit={handleSubmit} className="flex w-full items-center bg-neutral-800 border-2 border-black rounded-xl mt-2">
@@ -186,8 +220,6 @@ function CommentList(
                     <IconSend2 className="z-50 flex items-center mx-2 pointer-events-non hover:cursor-pointer" />
                 </button>
             </form>
-
-            {/* Render the ReportDialog */}
             {isReportDialogOpen && createPortal(
                 <ReportDialog
                     isOpen={isReportDialogOpen}
@@ -198,6 +230,17 @@ function CommentList(
                 />,
                 document.body
             )}
+            <div className="w-full p-3 pt-0 border-2 flex flex-col rounded-lg">
+                <ConfirmationDialog
+                    isOpen={isDeleteDialogOpen}
+                    onClose={() => setIsDeleteDialogOpen(false)}
+                    onAccept={handleConfirmDelete}
+                    title="Xoá bình luận"
+                    content="Bạn có muốn xoá bình luận này?"
+                    acceptButtonText="Xoá"
+                    cancelButtonText="Huỷ"
+                />
+            </div>
         </div>
     );
 }

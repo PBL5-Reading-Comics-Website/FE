@@ -4,7 +4,9 @@ import { mangaService } from "../../src/service/mangaService";
 import { ImageService } from "../../utils/imageService.tsx";
 import CommentList from '../ui/commentList.tsx';
 import Header from "../util/header";
-
+import { userService } from '../../src/service/userService.tsx';
+import Cookies from 'js-cookie'; import { jwtDecode } from 'jwt-decode';
+;
 const ChapterImage = lazy(() => import("../util/chapterImage.tsx"));
 
 function ChapterScreen() {
@@ -40,14 +42,28 @@ function ChapterScreen() {
           page: 0,
           size: 100
         });
+        const sortedChapters = chaptersResponse.data.sort((a: any, b: any) => a.number - b.number);
         setChapters(chaptersResponse.data);
         setCommentChange(!commentChange);
+        const token = Cookies.get('token');
+        if (!token) {
+          console.log('No token found');
+          return;
+        }
+        const decodedToken: any = jwtDecode(token);
+        console.log(chapterIdParam, mangaId);
+        const response = await userService.addReadingHistory({
+          mangaId: chapterResponse.data.chapter.manga.id,
+          chapterId: parseInt(chapterIdParam!),
+          userId: decodedToken.userId
+        });
       } catch (error) {
         console.error('Failed to fetch chapter data:', error);
       }
     };
     fetchChapterData();
   }, [chapterIdParam]);
+
 
   const handleChapterChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const newChapterNumber = parseInt(event.target.value, 10);

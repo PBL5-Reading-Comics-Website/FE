@@ -46,6 +46,7 @@ export function ReadHistoryTab(
             imageUrl={history.manga.coverImage}
             mangaName={history.manga.name}
             posterName={history.user.author}
+            chapterId={history.chapter.id}
             postTime={history.endAt}
             chapter={history.chapter.name}
           />
@@ -62,6 +63,7 @@ interface readHistoryItemProps {
   id?: number;
   imageUrl?: string;
   mangaName?: string;
+  chapterId?: number;
   posterName?: string;
   postTime?: string;
   chapter?: string;
@@ -73,6 +75,7 @@ export function ReadHistoryItem(
     id = 0,
     imageUrl = 'https://st.nhattruyenss.com/data/comics/228/blue-archive-global.jpg',
     mangaName = 'Manga Name',
+    chapterId = 0,
     posterName = 'Poster Name',
     postTime = '10 minutes ago',
     chapter = 'Chapter 1' }: readHistoryItemProps) {
@@ -86,7 +89,7 @@ export function ReadHistoryItem(
         <span>{posterName}</span>
       </div>
       <div className="flex flex-grow items-end justify-center">
-        <Link to={`/read-manga/${id}`}>
+        <Link to={`/read-manga/${chapterId}`}>
           <span>{chapter}</span>
         </Link>
       </div>
